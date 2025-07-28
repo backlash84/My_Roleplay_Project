@@ -1,0 +1,25 @@
+{
+  "memory_id": "PS_CH09_02",
+  "book": "Philosopher's Stone",
+  "chapter": "The Potions Master",
+  "scene_title": "A Tense Potions Lesson",
+  "summary": "In Snape’s first class, Hermione immediately tries to shine. She raises her hand eagerly to every question, becoming flustered and disappointed when Snape ignores her. As Harry becomes the target of Snape’s attention, Hermione grows visibly tense, frustrated that her efforts aren’t being acknowledged. Despite this, she cannot help whispering answers under her breath, hoping to be noticed. The interaction reveals both her ambition and her sensitivity to fairness and authority.",
+  "logline": "Eager to impress Snape, Hermione’s frustration builds when her knowledge is ignored in favor of antagonizing Harry.",
+  "tags": [
+    "ambitious",
+    "frustrated",
+    "sensitive to authority",
+    "eager"
+  ],
+  "speech_style": "Fast, controlled; increasingly tense when ignored, murmurs answers quietly under pressure",
+  "location": "Potions classroom",
+  "characters_present": [
+    "Hermione",
+    "Snape",
+    "Harry",
+    "Ron",
+    "Students"
+  ],
+  "emotional_state": "Frustrated, tense, eager for approval",
+  "chronology_index": 7
+}

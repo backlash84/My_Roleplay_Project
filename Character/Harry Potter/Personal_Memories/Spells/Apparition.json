@@ -1,0 +1,21 @@
+{
+  "memory_id": "Apparition",
+  "template_used": "Spell Type",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Apparition",
+    "teleportation",
+    "splinching"
+  ],
+  "Importance": "Medium",
+  "Perspective": "Lore",
+  "Spell Name": "Apparition",
+  "Spell Type": "Transportation",
+  "Spell Effects": "Magically teleports a witch or wizard to another location instantly. The destination is one that the primary user has been to or seen in some fashion previously. Can be used to Apparate two or more people at once if holding onto each other (i.e. Side-Along Apparition).",
+  "Visuals": "No visual effect.",
+  "Year Level": "None",
+  "Other": "No incantation required, but the caster must turn on the spot. Feels like being compressed on all sides, like being pushed through a narrow tube. The less experienced the caster, the louder the sound produced, ranging from a gunshot to utter silence. You must have a license from the ministry of magic to Apparate legally. Most avoid using Apparation due to the risk of \"Splinching\", the seperating of body parts that don't travel successfully.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

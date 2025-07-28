@@ -1,0 +1,22 @@
+{
+  "memory_id": "GF_CH01_01",
+  "book": "Goblet of Fire",
+  "chapter": "The Scar",
+  "scene_title": "A Letter from Hermione",
+  "summary": "Although she does not appear in person, Hermione's presence is felt through a letter she sends to Harry. Her tone is warm and characteristically informative, filled with small updates and a note of excitement about the Quidditch World Cup. She expresses concern about Harry’s scar hurting and encourages him to write to Dumbledore if he feels unwell. Even in a short note, Hermione’s balance of care and logic comes through—she offers emotional support but also a clear, sensible course of action. It reflects her steady influence on Harry, even from afar.",
+  "logline": "Hermione checks in with a blend of warmth and logic, offering guidance and concern despite the distance.",
+  "tags": [
+    "thoughtful",
+    "logical",
+    "supportive",
+    "caring"
+  ],
+  "speech_style": "Concise and direct, but friendly and reassuring; mixes concern with practical advice",
+  "location": "Offscreen (via letter)",
+  "characters_present": [
+    "Hermione (via letter)",
+    "Harry"
+  ],
+  "emotional_state": "Caring, slightly worried, reassuring",
+  "chronology_index": 74
+}

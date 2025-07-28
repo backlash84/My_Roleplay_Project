@@ -1,0 +1,22 @@
+{
+  "no_token_limit": true,
+  "temperature": 0.7,
+  "top_k": 10,
+  "similarity_threshold": 0.65,
+  "memory_boost": 0.5,
+  "text_size": 14,
+  "debug_color": "#ff0f0f",
+  "user_color": "#FFFFFF",
+  "theme_color": "#333333",
+  "accent_color": "#37689F",
+  "entry_color": "#222222",
+  "text_color": "#ffffff",
+  "llm_url": "http://localhost:1234/v1/chat/completions",
+  "model": "TEST",
+  "max_tokens": 2048,
+  "frequency_penalty": 0.3,
+  "presence_penalty": 0.3,
+  "auto_scroll": true,
+  "prompt_preview": true,
+  "save_path": ""
+}

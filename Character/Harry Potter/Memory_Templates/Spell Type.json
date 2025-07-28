@@ -1,0 +1,102 @@
+{
+  "template_name": "Spell Type",
+  "created_by": "Me",
+  "tags": [
+    "spell",
+    "magic"
+  ],
+  "fields": [
+    {
+      "label": "__template_name__",
+      "type": "text",
+      "usage": "Neither"
+    },
+    {
+      "label": "__created_by__",
+      "type": "text",
+      "usage": "Neither"
+    },
+    {
+      "label": "__tags__",
+      "type": "tag",
+      "usage": "Search"
+    },
+    {
+      "label": "Tags",
+      "type": "tag",
+      "usage": "Search"
+    },
+    {
+      "label": "__importance__",
+      "type": "dropdown",
+      "usage": "Search",
+      "options": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "default_value": "Medium"
+    },
+    {
+      "label": "__perspective__",
+      "type": "dropdown",
+      "usage": "Both",
+      "options": [
+        "First Hand",
+        "Second Hand",
+        "Lore"
+      ],
+      "default_value": "Lore"
+    },
+    {
+      "label": "Spell Name",
+      "type": "text",
+      "usage": "Both"
+    },
+    {
+      "label": "Spell Type",
+      "type": "text",
+      "usage": "Both"
+    },
+    {
+      "label": "Spell Effects",
+      "type": "text",
+      "usage": "Both",
+      "rows": 3
+    },
+    {
+      "label": "Visuals",
+      "type": "text",
+      "usage": "Prompt",
+      "default_value": "No visual effect."
+    },
+    {
+      "label": "Year Level",
+      "type": "dropdown",
+      "usage": "Prompt",
+      "default_value": "None",
+      "options": [
+        "First",
+        "Second",
+        "Third",
+        "Fourth",
+        "Fifth",
+        "Sixth",
+        "Seventh",
+        "None"
+      ]
+    },
+    {
+      "label": "Other",
+      "type": "text",
+      "usage": "Prompt",
+      "rows": 3
+    },
+    {
+      "label": "Source",
+      "type": "text",
+      "usage": "Neither",
+      "default_value": "https://harrypotter.fandom.com/wiki/List_of_spells"
+    }
+  ]
+}

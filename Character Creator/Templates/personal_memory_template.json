@@ -1,0 +1,25 @@
+{
+  "memory_id": "(Unique ID, e.g., PERS_001)",
+  "template_type": "personal",
+  "summary": "(memory description. Focused on the character's direct experience. Keep under 300 words unless you WANT to crash the AI.)",
+  "logline": "(Optional one-line summary. Used for sorting or fast searching.)",
+
+  "tags": [
+    "(emotion)",
+    "(trait)",
+    "(topic keyword)"
+  ],
+
+  "emotional_state": "(How the character felt in this memory. E.g., anxious, affectionate, etc.)",
+  "speech_style": "(Optional override. E.g., quieter than usual, more blunt, etc.)",
+  "location": "(Where this memory happened, e.g., Home, Library)",
+  "characters_present": [
+    "(Other characters involved in this memory)"
+  ],
+
+  "chronology_index": null,
+  "source_type": "(Original, fandom wiki, book, etc.)",
+  "visibility": "shared",
+  "created_by": "(You or 'AI')",
+  "notes": "(Optional internal notes for context or dev use.)"
+}

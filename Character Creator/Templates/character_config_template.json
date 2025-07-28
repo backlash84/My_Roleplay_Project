@@ -1,0 +1,18 @@
+{
+  "name": "(Character's Name)",
+  "personality": "(Personality traits. E.g., Brave, nerdy, shy, tsundere, etc.)",
+  "speech_style": "(How they talk. E.g., calm, stutters, uses slang, speaks formally, etc.)",
+  "scenario": "(Current scenario context. Can be changed in Character Settings Menu in game.)",
+  "prefix_instructions": "(How the bot should behave. Should it write in first or third person? Avoid controlling the user's character? Write in present tense? etc. Can be changed in Character Settings Menu in game.)",
+  "text_color": "#FFFFFF",
+
+  "memory_templates": [
+    "personal"
+  ],
+
+  "source_type": "(Canon, AU, Original Character, etc.)",
+  "author": "(You)",
+  "visibility": "shared",
+  "other": "Anything else important you want the AI to CONSTANTLY keep in mind. Use carefully and sparingly.",
+  "notes": "(Optional developer notes go here.)"
+}

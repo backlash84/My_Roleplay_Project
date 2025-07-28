@@ -1,0 +1,19 @@
+{
+  "memory_id": "Amato Animo Animato Animagus",
+  "template_used": "Spell Type",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Amato Animo Animato Animagus"
+  ],
+  "Importance": "Medium",
+  "Perspective": "Lore",
+  "Spell Name": "Amato Animo Animato Animagus",
+  "Spell Type": "Transfiguration",
+  "Spell Effects": "Part of the process of becoming an Animagus. The incantation had to be recited at sunrise and sundown, every day before the consumption of the Animagus Potion. The incantation was also recited just prior to the consumption of the potion, which had to take place just after a lightning storm started. The incantation was recited while placing the wand's tip over one's heart.",
+  "Visuals": "Golden light.",
+  "Year Level": "None",
+  "Other": "The incantation \"Amato Animo Animato Animagus\" has latin roots, and can roughly translate to mean \"My love brings me life, I am obliged to become an animal wizard.\" It is the spell with the longest incantation.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

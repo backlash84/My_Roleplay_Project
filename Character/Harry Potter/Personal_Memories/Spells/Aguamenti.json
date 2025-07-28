@@ -1,0 +1,20 @@
+{
+  "memory_id": "Aguamenti",
+  "template_used": "Spell Type",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Aguamenti",
+    "creates water"
+  ],
+  "Importance": "Medium",
+  "Perspective": "Lore",
+  "Spell Name": "Aguamenti",
+  "Spell Type": "Charm, Conjuration",
+  "Spell Effects": "Produces a jet of clean water from the tip of the casters wand. Depending on the caster's concentration and intentions, this charm can produce anything from a simple trickle of water to a wave.",
+  "Visuals": "Water pours from the tip of the wand. A faint blue light emits from where the water is produced.",
+  "Year Level": "Sixth",
+  "Other": "The wand movement for this spell was a smooth wave movement from right to left. This spell was useless against Fiendfyre, a spell that conjured cursed flames, as the water conjured from this spell would instantly evaporate on contact with the dark fire.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

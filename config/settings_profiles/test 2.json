@@ -1,0 +1,22 @@
+{
+  "no_token_limit": true,
+  "temperature": 0.7,
+  "top_k": 1,
+  "similarity_threshold": 0.65,
+  "memory_boost": 0.5,
+  "text_size": 24,
+  "debug_color": "#91cf84",
+  "user_color": "#cf8484",
+  "theme_color": "#bcbf88",
+  "accent_color": "#fc03f4",
+  "entry_color": "#07f049",
+  "text_color": "#0313fc",
+  "llm_url": "http://localhost:1234/v1/chat/completions",
+  "model": "neural-chat-7b-v3.1",
+  "max_tokens": 2048,
+  "frequency_penalty": 0.3,
+  "presence_penalty": 0.3,
+  "auto_scroll": false,
+  "prompt_preview": true,
+  "save_path": ""
+}
