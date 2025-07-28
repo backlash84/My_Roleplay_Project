@@ -13,7 +13,8 @@
       "Hermione",
       "disgust"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 130
   },
   {
     "memory_id": "TESTING",
@@ -25,7 +26,8 @@
       "you",
       "annoyed"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 20
   },
   {
     "memory_id": "Philosopher's Stone 1",
@@ -41,7 +43,8 @@
       "Harry",
       "indifferent"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 390
   },
   {
     "memory_id": "Philosopher's Stone 10",
@@ -58,7 +61,8 @@
       "Snape",
       "happy"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 344
   },
   {
     "memory_id": "Philosopher's Stone 11",
@@ -78,7 +82,8 @@
       "interested",
       "embarrassed"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 371
   },
   {
     "memory_id": "Philosopher's Stone 12",
@@ -96,7 +101,8 @@
       "annoyed",
       "surprised"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 325
   },
   {
     "memory_id": "Philosopher's Stone 13",
@@ -116,7 +122,8 @@
       "tense",
       "scared"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 340
   },
   {
     "memory_id": "Philosopher's Stone 14",
@@ -134,7 +141,8 @@
       "excited",
       "Happy"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 207
   },
   {
     "memory_id": "Philosopher's Stone 15",
@@ -154,7 +162,8 @@
       "scared",
       "triumphant"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 360
   },
   {
     "memory_id": "Philosopher's Stone 16",
@@ -175,7 +184,8 @@
       "triumphant",
       "intrigued"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 465
   },
   {
     "memory_id": "Philosopher's Stone 17",
@@ -191,7 +201,8 @@
       "Happy",
       "amazed"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 283
   },
   {
     "memory_id": "Philosopher's Stone 18",
@@ -205,7 +216,8 @@
       "Dumbledore",
       "amazed"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 361
   },
   {
     "memory_id": "Philosopher's Stone 19",
@@ -220,7 +232,8 @@
       "Quirrell",
       "suspicious"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 343
   },
   {
     "memory_id": "Philosopher's Stone 2",
@@ -236,7 +249,8 @@
       "intrigued",
       "angry"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 403
   },
   {
     "memory_id": "Philosopher's Stone 20",
@@ -256,7 +270,8 @@
       "surprised",
       "guilty"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 414
   },
   {
     "memory_id": "Philosopher's Stone 21",
@@ -277,7 +292,8 @@
       "scared",
       "disturbed"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 446
   },
   {
     "memory_id": "Philosopher's Stone 22",
@@ -296,7 +312,8 @@
       "surprised",
       "tense"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 388
   },
   {
     "memory_id": "Philosopher's Stone 23",
@@ -314,7 +331,8 @@
       "Hermione",
       "Determined"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 325
   },
   {
     "memory_id": "Philosopher's Stone 24",
@@ -330,7 +348,8 @@
       "brave",
       "determined"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 467
   },
   {
     "memory_id": "Philosopher's Stone 25",
@@ -349,7 +368,8 @@
       "relieved",
       "celebratory"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 438
   },
   {
     "memory_id": "Philosopher's Stone 3",
@@ -364,7 +384,8 @@
       "disappointed",
       "determined."
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 405
   },
   {
     "memory_id": "Philosopher's Stone 4",
@@ -382,7 +403,8 @@
       "Surprise",
       "wonder"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 566
   },
   {
     "memory_id": "Philosopher's Stone 5",
@@ -398,7 +420,8 @@
       "awe",
       "excitement"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 461
   },
   {
     "memory_id": "Philosopher's Stone 6",
@@ -416,7 +439,8 @@
       "amazed",
       "curious"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 334
   },
   {
     "memory_id": "Philosopher's Stone 7",
@@ -435,7 +459,8 @@
       "amazed",
       "happy"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 346
   },
   {
     "memory_id": "Philosopher's Stone 8",
@@ -458,7 +483,8 @@
       "excited",
       "happy"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 353
   },
   {
     "memory_id": "Philosopher's Stone 9",
@@ -478,7 +504,8 @@
       "nervous",
       "celebratory"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 487
   },
   {
     "memory_id": "Accio",
@@ -490,7 +517,8 @@
       "accio",
       "summon object"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 173
   },
   {
     "memory_id": "Age Line",
@@ -501,7 +529,8 @@
       "magic",
       "age line"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 53
   },
   {
     "memory_id": "Aguamenti",
@@ -513,7 +542,8 @@
       "Aguamenti",
       "creates water"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 149
   },
   {
     "memory_id": "Alarte Ascendare",
@@ -526,7 +556,8 @@
       "fly upward",
       "jump"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 97
   },
   {
     "memory_id": "Alohomora",
@@ -538,7 +569,8 @@
       "unlock",
       "Alohomora"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 225
   },
   {
     "memory_id": "Amato Animo Animato Animagus",
@@ -549,7 +581,8 @@
       "magic",
       "Amato Animo Animato Animagus"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 177
   },
   {
     "memory_id": "Anapneo",
@@ -561,7 +594,8 @@
       "Anapneo",
       "choking"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 61
   },
   {
     "memory_id": "Anteoculatia",
@@ -573,7 +607,8 @@
       "Anteoculatia",
       "antlers"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 39
   },
   {
     "memory_id": "Aparecium",
@@ -586,7 +621,8 @@
       "secret message",
       "hidden writing"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 63
   },
   {
     "memory_id": "Appare Vestigium",
@@ -597,7 +633,8 @@
       "magic",
       "tracking"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 51
   },
   {
     "memory_id": "Apparition",
@@ -610,7 +647,8 @@
       "teleportation",
       "splinching"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 190
   },
   {
     "memory_id": "Arania Exumai",
@@ -622,6 +660,7 @@
       "spider",
       "Acromantulas"
     ],
-    "importance": "Medium"
+    "importance": "Medium",
+    "token_count": 71
   }
 ]

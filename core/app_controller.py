@@ -1,6 +1,7 @@
 import os
 import customtkinter as ctk
 import json
+from start_session_panel import StartSessionPanel
 
 """
 app_controller.py
@@ -32,6 +33,11 @@ class RoleplayApp(ctk.CTk):
 
         # Dictionary of views registered with the controller
         self.frames = {}
+
+        # Register the StartSessionPanel
+        start_session_panel = StartSessionPanel(parent=self.container, character_base_path="Character", controller=self)
+        self.frames["StartSessionPanel"] = start_session_panel
+        start_session_panel.grid(row=0, column=0, sticky="nsew")
 
     def register_view(self, name, frame):
         # Add a UI frame to the controller's registry and place it in the grid.

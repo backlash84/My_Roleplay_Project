@@ -2,7 +2,6 @@ import customtkinter as ctk
 import os
 import json
 from base_settings_panel import BaseSettingsPanel
-from scenarioprefix_panel import ScenarioPrefixPanel
 from template_maker_panel import TemplateMakerPanel
 from memory_maker_panel import MemoryMakerPanel
 from finalizer import finalize_memories
@@ -30,7 +29,6 @@ class CharacterEditorScreen(ctk.CTkFrame):
         ctk.CTkLabel(sidebar, text=character_name, font=("Arial", 16)).pack(pady=20)
 
         ctk.CTkButton(sidebar, text="Base Settings", command=lambda: self.show_view("config")).pack(pady=10, fill="x", padx=10)
-        ctk.CTkButton(sidebar, text="Scenario & Prefix", command=lambda: self.show_view("scenarioprefix")).pack(pady=10, fill="x", padx=10)
         ctk.CTkButton(sidebar, text="Memories", command=lambda: self.show_view("memories")).pack(pady=10, fill="x", padx=10)
         ctk.CTkButton(sidebar, text="Template Maker", command=lambda: self.show_view("templatemaker")).pack(pady=10, fill="x", padx=10)
         ctk.CTkButton(sidebar, text="Finalize", command=lambda: self.show_view("finalize")).pack(pady=10, fill="x", padx=10)
@@ -64,11 +62,6 @@ class CharacterEditorScreen(ctk.CTkFrame):
                 print(f"Error loading config: {e}")
 
             panel = BaseSettingsPanel(self.content_area, config_data, config_path)
-            panel.grid(row=0, column=0, sticky="nsew")
-            self.current_panel = panel
-
-        elif view_name == "scenarioprefix":
-            panel = ScenarioPrefixPanel(self.content_area, self.character_path)
             panel.grid(row=0, column=0, sticky="nsew")
             self.current_panel = panel
 

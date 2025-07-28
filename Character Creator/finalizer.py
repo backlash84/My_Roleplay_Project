@@ -3,7 +3,12 @@ import json
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer
 
+tokenizer = AutoTokenizer.from_pretrained("Intel/neural-chat-7b-v3-1")
+
+def count_tokens(text):
+    return len(tokenizer.encode(text, add_special_tokens=False))
 
 DEFAULT_BASE_PATH = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "Character")
@@ -104,12 +109,16 @@ def finalize_memories(
             embedding = model.encode(search_text, convert_to_numpy=True, normalize_embeddings=True)
             index.add(np.array([embedding]))
 
+            llm_visible_text = prompt_text.strip()
+            token_count = len(tokenizer.encode(prompt_text, add_special_tokens=False))
+
             memory_mapping.append({
                 "memory_id": memory_id,
-                "prompt_text": prompt_text.strip(),
+                "prompt_text": llm_visible_text,
                 "search_text": search_text.strip(),
                 "tags": tags,
-                "importance": importance
+                "importance": importance,
+                "token_count": token_count
             })
 
             print(f"  [OK] Processed: {memory_id} | Importance: {importance} | Tags: {tags}")
@@ -119,8 +128,6 @@ def finalize_memories(
     with open(os.path.join(output_folder, "memory_mapping.json"), "w", encoding="utf-8") as f:
         json.dump(memory_mapping, f, indent=2, ensure_ascii=False)
 
-    for i, mem in enumerate(memory_mapping):
-        if "pizza" in mem.get("prompt_text", "").lower():
-            print(f"Pizza memory found in mapping at index {i}")
-
     print(f"Finalization complete. Indexed {len(memory_mapping)} memory chunks.")
+    total_tokens = sum(mem["token_count"] for mem in memory_mapping)
+    print(f"Total LLM-visible token count across all memories: {total_tokens}")
