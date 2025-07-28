@@ -1,7 +1,7 @@
 import os
 import customtkinter as ctk
 import json
-from start_session_panel import StartSessionPanel
+from core.start_session_panel import StartSessionPanel
 
 """
 app_controller.py
@@ -117,7 +117,7 @@ class RoleplayApp(ctk.CTk):
     def start_chat(self, character_name):
         # Launch a new chat session using the given character
         # This calls ChatView.reset_chat() and shows the ChatView screen
-        self.frames["ChatView"].reset_chat(character_name)
+        self.frames["ChatView"].load_session_data(session_path)
         self.show_frame("ChatView")
 
     def apply_theme_to_all_views(self):

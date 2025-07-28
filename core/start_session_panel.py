@@ -4,10 +4,11 @@ import json
 from tkinter import messagebox
 
 class StartSessionPanel(ctk.CTkFrame):
-    def __init__(self, parent, base_character_path, start_callback):
+    def __init__(self, parent, controller, character_base_path="Character"):
         super().__init__(parent)
-        self.base_character_path = base_character_path
-        self.start_callback = start_callback  # function to launch session
+        self.controller = controller
+
+        self.base_character_path = character_base_path
         self.character_folders = self.get_character_list()
 
         # Row/Column Config
@@ -63,7 +64,7 @@ class StartSessionPanel(ctk.CTkFrame):
 
     def update_scenario_prefix_lists(self, selected_character):
         char_path = os.path.join(self.base_character_path, selected_character)
-        scenario_dir = os.path.join(char_path, "Scenario")
+        scenario_dir = os.path.join(char_path, "Scenarios")
         prefix_dir = os.path.join(char_path, "Prefix")
 
         scenario_files = [f for f in os.listdir(scenario_dir) if f.endswith(".txt")] if os.path.exists(scenario_dir) else []
