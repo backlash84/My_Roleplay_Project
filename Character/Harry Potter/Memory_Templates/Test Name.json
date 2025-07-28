@@ -23,11 +23,6 @@
       "usage": "Search"
     },
     {
-      "label": "Tags",
-      "type": "tag",
-      "usage": "Search"
-    },
-    {
       "label": "__importance__",
       "type": "dropdown",
       "usage": "Search",

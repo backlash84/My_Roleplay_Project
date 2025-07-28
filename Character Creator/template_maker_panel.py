@@ -76,7 +76,6 @@ class TemplateMakerPanel(ctk.CTkFrame):
             {"label": "__template_name__", "type": "text", "usage": "Neither"},
             {"label": "__created_by__", "type": "text", "usage": "Neither"},
             {"label": "__tags__", "type": "tag", "usage": "Search"},
-            {"label": "Tags", "type": "tag", "usage": "Search"},
             {"label": "__importance__", "type": "dropdown", "usage": "Search", "options": ["Low", "Medium", "High"], "default_value": "Medium"},
             {"label": "__perspective__", "type": "dropdown", "usage": "Both",
              "options": ["First Hand", "Second Hand", "Lore"], "default_value": perspective_value},
