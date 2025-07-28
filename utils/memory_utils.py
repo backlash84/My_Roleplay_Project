@@ -40,7 +40,8 @@ def retrieve_relevant_memories(
     D, I = memory_index.search(query_embedding, top_k) 
 
     print("\n[DEBUG] FAISS Query Results")
-    print ("Scores:", D[0]) print("Indices:", I[0])
+    print ("Scores:", D[0]) 
+    print("Indices:", I[0])
     print ("Mapping size:", len (memory_mapping))
 
     # === Step 2: Extract keywords with capitalized emphasis ===
@@ -57,7 +58,7 @@ def retrieve_relevant_memories(
 
     results = []
     for dist, idx in zip(D[0], I[0]):
-        print(f"\n[DEBUG] Checking index (idx} (score: {dist:.4f})")
+        print(f"\n[DEBUG] Checking index {idx} (score: {dist:.4f})")
 
         if idx >= len(memory_mapping):
             print("  [SKIP] Index out of range.")
@@ -91,7 +92,7 @@ def retrieve_relevant_memories(
         print(f"  Similarity: {similarity:.4f}, Boost: {boost:.4f}, Final Score: {score:.4f}")
         print("   Passed threshold" if score >= similarity_threshold else " Rejected")
 
-        if similarity >= similarity_threshold:
+        if score >= similarity_threshold:
             results.append((score, memory, matched, dist, boost, tag_to_words))
             print("   Passed threshold")
         else:
@@ -104,8 +105,8 @@ def retrieve_relevant_memories(
     for score, memory, matched, dist, boost, tag_to_words in results[:top_k]:
         selected.append(memory)
         if debug_mode:
-            debug_lines.append (f"Chunk: Score = (dist:.4f}, Boost = {boost:.2f}, Total = (score: 4f)")
-            debug_lines.append(f" Base Score: {dist:.4f)")
+            debug_lines.append (f"Chunk: Score = {dist:.4f}, Boost = {boost:.2f}, Total = {score: 4f}")
+            debug_lines.append(f" Base Score: {dist:.4f}")
             debug_lines.append(f"  Boost: {boost:.4f}")
             debug_lines.append(f"  Total: {score:.4f}")
             debug_lines.append(f"  Matched words: {', '.join(sorted(matched)) or '(none)'}")
