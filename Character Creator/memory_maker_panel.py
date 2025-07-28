@@ -182,6 +182,18 @@ class MemoryMakerPanel(ctk.CTkFrame):
             for k, v in memory.items()
             if not (k.startswith("_") and not k.startswith("__"))
         }
+
+         # Populate internal metadata fields for clean comparison
+        cleaned_memory["__created_by__"] = memory.get(
+            "Created By", self.template.get("created_by", "")
+        )
+        cleaned_memory["__tags__"] = memory.get(
+            "Tags", self.template.get("tags", [])
+        )
+        cleaned_memory["__importance__"] = memory.get("Importance", "Medium")
+        cleaned_memory["__perspective__"] = memory.get(
+            "__perspective__", "First Hand"
+        )
         self.active_memory = copy.deepcopy(cleaned_memory)
         self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
 
