@@ -1,0 +1,7 @@
+{
+    "session_name": "Test4",
+    "llm_character": "Harry Potter",
+    "user_character": "User Default",
+    "scenario_file": "Interview Scenario.txt",
+    "prefix_file": "Default.txt"
+}

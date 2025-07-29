@@ -48,7 +48,14 @@ def generate_advanced_debug_report(
     lines = [f"=== Advanced Debug Report ==="]
     lines.append(f"Generated at: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
-    # === Scenario / Prefix ===
+    # Characters
+    lines.append("--- Character Info ---")
+    llm_char = settings_data.get("llm_character") or "(not set)"
+    user_char = settings_data.get("user_character") or "(not set)"
+    lines.append(f"LLM-Controlled Character: {llm_char}")
+    lines.append(f"User-Controlled Character: {user_char}\n")
+
+    # Scenario & Prefix
     lines.append("--- Scenario in Settings Menu ---")
     lines.append(scenario_ui.strip() or "(none)")
     lines.append("\n--- Scenario Sent to AI ---")
@@ -59,7 +66,7 @@ def generate_advanced_debug_report(
     lines.append("\n--- Prefix Sent to AI ---")
     lines.append(prefix_sent.strip() or "(none)")
 
-    # === LLM Settings: UI and Used ===
+    # LLM Settings
     lines.append("\n--- LLM Settings Comparison ---")
     display_keys = [
         "max_tokens", "chat_history_length", "top_k", "similarity_threshold",
@@ -82,24 +89,22 @@ def generate_advanced_debug_report(
         if key == "save_path":
             api_val = settings_data.get("save_path", "") or "(none)"
 
-        if api_val is None or str(api_val).lower() == "none":
-            override_note = ""
-        elif str(ui_val) != str(api_val):
+        override_note = ""
+        if api_val is not None and str(api_val).lower() != str(ui_val).lower():
             override_note = f" (used: {api_val})"
-        else:
-            override_note = ""
         lines.append(f"{key.replace('_', ' ').title()}: {ui_val}{override_note}")
 
-    # === Memory Debug ===
+    # Memory debug
     lines.append("\n--- Raw FAISS Distances and Boosted Scores ---")
     lines.extend(memory_debug_lines or ["(no memory debug data provided)"])
     lines.append(f"\nReturned {len(selected_memories)} memory chunk(s) after filtering.")
     if selected_memories:
-        lines.append("--- Selected Memory Content ---")
+        lines.append("--- Selected Memory IDs ---")
         for i, mem in enumerate(selected_memories, 1):
-            lines.append(f"Memory {i}: {mem.strip().replace('[Memory] ', '', 1)}\n")
+            mem_str = str(mem).strip().replace("[Memory] ", "", 1)
+            lines.append(f"Memory {i}: {mem_str}")
 
-    # === Rolling Memory ===
+    # Rolling memory
     lines.append("\n=== Rolling Memory ===")
     for i, msg in enumerate(conversation_history, 1):
         role = msg.get("role", "unknown").capitalize()
@@ -107,7 +112,7 @@ def generate_advanced_debug_report(
         lines.append(f"{i}. [{role}] {content}")
     lines.append("=== End Rolling Memory ===")
 
-    # === Final API Payload ===
+    # Final payload
     lines.append("\n--- Final API Payload ---")
     try:
         lines.append(json.dumps(prompt_payload, indent=2))

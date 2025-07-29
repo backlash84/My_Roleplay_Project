@@ -4,11 +4,11 @@ import json
 from tkinter import messagebox
 
 class StartSessionPanel(ctk.CTkFrame):
-    def __init__(self, parent, controller, character_base_path="Character"):
+    def __init__(self, parent, character_base_path, controller, start_callback):
         super().__init__(parent)
         self.controller = controller
-
         self.base_character_path = character_base_path
+        self.start_callback = start_callback
         self.character_folders = self.get_character_list()
 
         # Row/Column Config
@@ -96,5 +96,24 @@ class StartSessionPanel(ctk.CTkFrame):
             "scenario_file": scenario,
             "prefix_file": prefix
         }
+
+        # Path to the character's Sessions folder
+        sessions_folder = os.path.join("Character", character, "Sessions")
+        os.makedirs(sessions_folder, exist_ok=True)
+
+        # Path to the specific session folder
+        session_path = os.path.join(sessions_folder, session_name)
+        if os.path.exists(session_path):
+            messagebox.showerror("Session Exists", f"A session named '{session_name}' already exists for {character}.")
+            return
+
+        os.makedirs(session_path)
+
+        # Save session_data to a file
+        session_json_path = os.path.join(session_path, "session_info.json")
+        with open(session_json_path, "w", encoding="utf-8") as f:
+            json.dump(session_data, f, indent=4)
+
+        messagebox.showinfo("Session Created", f"Session '{session_name}' created for {character}.")
 
         self.start_callback(session_data)

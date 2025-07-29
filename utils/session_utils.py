@@ -1,12 +1,3 @@
-"""
-session_utils.py
-
-Handles saving and loading of user chat sessions, including character selection,
-scenario, prefix instructions, and conversation history.
-
-Ensures session persistence and restoration, used by both ChatView and StartMenu
-to resume past interactions.
-"""
 import os
 import json
 from tkinter import filedialog
@@ -14,14 +5,9 @@ from tkinter import filedialog
 def save_session(file_path: str, session_data: dict):
     """
     Saves session data (chat history, prefix, scenario, etc.) to a JSON file.
-
-    Args:
-        file_path (str): Destination path for the session file.
-        session_data (dict): Dictionary of session data to save.
+    Used only for manual saves (optional now due to new session system).
     """
-    # Ensure the Sessions directory exists
-    os.makedirs("Sessions", exist_ok=True)
-
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     if not file_path:
         return
 
@@ -30,45 +16,41 @@ def save_session(file_path: str, session_data: dict):
 
 def load_session(chat_view, file_path=None):
     """
-    Loads a saved chat session into the given ChatView instance.
+    Loads a saved chat session into the ChatView.
 
-    If no file path is provided, prompts the user to select a session file.
+    If no file path is provided, prompts the user to select a session_info.json file
+    from a character's Sessions folder.
 
     Args:
-        chat_view (ChatView): The chat view instance to populate with session data.
-        file_path (str, optional): Optional path to a saved session JSON file.
+        chat_view (ChatView): The chat view instance to populate.
+        file_path (str, optional): Optional direct path to a session_info.json file.
     """
-    session_dir = "Sessions"
-    os.makedirs(session_dir, exist_ok=True)
-
+    base_path = "Character"
     if not file_path:
-        # Prompt user to choose a session file
         file_path = filedialog.askopenfilename(
-            initialdir=session_dir,
+            initialdir=base_path,
             filetypes=[("JSON Files", "*.json")],
             title="Load Previous Session"
         )
         if not file_path:
-            return 
-    # Load session data from disk
+            return
+
     with open(file_path, "r", encoding="utf-8") as f:
         session_data = json.load(f)
 
-    char_name = session_data.get("character")
-    prefix = session_data.get("prefix", "")
-    scenario = session_data.get("scenario", "")
-    chat_history = session_data.get("conversation_history", [])  # renamed for consistency
+    chat_view.controller.active_session_data = session_data
 
-    # Restore character and session context
-    chat_view.controller.selected_character = char_name
-    chat_view.prefix = prefix
-    chat_view.scenario = scenario
-    chat_view.conversation_history = chat_history
+    # Load history file if it exists
+    session_dir = os.path.dirname(file_path)
+    history_path = os.path.join(session_dir, "chat_log.json")
+
+    if os.path.exists(history_path):
+        with open(history_path, "r", encoding="utf-8") as f:
+            chat_view.conversation_history = json.load(f)
+    else:
+        chat_view.conversation_history = []
+
     chat_view.chat_initialized = False
-
-    # Reload FAISS index and character config from disk
-    chat_view.load_character_assets(force_reload=True)  # Load memory index + character config
-
-    # Re-render chat view from restored history
-    chat_view.render_conversation_to_display()  # Cleanly rebuild UI from history
-    chat_view.entry.delete("1.0", "end")  # Clear input
+    chat_view.load_session_assets(force_reload=True)
+    chat_view.render_conversation_to_display()
+    chat_view.entry.delete("1.0", "end")

@@ -102,7 +102,6 @@ class AdvancedSettings(CenteredFrame):
         self.accent_color_entry = add_labeled_entry(col2, "Accent Color (hex)", self.settings.get("accent_color", "#00ccff"))
         self.entry_color_entry = add_labeled_entry(col2, "Entry BG Color (hex)", self.settings.get("entry_color", "#222222"))
         self.text_color_entry = add_labeled_entry(col2, "Text Color (hex)", self.settings.get("text_color", "#ffffff"))
-        self.user_color_entry = add_labeled_entry(col2, "User Text Color (hex)", self.settings.get("user_color", "#00ccff"))
         self.debug_color_entry = add_labeled_entry(col2, "Debug Text Color (hex)", self.settings.get("debug_color", "#ff0f0f"))
         self.text_size_entry = add_labeled_entry(col2, "Text Size", self.settings.get("text_size", 14))
         self.auto_scroll_var = add_labeled_checkbox(col2, "Auto-Scroll", self.settings.get("auto_scroll", True))
@@ -147,7 +146,6 @@ class AdvancedSettings(CenteredFrame):
             return 0.5
     def get_text_size(self): return int(self.text_size_entry.get())
     def get_debug_color(self): return self.debug_color_entry.get().strip()
-    def get_user_color(self): return self.user_color_entry.get().strip()
     def get_theme_color(self): return self.ui_theme_color_entry.get().strip()
     def get_llm_url(self): return self.llm_url_entry.get().strip()
     def get_model_name(self): return self.model_entry.get().strip()
@@ -270,7 +268,6 @@ class AdvancedSettings(CenteredFrame):
             "memory_boost": self.get_memory_boost(),
             "text_size": self.get_text_size(),
             "debug_color": self.get_debug_color(),
-            "user_color": self.get_user_color(),
             "theme_color": self.get_theme_color(),
             "accent_color": self.get_accent_color(),
             "entry_color": self.entry_color_entry.get().strip(),
@@ -329,9 +326,6 @@ class AdvancedSettings(CenteredFrame):
 
             self.text_color_entry.delete(0, "end")
             self.text_color_entry.insert(0, data.get("text_color", "#ffffff"))
-
-            self.user_color_entry.delete(0, "end")
-            self.user_color_entry.insert(0, data.get("user_color", "#00ccff"))
 
             self.debug_color_entry.delete(0, "end")
             self.debug_color_entry.insert(0, data.get("debug_color", "#ff0f0f"))
