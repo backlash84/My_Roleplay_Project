@@ -97,7 +97,7 @@ class ChatView(ctk.CTkFrame):
         button_row.pack(pady=(0, 10))
         ctk.CTkButton(button_row, text="Send", width=100, font=font, command=self.send_message).pack(side="left", padx=5)
         ctk.CTkButton(button_row, text="Save", width=100, font=font, command=self.save_session).pack(side="left", padx=5)
-        ctk.CTkButton(button_row, text="Load", width=100, font=font, command=lambda: load_session(self)).pack(side="left", padx=5)
+        ctk.CTkButton(button_row, text="Load", width=100, font=font, command=self.prompt_and_load_session_folder).pack(side="left", padx=5)
 
         # === Memory Debug Toggle ===
         self.debug_toggle_var = ctk.BooleanVar(value=False)
@@ -268,7 +268,11 @@ class ChatView(ctk.CTkFrame):
             messagebox.showerror("Save Failed", f"Error saving session:\n{e}")
 
     def confirm_back_to_main(self):
-        if messagebox.askyesno("Return to Main Menu", "Are you sure you want to return to the main menu? Unsaved progress will be lost."):
+        if messagebox.askyesno(
+            "Return to Main Menu",
+            "Are you sure you want to return to the main menu? Unsaved progress will be lost."
+        ):
+            self.reset_session_state()  # Clear old chat, characters, and memory
             self.controller.show_frame("StartMenu")
 
     def send_message(self):
@@ -357,6 +361,10 @@ class ChatView(ctk.CTkFrame):
         )
         payload["messages"] = messages
 
+        # Inject character names into settings_data for debug visibility
+        settings_data["llm_character"] = self.controller.active_session_data.get("llm_character", "(not set)")
+        settings_data["user_character"] = self.controller.active_session_data.get("user_character", "(not set)")
+
         # Optional debug preview
         if self.debug_mode:
             debug_text_console = generate_advanced_debug_report(
@@ -444,9 +452,14 @@ class ChatView(ctk.CTkFrame):
             print("[Error] No active session data.")
             return
 
-        char_name = session.get("llm_character")
-        user_char = session.get("user_character")
-        session_folder = os.path.join("Character", char_name, "Sessions", session.get("session_name", ""))
+        # Save session context to instance variables
+        self.llm_character = session.get("llm_character", "")
+        self.user_character = session.get("user_character", "")
+        self.session_name = session.get("session_name", "")
+
+        char_name = self.llm_character
+        user_char = self.user_character
+        session_folder = os.path.join("Character", char_name, "Sessions", self.session_name)
 
         if not char_name or not user_char:
             print("[Error] Missing character or user character in session data.")
@@ -473,15 +486,15 @@ class ChatView(ctk.CTkFrame):
         index_path = os.path.join(path, "memory_index.faiss")
         mapping_path = os.path.join(path, "memory_mapping.json")
 
-        if os.path.exists(config_path):
-            with open(config_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                self.character_color = data.get("text_color", "#ffeb0f")
-                self.chat_display.tag_config("bot", foreground=self.character_color)
+        if self.llm_character_config:
+            self.character_color = self.llm_character_config.get("text_color", "#ffeb0f")
+            self.chat_display.tag_config("bot", foreground=self.character_color)
 
             # Load scenario and prefix from selected files
             scenario_file = session.get("scenario_file")
             prefix_file = session.get("prefix_file")
+            self.scenario_file = scenario_file or ""
+            self.prefix_file = prefix_file or ""
             scenario_path = os.path.join("Character", char_name, "Scenarios", scenario_file) if scenario_file else None
             prefix_path = os.path.join("Character", char_name, "Prefix", prefix_file) if prefix_file else None
 
@@ -509,6 +522,17 @@ class ChatView(ctk.CTkFrame):
             self.chat_display.configure(state="normal")
             self.chat_display.insert("end", f"--- {char_name} loaded ---\nScenario: {self.scenario}\n\n")
             self.chat_display.configure(state="disabled")
+
+        # Load chat history if chat.json exists
+        chat_json_path = os.path.join(session_folder, "chat.json")
+        if os.path.exists(chat_json_path):
+            try:
+                with open(chat_json_path, "r", encoding="utf-8") as f:
+                    saved = json.load(f)
+                self.conversation_history = saved.get("conversation_history", [])
+                print(f"[Session] Loaded chat history ({len(self.conversation_history)} messages).")
+            except Exception as e:
+                print(f"[Warning] Failed to load chat history: {e}")
 
         self.chat_initialized = True
 
@@ -563,3 +587,83 @@ class ChatView(ctk.CTkFrame):
         self.thinking_label.configure(text=f"Thinking{dots}")
         self._thinking_dots += 1
         self._thinking_anim_id = self.after(500, self._animate_thinking)
+
+    def reset_session_state(self):
+        self.chat_initialized = False
+        self.conversation_history.clear()
+        self.scenario = ""
+        self.prefix = ""
+        self.last_prompt = None
+        self.last_payload_used = None
+        self.last_built_prompt = None
+        self.selected_memories = []
+        self.memory_debug_lines = []
+
+        if hasattr(self, "chat_display"):
+            self.chat_display.configure(state="normal")
+            self.chat_display.delete("1.0", "end")
+            self.chat_display.configure(state="disabled")
+
+        if hasattr(self, "entry"):
+            self.entry.delete("1.0", "end")
+
+    def load_session(self, session_data):
+        """Handles loading of new session data passed from Start Menu or manual folder load."""
+        self.reset_session_state()
+
+        char_name = session_data.get("llm_character", "")
+        session_name = session_data.get("session_name", "")
+        session_folder = os.path.join("Character", char_name, "Sessions", session_name)
+
+        # Auto-detect scenario and prefix if not provided
+        if not session_data.get("scenario_file") or not session_data.get("prefix_file"):
+            if os.path.exists(session_folder):
+                try:
+                    for file in os.listdir(session_folder):
+                        file_lower = file.lower()
+                        if not file_lower.endswith(".txt"):
+                            continue
+                        if not session_data.get("scenario_file") and file_lower.startswith("scenario"):
+                            session_data["scenario_file"] = file
+                        elif not session_data.get("prefix_file") and file_lower.startswith("prefix"):
+                            session_data["prefix_file"] = file
+                        if session_data.get("scenario_file") and session_data.get("prefix_file"):
+                            break
+                except Exception as e:
+                    print(f"[Warning] Failed to auto-detect scenario/prefix in folder: {e}")
+
+        # Store active session and load assets
+        self.controller.active_session_data = session_data
+        self.load_session_assets(force_reload=True)
+        self.render_conversation_to_display()
+
+    def prompt_and_load_session_folder(self):
+        char_name = self.llm_character or self.controller.selected_character
+        if not char_name:
+            messagebox.showerror("Character Required", "No character selected. Please start a session first.")
+            return
+
+        sessions_path = os.path.join("Character", char_name, "Sessions")
+        if not os.path.exists(sessions_path):
+            messagebox.showerror("Not Found", f"No sessions folder found at:\n{sessions_path}")
+            return
+
+        session_folder = filedialog.askdirectory(
+            initialdir=sessions_path,
+            title="Select a Session Folder to Load"
+        )
+        if not session_folder:
+            return  # Cancelled
+
+        session_name = os.path.basename(session_folder)
+        user_char = self.user_character or self.controller.active_session_data.get("user_character", "")
+
+        session_data = {
+            "llm_character": char_name,
+            "user_character": user_char,
+            "session_name": session_name,
+            "scenario_file": "",
+            "prefix_file": ""
+        }
+
+        self.load_session(session_data)

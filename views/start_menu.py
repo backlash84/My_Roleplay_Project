@@ -1,6 +1,6 @@
 import os
 import customtkinter as ctk
-from tkinter import filedialog
+from tkinter import messagebox, filedialog
 
 CHARACTER_DIR = "Character"
 
@@ -45,8 +45,46 @@ class StartMenu(ctk.CTkFrame):
         self.controller.show_frame("StartSessionPanel")  # Make sure it's registered in `controller.frames`
 
     def load_session_from_start(self):
-        from utils.session_utils import load_session
-
         chat_view = self.controller.frames["ChatView"]
-        load_session(chat_view)
+
+        selected_folder = filedialog.askdirectory(
+            initialdir="Character",
+            title="Select a Session Folder to Load"
+        )
+        if not selected_folder:
+            return  # Cancelled
+
+        # Normalize path
+        selected_folder = os.path.abspath(selected_folder)
+
+        # Make sure it's under a Character/*/Sessions/* path
+        try:
+            # Split the full path
+            parts = selected_folder.split(os.sep)
+
+            # We want to find: .../Character/{char_name}/Sessions/{session_name}
+            if "Character" not in parts or "Sessions" not in parts:
+                raise ValueError
+
+            char_index = parts.index("Character") + 1
+            sessions_index = parts.index("Sessions")
+
+            if sessions_index - char_index != 1:
+                raise ValueError  # Sessions is not directly inside character folder
+
+            char_name = parts[char_index]
+            session_name = parts[sessions_index + 1]
+        except (ValueError, IndexError):
+            messagebox.showerror("Invalid Folder", "Selected folder must be inside a Character/<name>/Sessions/<session> path.")
+            return
+
+        session_data = {
+            "llm_character": char_name,
+            "user_character": self.controller.user_character_name or "",
+            "session_name": session_name,
+            "scenario_file": "",
+            "prefix_file": ""
+        }
+
+        chat_view.load_session(session_data)
         self.controller.show_frame("ChatView")

@@ -8,7 +8,15 @@ semantic similarity with lemmatized tag overlap for fine-tuned selection.
 import re
 import faiss
 import numpy as np
-from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
+import os
+
+def load_stopwords(file_path="config/Filtered_Words_List.txt") -> set:
+    if not os.path.exists(file_path):
+        print("[Warning] Stopwords file not found.")
+        return set()
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        return {line.strip().lower() for line in f if line.strip()}
 
 def retrieve_relevant_memories(
     user_message,
@@ -32,6 +40,9 @@ def retrieve_relevant_memories(
         print("[Memory Retrieval] Index or mapping missing.")
         return "", []
 
+    # Load stopwords (only once per call)
+    stopwords = load_stopwords()
+
     # === Step 1: Extract questions and emphasize them ===
     question_sentences = [s.strip() for s in re.split(r'(?<=[?!.])\s+', user_message) if s.strip().rstrip('"\'').endswith('?')]
     emphasized_input = " ".join(question_sentences + [user_message])
@@ -51,6 +62,9 @@ def retrieve_relevant_memories(
 
     for w in words:
         base = lemmatizer.lemmatize(w.lower())
+        if base in stopwords:
+            continue  # skip stopwords entirely
+
         lemmatized_keywords.add(base)
         if w[0].isupper():
             lemmatized_keywords.add(base + "_CAP")

@@ -1,5 +1,5 @@
 {
-    "session_name": "Test 2",
+    "session_name": "save/load test",
     "llm_character": "Harry Potter",
     "user_character": "User Default",
     "scenario_file": "Interview Scenario.txt",
