@@ -1,6 +1,7 @@
 {
   "memory_id": "Aguamenti",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "creates water"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Aguamenti",
   "Spell Type": "Charm, Conjuration",
   "Spell Effects": "Produces a jet of clean water from the tip of the casters wand. Depending on the caster's concentration and intentions, this charm can produce anything from a simple trickle of water to a wave.",

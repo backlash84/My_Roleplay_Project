@@ -1,6 +1,7 @@
 {
   "memory_id": "Arania Exumai",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "Acromantulas"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Arania Exumai",
   "Spell Type": "Charm",
   "Spell Effects": "Used to blast away Acromantulas or other large spiders. If the spell missed and struck a stone, it would produce a large black scorch mark, and thus was not recommended for use on humans,",

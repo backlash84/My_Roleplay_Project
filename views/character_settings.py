@@ -12,6 +12,7 @@ import os
 import json
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
+from utils.token_utils import count_tokens
 CHARACTER_DIR = "Character"
 
 class CharacterSettings(ctk.CTkFrame):
@@ -52,14 +53,14 @@ class CharacterSettings(ctk.CTkFrame):
             folder_path = os.path.join(CHARACTER_DIR, folder_name)
             config_path = os.path.join(folder_path, "character_config.json")
             if os.path.isdir(folder_path) and os.path.exists(config_path):
-                with open(config_path, "r", encoding="utf-8") as f:
-                    config = json.load(f)
-                    display_name = config.get("name", folder_name)
-                    character_display_names.append(display_name)
-                    self.character_folder_map[display_name] = folder_name
+                character_display_names.append(folder_name)
+                self.character_folder_map[folder_name] = folder_name
 
-        self.character_dropdown = ctk.CTkOptionMenu(inner, variable=self.selected_character, values=character_display_names, font=self.get_ui_font())
+        self.character_dropdown = ctk.CTkOptionMenu(inner, variable=self.selected_character, font=self.get_ui_font())
         self.character_dropdown.pack(pady=(0, 10))
+
+        # Set the list of values explicitly once
+        self.character_dropdown.configure(values=character_display_names)
 
         ctk.CTkLabel(inner, text="Scenario:", font=self.get_ui_font()).pack()
         self.scenario_box = ctk.CTkTextbox(inner, height=100, width=500, font=self.get_ui_font())
@@ -75,11 +76,6 @@ class CharacterSettings(ctk.CTkFrame):
         ctk.CTkButton(inner, text="Load Prefix from File", font=self.get_ui_font(), command=self.load_prefix_from_file).pack(pady=(0, 5))
         ctk.CTkButton(inner, text="Save Prefix to File", font=self.get_ui_font(), command=self.save_prefix_to_file).pack(pady=(0, 10))
 
-        ctk.CTkLabel(inner, text="Text Color (hex):", font=self.get_ui_font()).pack()
-        self.color_entry = ctk.CTkEntry(inner, width=150, font=self.get_ui_font())
-        self.color_entry.pack(pady=(0, 10))
-
-        ctk.CTkButton(inner, text="Save All Settings", font=self.get_ui_font(), command=self.save_character).pack(pady=10)
         ctk.CTkButton(inner, text="Back to Menu", font=self.get_ui_font(), command=lambda: controller.show_frame("StartMenu")).pack(pady=20)
 
         if character_display_names:
@@ -94,19 +90,6 @@ class CharacterSettings(ctk.CTkFrame):
         settings = self.controller.frames.get("AdvancedSettings")
         size = settings.get_text_size() if settings else 14
         return ("Arial", size)
-
-    def is_valid_hex_color(self, color):
-        """
-        Validates that the input string is a proper hex color like '#ffaa00'.
-        Returns True if valid, False otherwise.
-        """
-        if isinstance(color, str) and len(color) == 7 and color.startswith("#"):
-            try:
-                int(color[1:], 16)
-                return True
-            except ValueError:
-                return False
-        return False
 
     def apply_theme_colors(self):
         """
@@ -132,11 +115,7 @@ class CharacterSettings(ctk.CTkFrame):
             with open(path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 self.scenario_box.delete("1.0", "end")
-                self.scenario_box.insert("end", data.get("scenario", ""))
                 self.prefix_box.delete("1.0", "end")
-                self.prefix_box.insert("end", data.get("prefix_instructions", ""))
-                self.color_entry.delete(0, "end")
-                self.color_entry.insert(0, data.get("text_color", "").upper())
 
     def save_character(self):
         """
@@ -154,13 +133,6 @@ class CharacterSettings(ctk.CTkFrame):
         if os.path.exists(config_path):
             with open(config_path, "r", encoding="utf-8") as f:
                 config = json.load(f)
-        config["scenario"] = self.scenario_box.get("1.0", "end").strip()
-        config["prefix_instructions"] = self.prefix_box.get("1.0", "end").strip()
-        color = self.color_entry.get().strip()
-        if not self.is_valid_hex_color(color):
-            messagebox.showerror("Invalid Color", "Text color must be a valid hex code like #ffaa00.")
-            return  # abort save
-        config["text_color"] = color.upper()
         with open(config_path, "w", encoding="utf-8") as f:
             json.dump(config, f, indent=2)
 
@@ -179,10 +151,11 @@ class CharacterSettings(ctk.CTkFrame):
         name = self.selected_character.get()
         scenario_dir = os.path.join(CHARACTER_DIR, self.character_folder_map[name], "Scenarios")
         os.makedirs(scenario_dir, exist_ok=True)
-        file_path = filedialog.askopenfilename(initialdir=scenario_dir, title="Select Scenario File", filetypes=[("Text Files", "*.txt")])
+        file_path = filedialog.askopenfilename(initialdir=scenario_dir, title="Select Scenario File", filetypes=[("JSON Files", "*.json")])
         if file_path:
             with open(file_path, "r", encoding="utf-8") as f:
-                text = f.read()
+                data = json.load(f)
+                text = data.get("content", "")
                 self.scenario_box.delete("1.0", "end")
                 self.scenario_box.insert("end", text)
 
@@ -194,11 +167,21 @@ class CharacterSettings(ctk.CTkFrame):
         name = self.selected_character.get()
         scenario_dir = os.path.join(CHARACTER_DIR, self.character_folder_map[name], "Scenarios")
         os.makedirs(scenario_dir, exist_ok=True)
-        file_path = filedialog.asksaveasfilename(defaultextension=".txt", initialdir=scenario_dir, filetypes=[("Text Files", "*.txt")])
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            initialdir=scenario_dir,
+            filetypes=[("JSON Files", "*.json")]
+        )
         if file_path:
             text = self.scenario_box.get("1.0", "end").strip()
+            # Save as JSON with token count
+            token_count = count_tokens(text)
+            json_data = {
+                "content": text,
+                "token_count": token_count
+            }
             with open(file_path, "w", encoding="utf-8") as f:
-                f.write(text)
+                json.dump(json_data, f, indent=2)
 
     def load_prefix_from_file(self):
         """
@@ -208,20 +191,31 @@ class CharacterSettings(ctk.CTkFrame):
         name = self.selected_character.get()
         prefix_dir = os.path.join(CHARACTER_DIR, self.character_folder_map[name], "Prefix")
         os.makedirs(prefix_dir, exist_ok=True)
-        file_path = filedialog.askopenfilename(initialdir=prefix_dir, title="Select Prefix File", filetypes=[("Text Files", "*.txt")])
+        file_path = filedialog.askopenfilename(initialdir=prefix_dir, title="Select Prefix File", filetypes=[("JSON Files", "*.json")])
         if file_path:
             with open(file_path, "r", encoding="utf-8") as f:
-                text = f.read()
+                data = json.load(f)
+                text = data.get("content", "")
                 self.prefix_box.delete("1.0", "end")
                 self.prefix_box.insert("end", text)
 
     def save_prefix_to_file(self):
-    # Saves the prefix textbox content to a text file in Character/<name>/Prefix/.
+        # Saves the prefix textbox content to a text file in Character/<name>/Prefix/.
         name = self.selected_character.get()
         prefix_dir = os.path.join(CHARACTER_DIR, self.character_folder_map[name], "Prefix")
         os.makedirs(prefix_dir, exist_ok=True)
-        file_path = filedialog.asksaveasfilename(defaultextension=".txt", initialdir=prefix_dir, filetypes=[("Text Files", "*.txt")])
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            initialdir=prefix_dir,
+            filetypes=[("JSON Files", "*.json")]
+        )
         if file_path:
             text = self.prefix_box.get("1.0", "end").strip()
+            # Save as JSON with token count
+            token_count = count_tokens(text)
+            json_data = {
+                "content": text,
+                "token_count": token_count
+            }
             with open(file_path, "w", encoding="utf-8") as f:
-                f.write(text)
+                json.dump(json_data, f, indent=2)

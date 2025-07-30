@@ -1,6 +1,7 @@
 {
   "memory_id": "Aparecium",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -10,7 +11,6 @@
     "hidden writing"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Aparecium",
   "Spell Type": "Charm",
   "Spell Effects": "Reveals secret messages written in invisible ink, or any other hidden markings. Also works against Concealing charms",

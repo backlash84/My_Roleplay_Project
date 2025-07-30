@@ -5,6 +5,15 @@ import json
 def generate_basic_debug_report(payload: dict, memory_debug_lines: list[str], selected_memories: list[str]) -> str:
     lines = ["=== Memory Debug ==="]
 
+    lines.append("\n--- Token Usage Breakdown ---")
+    lines.append(f"Max LLM Tokens: {max_tokens}")
+    lines.append(f"System Prompt: {system_tokens} tokens")
+    lines.append(f"Scenario File: {scenario_tokens} tokens")
+    lines.append(f"Prefix File: {prefix_tokens} tokens")
+    lines.append(f"Memory Chunks: {memory_tokens} tokens")
+    lines.append(f"Available for Rolling Memory: {available_for_rolling}")
+    lines.append(f"Used for Rolling Memory: {total}")
+
     # Memory parameters
     lines.append(f"Top K (Chunks): {payload.get('top_k', '???')}")
     lines.append(f"Similarity Threshold: {payload.get('similarity_threshold', '???')}\n")
@@ -43,17 +52,41 @@ def generate_advanced_debug_report(
     prompt_payload: dict,
     raw_prompt: str,
     scenario_ui: str = "",
-    prefix_ui: str = ""
+    prefix_ui: str = "",
+    llm_character_config: dict = None,
+    user_character_config: dict = None
 ) -> str:
     lines = [f"=== Advanced Debug Report ==="]
     lines.append(f"Generated at: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+
+    lines.append("\n--- Token Usage Breakdown ---")
+    lines.append(f"Max LLM Tokens: {max_tokens}")
+    lines.append(f"System Prompt: {system_tokens} tokens")
+    lines.append(f"Scenario File: {scenario_tokens} tokens")
+    lines.append(f"Prefix File: {prefix_tokens} tokens")
+    lines.append(f"Memory Chunks: {memory_tokens} tokens")
+    lines.append(f"Available for Rolling Memory: {available_for_rolling}")
+    lines.append(f"Used for Rolling Memory: {total}")
 
     # Characters
     lines.append("--- Character Info ---")
     llm_char = settings_data.get("llm_character") or "(not set)"
     user_char = settings_data.get("user_character") or "(not set)"
     lines.append(f"LLM-Controlled Character: {llm_char}")
-    lines.append(f"User-Controlled Character: {user_char}\n")
+    if llm_character_config:
+        llm_desc = llm_character_config.get("character_information", "").strip()
+        if llm_desc:
+            lines.append("Character Description:")
+            lines.append(llm_desc)
+    lines.append("")  # spacing
+
+    lines.append(f"User-Controlled Character: {user_char}")
+    if user_character_config:
+        user_desc = user_character_config.get("character_information", "").strip()
+        if user_desc:
+            lines.append("Character Description:")
+            lines.append(user_desc)
+    lines.append("")  # extra line for clarity
 
     # Scenario & Prefix
     lines.append("--- Scenario in Settings Menu ---")

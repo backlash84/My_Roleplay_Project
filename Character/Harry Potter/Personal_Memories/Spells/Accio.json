@@ -1,6 +1,7 @@
 {
   "memory_id": "Accio",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "summon object"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Accio",
   "Spell Type": "Charm",
   "Spell Effects": "Summons an object to the caster by saying the name of the spell, followed by the item the caster wishes to summon.  For example, \"Accio broom\" would summon a broom from nearby. Ineffective on very large objects, such as buildings. The caster does not need to be in line of sight of the object, or even know what it looks like.\n\nThe caster has to clearly visualise the object in their mind before trying to summon it. Any distraction will make the spell ineffective.",

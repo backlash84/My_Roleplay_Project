@@ -1,6 +1,7 @@
 {
   "memory_id": "Apparition",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -10,7 +11,6 @@
     "splinching"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Apparition",
   "Spell Type": "Transportation",
   "Spell Effects": "Magically teleports a witch or wizard to another location instantly. The destination is one that the primary user has been to or seen in some fashion previously. Can be used to Apparate two or more people at once if holding onto each other (i.e. Side-Along Apparition).",

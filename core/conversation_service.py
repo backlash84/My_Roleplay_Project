@@ -6,6 +6,7 @@ and conversation history used by the LLM backend. Keeps ChatView UI logic separa
 """
 
 from utils.api_utils import call_llm_api
+from utils.token_utils import count_tokens
 
 class ConversationService:
     """
@@ -19,7 +20,7 @@ class ConversationService:
         """
         self.controller = controller
 
-    def build_prompt(self, user_message, retrieved_memories, scenario, prefix):
+    def build_prompt(self, user_message, memories, scenario, prefix, llm_character_config=None, user_character_config=None):
         """
         Constructs a full prompt string to send to the LLM. Combines:
         - Scenario (high-level context)
@@ -27,6 +28,42 @@ class ConversationService:
         - Retrieved memories (from vector search)
         - The current user message
         """
+
+        config = llm_character_config or {}
+        llm_name = config.get("name", "Unnamed Character").strip()
+        llm_info = config.get("character_information", "").strip()
+        system_instructions = f"You are playing as this character:\nName: {llm_name}\n{llm_info.strip()}"
+
+        user_config = user_character_config or {}
+        user_name = user_config.get("name", "Player").strip()
+        user_info = user_config.get("character_information", "").strip()
+        user_instructions = f"The user is playing as this character:\nName: {user_name}\n{user_info.strip()}"
+
+        system_prompt = f"{system_instructions}\n\n{user_instructions}"
+
+        # === Token counting logic ===
+        max_tokens = config.get("max_tokens", 4096)
+        system_tokens = count_tokens(system_prompt)
+        scenario_tokens = self.loaded_scenario_data.get("token_count", 0)
+        prefix_tokens = self.loaded_prefix_data.get("token_count", 0)
+        memory_tokens = sum(m.get("token_count", 0) for m in memory_chunks)
+
+        overhead = system_tokens + scenario_tokens + prefix_tokens + memory_tokens
+        available_for_rolling = max(0, max_tokens - overhead)
+
+        # === Trim conversation history dynamically ===
+        rolling_memory = []
+        total = 0
+        for msg in reversed(self.chat_history):
+            tokens = count_tokens(msg.get("content", ""))
+            if total + tokens > available_for_rolling:
+                break
+            rolling_memory.insert(0, msg)  # keep order
+            total += tokens
+
+        # Save to internal state (for debug view)
+        self.trimmed_history = rolling_memory
+
         memory_snippets = "\n\n".join(
             m.get("prompt_text", "").strip() for m in retrieved_memories if m.get("prompt_text")
         )
@@ -61,7 +98,7 @@ class ConversationService:
 
         return payload
 
-    def build_chat_messages(self, conversation_history: list[dict], scenario: str, prefix: str, memories: str) -> list[dict]:
+    def build_chat_messages(self, conversation_history: list[dict], scenario: str, prefix: str, memories: str, llm_character_config: dict, user_character_config: dict) -> list[dict]:
         """
         Builds the chat message list for the LLM, starting with a system prompt that includes
         the scenario, prefix, and memory.
@@ -83,7 +120,26 @@ class ConversationService:
         if formatted_memories:
             formatted_memories = f"\n--- Retrieved Memories ---\n{formatted_memories.strip()}"
 
-        system_content = f"{scenario.strip()}\n\n{prefix.strip()}{formatted_memories}"
+        llm_name = llm_character_config.get("name", "Unknown Character")
+        llm_info = llm_character_config.get("character_information", "").strip()
+
+        user_name = user_character_config.get("name", "Unknown Player")
+        user_info = user_character_config.get("character_information", "").strip()
+
+        system_content = f"""You are playing as this character:
+        Name: {llm_name}
+        Character Information:
+        {llm_info}
+
+        The user is playing as this character:
+        Name: {user_name}
+        Character Information:
+        {user_info}
+
+        {scenario.strip()}
+
+        {prefix.strip()}
+        {formatted_memories}"""
         messages.append({"role": "system", "content": system_content})
 
         

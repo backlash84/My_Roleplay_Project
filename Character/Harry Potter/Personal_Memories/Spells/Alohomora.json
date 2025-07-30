@@ -1,6 +1,7 @@
 {
   "memory_id": "Alohomora",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "Alohomora"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Alohomora",
   "Spell Type": "Charm",
   "Spell Effects": "Unlocked doors and other locked objects. It could also unlock doors that had been sealed with a Locking Spell, although it was possible to bewitch doors to become unaffected by this spell.",

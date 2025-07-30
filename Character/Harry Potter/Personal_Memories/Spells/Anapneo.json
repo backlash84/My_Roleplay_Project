@@ -1,6 +1,7 @@
 {
   "memory_id": "Anapneo",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "choking"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Anapneo",
   "Spell Type": "Healing, Vanishing, Charm",
   "Spell Effects": "Clears the target's airway if they are choking on something.",

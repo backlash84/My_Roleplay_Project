@@ -1,6 +1,7 @@
 {
   "memory_id": "Age Line",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -8,7 +9,6 @@
     "age line"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Age Line",
   "Spell Type": "Charm",
   "Spell Effects": "Prevents an individual either above or below a certain age from crossing a line.",

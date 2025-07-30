@@ -97,6 +97,7 @@ class ChatView(ctk.CTkFrame):
         button_row.pack(pady=(0, 10))
         ctk.CTkButton(button_row, text="Send", width=100, font=font, command=self.send_message).pack(side="left", padx=5)
         ctk.CTkButton(button_row, text="Save", width=100, font=font, command=self.save_session).pack(side="left", padx=5)
+        ctk.CTkButton(button_row, text="Save As", width=100, font=font, command=self.save_session_as).pack(side="left", padx=5)
         ctk.CTkButton(button_row, text="Load", width=100, font=font, command=self.prompt_and_load_session_folder).pack(side="left", padx=5)
 
         # === Memory Debug Toggle ===
@@ -362,7 +363,9 @@ class ChatView(ctk.CTkFrame):
             self.conversation_history,
             self.scenario,
             self.prefix,
-            memory_objects
+            memory_objects,
+            self.llm_character_config,
+            self.user_character_config
         )
         payload["messages"] = messages
 
@@ -382,7 +385,9 @@ class ChatView(ctk.CTkFrame):
                 prompt_payload=payload,
                 raw_prompt=prompt,
                 scenario_ui=self.scenario,
-                prefix_ui=self.prefix
+                prefix_ui=self.prefix,
+                llm_character_config=self.llm_character_config,
+                user_character_config=self.user_character_config
             )
             print(debug_text_console)
 
@@ -506,12 +511,14 @@ class ChatView(ctk.CTkFrame):
             try:
                 if scenario_path and os.path.exists(scenario_path):
                     with open(scenario_path, "r", encoding="utf-8") as f:
-                        self.scenario = f.read().strip()
+                        data = json.load(f)
+                        self.scenario = data.get("content", "").strip()
                     print(f"[Session] Loaded scenario: {scenario_file}")
 
                 if prefix_path and os.path.exists(prefix_path):
                     with open(prefix_path, "r", encoding="utf-8") as f:
-                        self.prefix = f.read().strip()
+                        data = json.load(f)
+                        self.prefix = data.get("content", "").strip()
                     print(f"[Session] Loaded prefix: {prefix_file}")
             except Exception as e:
                 print(f"[Warning] Failed to load scenario or prefix: {e}")
@@ -673,3 +680,43 @@ class ChatView(ctk.CTkFrame):
         }
 
         self.load_session(session_data)
+
+    def save_session_as(self):
+        if not self.llm_character:
+            messagebox.showerror("Missing Info", "Cannot save session without a loaded character.")
+            return
+
+        # Prompt for new session name
+        new_name = ctk.CTkInputDialog(text="Enter new session name:", title="Save Session As").get_input()
+        if not new_name:
+            return  # User cancelled or gave blank input
+
+        new_session_dir = os.path.join("Character", self.llm_character, "Sessions", new_name)
+        if os.path.exists(new_session_dir):
+            messagebox.showerror("Session Exists", f"A session named '{new_name}' already exists.")
+            return
+
+        os.makedirs(new_session_dir, exist_ok=True)
+
+        # Save chat.json
+        chat_path = os.path.join(new_session_dir, "chat.json")
+        chat_data = {
+            "chat": self.chat_display.get("1.0", "end").strip(),
+            "conversation_history": self.conversation_history
+        }
+        with open(chat_path, "w", encoding="utf-8") as f:
+            json.dump(chat_data, f, indent=2)
+
+        # Save session_info.json
+        info_path = os.path.join(new_session_dir, "session_info.json")
+        info_data = {
+            "llm_character": self.llm_character,
+            "user_character": self.user_character,
+            "session_name": new_name,
+            "scenario_file": self.scenario_file,
+            "prefix_file": self.prefix_file
+        }
+        with open(info_path, "w", encoding="utf-8") as f:
+            json.dump(info_data, f, indent=2)
+
+        messagebox.showinfo("Session Saved", f"Session saved as '{new_name}'.")

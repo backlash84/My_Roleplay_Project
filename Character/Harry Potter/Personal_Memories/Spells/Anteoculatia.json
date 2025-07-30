@@ -1,6 +1,7 @@
 {
   "memory_id": "Anteoculatia",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -9,7 +10,6 @@
     "antlers"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Anteoculatia",
   "Spell Type": "Dark charm",
   "Spell Effects": "Causes the target to grow antlers on their head.",

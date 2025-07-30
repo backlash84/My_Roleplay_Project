@@ -1,8 +1,11 @@
 import customtkinter as ctk
 import json
 import os
+import sys
 from tkinter import messagebox, filedialog
 from transformers import AutoTokenizer
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from utils.token_utils import count_tokens
 
 
 class BaseSettingsPanel(ctk.CTkFrame):
@@ -65,8 +68,7 @@ class BaseSettingsPanel(ctk.CTkFrame):
 
         # --- Token counting ---
         try:
-            tokenizer = AutoTokenizer.from_pretrained("Intel/neural-chat-7b-v3-1", trust_remote_code=True)
-            name_tokens = tokenizer.encode(data["name"], add_special_tokens=False)
+            total_tokens = count_tokens(data["name"]) + count_tokens(data["character_information"])
             info_tokens = tokenizer.encode(data["character_information"], add_special_tokens=False)
             total_tokens = len(name_tokens) + len(info_tokens)
             data["token_estimate"] = total_tokens

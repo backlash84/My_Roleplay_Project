@@ -1,6 +1,7 @@
 {
   "memory_id": "Appare Vestigium",
   "template_used": "Spell Type",
+  "__perspective__": "Lore",
   "Created By": "Me",
   "Tags": [
     "spell",
@@ -8,7 +9,6 @@
     "tracking"
   ],
   "Importance": "Medium",
-  "Perspective": "Lore",
   "Spell Name": "Appare Vestigium",
   "Spell Type": "Charm",
   "Spell Effects": "Reveals and illuminates traces of recent magical activity and shows magical footprints and track marks in an area.",

@@ -38,7 +38,7 @@ class StartSessionPanel(ctk.CTkFrame):
 
         # Scenario
         ctk.CTkLabel(frame, text="Scenario:").grid(row=4, column=0, sticky="e", padx=10, pady=5)
-        self.scenario_dropdown = ctk.CTkOptionMenu(frame, values=[])
+        self.scenario_dropdown = ctk.CTkOptionMenu(frame, values=["(select character first)"])
         self.scenario_dropdown.grid(row=4, column=1, sticky="w", padx=10)
 
         # Prefix
@@ -46,15 +46,16 @@ class StartSessionPanel(ctk.CTkFrame):
         self.prefix_dropdown = ctk.CTkOptionMenu(frame, values=[])
         self.prefix_dropdown.grid(row=5, column=1, sticky="w", padx=10)
 
-        # Hook up scenario/prefix update on character change
-        self.character_dropdown.configure(command=self.update_scenario_prefix_lists)
-
         # Start Button
         ctk.CTkButton(frame, text="Start", command=self.start_session).grid(row=6, column=0, columnspan=2, pady=20)
 
         # Initialize scenario/prefix lists
         if self.character_folders:
-            self.update_scenario_prefix_lists(self.character_folders[0])
+            selected = self.character_folders[0]
+            self.character_dropdown.set(selected)
+            self.update_scenario_prefix_lists(selected)
+
+        self.character_dropdown.configure(command=self.update_scenario_prefix_lists)
 
     def get_character_list(self):
         if not os.path.exists(self.base_character_path):
@@ -67,16 +68,26 @@ class StartSessionPanel(ctk.CTkFrame):
         scenario_dir = os.path.join(char_path, "Scenarios")
         prefix_dir = os.path.join(char_path, "Prefix")
 
-        scenario_files = [f for f in os.listdir(scenario_dir) if f.endswith(".txt")] if os.path.exists(scenario_dir) else []
-        prefix_files = [f for f in os.listdir(prefix_dir) if f.endswith(".txt")] if os.path.exists(prefix_dir) else []
+        scenario_files = [f for f in os.listdir(scenario_dir) if f.endswith(".json")]
+        prefix_files = [f for f in os.listdir(prefix_dir) if f.endswith(".json")]
 
         self.scenario_dropdown.configure(values=scenario_files)
         self.prefix_dropdown.configure(values=prefix_files)
 
         if scenario_files:
+            self.scenario_dropdown.configure(values=scenario_files)
             self.scenario_dropdown.set(scenario_files[0])
+        else:
+            self.scenario_dropdown.configure(values=["(none found)"])
+            self.scenario_dropdown.set("(none found)")
+
         if prefix_files:
+            self.prefix_dropdown.configure(values=prefix_files)
             self.prefix_dropdown.set(prefix_files[0])
+        else:
+            self.prefix_dropdown.configure(values=["(none found)"])
+            self.prefix_dropdown.set("(none found)")
+
 
     def start_session(self):
         session_name = self.session_name_entry.get().strip()
