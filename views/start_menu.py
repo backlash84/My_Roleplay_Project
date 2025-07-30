@@ -1,6 +1,8 @@
 import os
+import json
 import customtkinter as ctk
 from tkinter import messagebox, filedialog
+from utils.session_utils import load_session
 
 CHARACTER_DIR = "Character"
 
@@ -49,42 +51,29 @@ class StartMenu(ctk.CTkFrame):
 
         selected_folder = filedialog.askdirectory(
             initialdir="Character",
-            title="Select a Session Folder to Load"
+            title="Select a Session Folder to Load",
         )
         if not selected_folder:
             return  # Cancelled
 
-        # Normalize path
         selected_folder = os.path.abspath(selected_folder)
+        info_path = os.path.join(selected_folder, "session_info.json")
 
-        # Make sure it's under a Character/*/Sessions/* path
-        try:
-            # Split the full path
-            parts = selected_folder.split(os.sep)
-
-            # We want to find: .../Character/{char_name}/Sessions/{session_name}
-            if "Character" not in parts or "Sessions" not in parts:
-                raise ValueError
-
-            char_index = parts.index("Character") + 1
-            sessions_index = parts.index("Sessions")
-
-            if sessions_index - char_index != 1:
-                raise ValueError  # Sessions is not directly inside character folder
-
-            char_name = parts[char_index]
-            session_name = parts[sessions_index + 1]
-        except (ValueError, IndexError):
-            messagebox.showerror("Invalid Folder", "Selected folder must be inside a Character/<name>/Sessions/<session> path.")
+        if not os.path.exists(info_path):
+            messagebox.showerror(
+                "Invalid Folder",
+                "Selected folder does not contain a session_info.json file."
+            )
             return
 
-        session_data = {
-            "llm_character": char_name,
-            "user_character": self.controller.user_character_name or "",
-            "session_name": session_name,
-            "scenario_file": "",
-            "prefix_file": ""
-        }
+        try:
+            with open(info_path, "r", encoding="utf-8") as f:
+                session_data = json.load(f)
+        except Exception as e:
+            messagebox.showerror("Load Failed", f"Could not read session_info.json:\n{e}")
+            return
+
+        self.controller.selected_character = session_data.get("llm_character", "")
 
         chat_view.load_session(session_data)
         self.controller.show_frame("ChatView")

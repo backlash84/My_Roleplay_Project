@@ -169,6 +169,7 @@ class RoleplayApp(ctk.CTk):
         self.controller.start_chat_session(session_data)
 
     def start_chat_session(self, session_data):
+        self.selected_character = session_data.get("llm_character", "")
         chat_view = self.frames.get("ChatView")
         if chat_view:
             chat_view.controller.active_session_data = session_data

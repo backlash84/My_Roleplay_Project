@@ -248,24 +248,29 @@ class ChatView(ctk.CTkFrame):
 
         session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
         os.makedirs(session_dir, exist_ok=True)
-        file_path = os.path.join(session_dir, "chat.json")
 
-        session_data = {
+        # Save minimal chat.json
+        chat_path = os.path.join(session_dir, "chat.json")
+        chat_data = {
+            "chat": self.chat_display.get("1.0", "end").strip(),
+            "conversation_history": self.conversation_history
+        }
+        with open(chat_path, "w", encoding="utf-8") as f:
+            json.dump(chat_data, f, indent=2)
+
+        # Save full session_info.json
+        info_path = os.path.join(session_dir, "session_info.json")
+        info_data = {
             "llm_character": self.llm_character,
             "user_character": self.user_character,
             "session_name": self.session_name,
-            "chat": self.chat_display.get("1.0", "end").strip(),
-            "scenario": self.scenario,
-            "prefix": self.prefix,
-            "conversation_history": self.conversation_history
+            "scenario_file": self.scenario_file,
+            "prefix_file": self.prefix_file
         }
+        with open(info_path, "w", encoding="utf-8") as f:
+            json.dump(info_data, f, indent=2)
 
-        try:
-            with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(session_data, f, indent=2)
-            messagebox.showinfo("Session Saved", f"Session saved to {file_path}")
-        except Exception as e:
-            messagebox.showerror("Save Failed", f"Error saving session:\n{e}")
+        messagebox.showinfo("Session Saved", f"Session saved to:\n{chat_path}\nand\n{info_path}")
 
     def confirm_back_to_main(self):
         if messagebox.askyesno(
@@ -613,6 +618,7 @@ class ChatView(ctk.CTkFrame):
 
         char_name = session_data.get("llm_character", "")
         session_name = session_data.get("session_name", "")
+        self.controller.selected_character = char_name
         session_folder = os.path.join("Character", char_name, "Sessions", session_name)
 
         # Auto-detect scenario and prefix if not provided
