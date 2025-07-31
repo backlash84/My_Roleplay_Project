@@ -1,0 +1,7 @@
+{
+  "llm_character": "Counter",
+  "user_character": "User Default",
+  "session_name": "counting",
+  "scenario_file": "Empty room.json",
+  "prefix_file": "Counting.json"
+}

@@ -2,18 +2,31 @@ import datetime
 import json
 
 # For chat display
-def generate_basic_debug_report(payload: dict, memory_debug_lines: list[str], selected_memories: list[str]) -> str:
-    lines = ["=== Memory Debug ==="]
+def generate_basic_debug_report(
+    payload: dict,
+    memory_debug_lines: list[str],
+    selected_memories: list[str],
+    token_stats: dict | None = None,
+) -> str:
+    """Generate a simplified debug report shown in the chat UI."""
 
+    token_stats = token_stats or {}
+
+    lines = ["=== Memory Debug ==="]
+     # --- Token Usage ---
     lines.append("\n--- Token Usage Breakdown ---")
-    max_tokens = settings_data.get("max_tokens", "(not set)")
+    max_tokens = token_stats.get("max_tokens", payload.get("max_tokens", "(not set)"))
     lines.append(f"Max LLM Tokens: {max_tokens}")
-    lines.append(f"System Prompt: {system_tokens} tokens")
-    lines.append(f"Scenario File: {scenario_tokens} tokens")
-    lines.append(f"Prefix File: {prefix_tokens} tokens")
-    lines.append(f"Memory Chunks: {memory_tokens} tokens")
-    lines.append(f"Available for Rolling Memory: {available_for_rolling}")
-    lines.append(f"Used for Rolling Memory: {total}")
+    lines.append(f"System Prompt: {token_stats.get('system_tokens', 0)} tokens")
+    lines.append(f"Scenario File: {token_stats.get('scenario_tokens', 0)} tokens")
+    lines.append(f"Prefix File: {token_stats.get('prefix_tokens', 0)} tokens")
+    lines.append(f"Memory Chunks: {token_stats.get('memory_tokens', 0)} tokens")
+    lines.append(
+        f"Available for Rolling Memory: {token_stats.get('available_for_rolling', 0)}"
+    )
+    lines.append(
+        f"Used for Rolling Memory: {token_stats.get('rolling_used_tokens', 0)}"
+    )
 
     # Memory parameters
     lines.append(f"Top K (Chunks): {payload.get('top_k', '???')}")

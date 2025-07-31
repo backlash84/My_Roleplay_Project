@@ -94,6 +94,17 @@ class ConversationService:
 
         self.trimmed_history = rolling_memory
 
+        # Save token statistics for debugging purposes
+        self.last_token_stats = {
+            "max_tokens": max_tokens,
+            "system_tokens": system_tokens,
+            "scenario_tokens": scenario_tokens,
+            "prefix_tokens": prefix_tokens,
+            "memory_tokens": memory_tokens,
+            "available_for_rolling": available_for_rolling,
+            "rolling_used_tokens": total,
+        }
+
         memory_snippets = "\n\n".join(
             m.get("prompt_text", "").strip() for m in memories if m.get("prompt_text")
         )

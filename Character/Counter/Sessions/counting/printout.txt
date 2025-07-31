@@ -1,0 +1,30 @@
+Greg: 1
+Counter: 2
+
+Greg: 3
+Counter: 4
+
+Greg: 5
+Counter: 6
+
+Greg: 7
+Counter: 8
+
+Greg: 9
+Counter: 10
+
+Greg: 11
+Counter: 12
+
+Greg: 13
+Counter: 14
+
+Greg: 15
+Counter: 16
+
+Greg: 17
+Counter: 18
+
+Greg: 19
+Counter: 20
+

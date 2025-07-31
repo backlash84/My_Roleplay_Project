@@ -1,7 +1,7 @@
 {
-  "llm_character": "Harry Potter",
-  "user_character": "User Default",
-  "session_name": "Test",
-  "scenario_file": "Interview Scenario.json",
-  "prefix_file": "Default.json"
+    "session_name": "test",
+    "llm_character": "Harry Potter",
+    "user_character": "User Default",
+    "scenario_file": "Interview Scenario.json",
+    "prefix_file": "Default.json"
 }

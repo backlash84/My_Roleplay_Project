@@ -1,0 +1,45 @@
+{
+  "chat": "--- Counter loaded ---\nScenario: You are sitting in an empty room.\n\nYou: 1\n\nCounter: 2\n\nYou: 3\n\nCounter: 4\n\nYou: 5\n\nCounter: 6\n\nYou: 7\n\nCounter: 8\n\nYou: 9\n\nCounter: 10\n\nYou: 11\n\nCounter: 12\n\nYou: 13\n\nCounter: 14\n\nYou: 15\n\nCounter: 16\n\nYou: 17\n\nCounter: 18\n\nYou: 19\n\nCounter: 20\n\nYou: 21\n\nCounter: 22",
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "13"
+    },
+    {
+      "role": "assistant",
+      "content": "14"
+    },
+    {
+      "role": "user",
+      "content": "15"
+    },
+    {
+      "role": "assistant",
+      "content": "16"
+    },
+    {
+      "role": "user",
+      "content": "17"
+    },
+    {
+      "role": "assistant",
+      "content": "18"
+    },
+    {
+      "role": "user",
+      "content": "19"
+    },
+    {
+      "role": "assistant",
+      "content": "20"
+    },
+    {
+      "role": "user",
+      "content": "21"
+    },
+    {
+      "role": "assistant",
+      "content": "22"
+    }
+  ]
+}

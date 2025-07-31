@@ -120,8 +120,14 @@ class ChatView(ctk.CTkFrame):
         payload = getattr(self, "last_payload_used", {})
         memory_debug_lines = getattr(self, "memory_debug_lines", [])
         selected_memories = getattr(self, "selected_memories", [])
+        token_stats = getattr(self.conversation_service, "last_token_stats", {})
         if self.debug_mode:
-            debug_text = generate_basic_debug_report(payload, memory_debug_lines, selected_memories)
+            debug_text = generate_basic_debug_report(
+                payload,
+                memory_debug_lines,
+                selected_memories,
+                token_stats,
+            )
             print(debug_text)
             self.chat_display.configure(state="normal")
             self.chat_display.insert("end", debug_text + "\n", "debug")
@@ -282,6 +288,30 @@ class ChatView(ctk.CTkFrame):
             self.controller.show_frame("StartMenu")
 
     def send_message(self):
+        if len(self.conversation_history) >= 2:
+            # Get the previous two entries
+            prev_bot = self.conversation_history[-1]
+            prev_user = self.conversation_history[-2]
+
+            # Confirm order
+            if prev_user["role"] == "user" and prev_bot["role"] == "assistant":
+                user_label = self.user_character_config.get("name", "You")
+                bot_label = self.llm_character_config.get("name", "Bot")
+
+                log_lines = [
+                    f"{user_label}: {prev_user['content'].strip()}",
+                    ""
+                    ""
+                    f"{bot_label}: {prev_bot['content'].strip()}",
+                    ""
+                    ""
+                ]
+
+                session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+                log_path = os.path.join(session_dir, "printout.txt")
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write("\n".join(log_lines) + "\n")
+
         settings = self.controller.frames["AdvancedSettings"]
         settings_data = settings.get_all_settings()
 
@@ -309,6 +339,8 @@ class ChatView(ctk.CTkFrame):
             self.chat_display.see("end")
 
         self.conversation_history.append({"role": "user", "content": user_input})
+        if len(self.conversation_history) > 10:
+            self.conversation_history = self.conversation_history[-10:]
 
         # Start background thread to fetch response
         threading.Thread(
@@ -409,6 +441,8 @@ class ChatView(ctk.CTkFrame):
         )
         self.after(0, lambda: self._display_reply(reply))
         self.conversation_history.append({"role": "assistant", "content": reply})
+        if len(self.conversation_history) > 10:
+            self.conversation_history = self.conversation_history[-10:]
         print("[DEBUG] Raw reply returned by LLM:", repr(reply))
 
     def _display_reply(self, reply):
