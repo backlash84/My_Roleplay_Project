@@ -39,6 +39,8 @@ class ChatView(ctk.CTkFrame):
 
         # --- Services ---
         self.conversation_service = ConversationService(controller)
+        self.conversation_service.loaded_scenario_data = self.loaded_scenario_data
+        self.conversation_service.loaded_prefix_data = self.loaded_prefix_data
         self.embedder = SentenceTransformer("all-MiniLM-L6-v2")
         self.lemmatizer = WordNetLemmatizer()
 
@@ -510,15 +512,22 @@ class ChatView(ctk.CTkFrame):
 
             try:
                 if scenario_path and os.path.exists(scenario_path):
-                    with open(scenario_path, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        self.scenario = data.get("content", "").strip()
+                    self.loaded_scenario_data = {}
+                    if scenario_path and os.path.exists(scenario_path):
+                        with open(scenario_path, "r", encoding="utf-8") as f:
+                            self.loaded_scenario_data = json.load(f)
+                            self.scenario = self.loaded_scenario_data.get("content", "").strip()
+                            print(f"[Session] Loaded scenario: {scenario_file}")
+
                     print(f"[Session] Loaded scenario: {scenario_file}")
 
                 if prefix_path and os.path.exists(prefix_path):
-                    with open(prefix_path, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        self.prefix = data.get("content", "").strip()
+                    self.loaded_prefix_data = {}
+                    if prefix_path and os.path.exists(prefix_path):
+                        with open(prefix_path, "r", encoding="utf-8") as f:
+                            self.loaded_prefix_data = json.load(f)
+                            self.prefix = self.loaded_prefix_data.get("content", "").strip()
+                            print(f"[Session] Loaded prefix: {prefix_file}")
                     print(f"[Session] Loaded prefix: {prefix_file}")
             except Exception as e:
                 print(f"[Warning] Failed to load scenario or prefix: {e}")
