@@ -6,6 +6,7 @@ def generate_basic_debug_report(payload: dict, memory_debug_lines: list[str], se
     lines = ["=== Memory Debug ==="]
 
     lines.append("\n--- Token Usage Breakdown ---")
+    max_tokens = settings_data.get("max_tokens", "(not set)")
     lines.append(f"Max LLM Tokens: {max_tokens}")
     lines.append(f"System Prompt: {system_tokens} tokens")
     lines.append(f"Scenario File: {scenario_tokens} tokens")
@@ -54,19 +55,26 @@ def generate_advanced_debug_report(
     scenario_ui: str = "",
     prefix_ui: str = "",
     llm_character_config: dict = None,
-    user_character_config: dict = None
+    user_character_config: dict = None,
+    max_tokens=None,
+    system_tokens=None,
+    scenario_tokens=None,
+    prefix_tokens=None,
+    memory_tokens=None,
+    available_for_rolling=None,
+    rolling_used_tokens=None
 ) -> str:
     lines = [f"=== Advanced Debug Report ==="]
     lines.append(f"Generated at: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
     lines.append("\n--- Token Usage Breakdown ---")
-    lines.append(f"Max LLM Tokens: {max_tokens}")
-    lines.append(f"System Prompt: {system_tokens} tokens")
-    lines.append(f"Scenario File: {scenario_tokens} tokens")
-    lines.append(f"Prefix File: {prefix_tokens} tokens")
-    lines.append(f"Memory Chunks: {memory_tokens} tokens")
-    lines.append(f"Available for Rolling Memory: {available_for_rolling}")
-    lines.append(f"Used for Rolling Memory: {total}")
+    lines.append(f"Max LLM Tokens: {max_tokens if max_tokens is not None else '(unknown)'}")
+    lines.append(f"System Prompt: {system_tokens or 0} tokens")
+    lines.append(f"Scenario File: {scenario_tokens or 0} tokens")
+    lines.append(f"Prefix File: {prefix_tokens or 0} tokens")
+    lines.append(f"Memory Chunks: {memory_tokens or 0} tokens")
+    lines.append(f"Available for Rolling Memory: {available_for_rolling or 0}")
+    lines.append(f"Used for Rolling Memory: {rolling_used_tokens or 0}")
 
     # Characters
     lines.append("--- Character Info ---")

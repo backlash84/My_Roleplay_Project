@@ -39,8 +39,6 @@ class ChatView(ctk.CTkFrame):
 
         # --- Services ---
         self.conversation_service = ConversationService(controller)
-        self.conversation_service.loaded_scenario_data = self.loaded_scenario_data
-        self.conversation_service.loaded_prefix_data = self.loaded_prefix_data
         self.embedder = SentenceTransformer("all-MiniLM-L6-v2")
         self.lemmatizer = WordNetLemmatizer()
 
@@ -312,11 +310,6 @@ class ChatView(ctk.CTkFrame):
 
         self.conversation_history.append({"role": "user", "content": user_input})
 
-        # Enforce max rolling memory size
-        max_history = settings.get_chat_history_length()
-        if max_history > 0 and len(self.conversation_history) > max_history * 2:
-            self.conversation_history = self.conversation_history[-max_history * 2:]
-
         # Start background thread to fetch response
         threading.Thread(
             target=self.fetch_and_display_reply,
@@ -343,7 +336,10 @@ class ChatView(ctk.CTkFrame):
             user_message,
             memory_objects,
             self.scenario,
-            self.prefix
+            self.prefix,
+            self.conversation_history, 
+            self.llm_character_config,
+            self.user_character_config
         )
 
         payload = self.conversation_service.build_payload(prompt, settings_data)
@@ -372,6 +368,7 @@ class ChatView(ctk.CTkFrame):
         payload["messages"] = messages
 
         # Inject character names into settings_data for debug visibility
+        token_stats = getattr(self.conversation_service, "last_token_stats", {})
         settings_data["llm_character"] = self.controller.active_session_data.get("llm_character", "(not set)")
         settings_data["user_character"] = self.controller.active_session_data.get("user_character", "(not set)")
 
@@ -389,7 +386,14 @@ class ChatView(ctk.CTkFrame):
                 scenario_ui=self.scenario,
                 prefix_ui=self.prefix,
                 llm_character_config=self.llm_character_config,
-                user_character_config=self.user_character_config
+                user_character_config=self.user_character_config,
+                max_tokens=token_stats.get("max_tokens"),
+                system_tokens=token_stats.get("system_tokens"),
+                scenario_tokens=token_stats.get("scenario_tokens"),
+                prefix_tokens=token_stats.get("prefix_tokens"),
+                memory_tokens=token_stats.get("memory_tokens"),
+                available_for_rolling=token_stats.get("available_for_rolling"),
+                rolling_used_tokens=token_stats.get("rolling_used_tokens")
             )
             print(debug_text_console)
 
@@ -590,14 +594,7 @@ class ChatView(ctk.CTkFrame):
         self.entry.delete("1.0", "end")
 
         self.load_session_assets(force_reload=True)
-
-        # Trim or clear history after reset
-        max_history = self.controller.frames["AdvancedSettings"].get_chat_history_length()
-        if max_history > 0 and len(self.conversation_history) > max_history * 2:
-            self.conversation_history = self.conversation_history[-max_history * 2:]
-        else:
-            self.conversation_history.clear()
-
+        self.conversation_history.clear()
         self.last_prompt = None
 
     def _animate_thinking(self):
