@@ -1,0 +1,45 @@
+{
+  "chat": "Greg: 9\n\nCounter: 10\n\nGreg: 11\n\nCounter: 12\n\nGreg: 13\n\nCounter: 14\n\nGreg: 15\n\nCounter: 16\n\nGreg: 17\n\nCounter: 18",
+  "conversation_history": [
+    {
+      "role": "user",
+      "content": "9"
+    },
+    {
+      "role": "assistant",
+      "content": "10"
+    },
+    {
+      "role": "user",
+      "content": "11"
+    },
+    {
+      "role": "assistant",
+      "content": "12"
+    },
+    {
+      "role": "user",
+      "content": "13"
+    },
+    {
+      "role": "assistant",
+      "content": "14"
+    },
+    {
+      "role": "user",
+      "content": "15"
+    },
+    {
+      "role": "assistant",
+      "content": "16"
+    },
+    {
+      "role": "user",
+      "content": "17"
+    },
+    {
+      "role": "assistant",
+      "content": "18"
+    }
+  ]
+}

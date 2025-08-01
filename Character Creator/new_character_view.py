@@ -49,7 +49,7 @@ class NewCharacterScreen(ctk.CTkFrame):
             os.makedirs(character_dir, exist_ok=True)
 
             # Subfolders
-            for subfolder in ["Personal_Memories", "Prefix", "Scenario", "Session"]:
+            for subfolder in ["Personal_Memories", "Prefix", "Scenarios", "Sessions"]:
                 os.makedirs(os.path.join(character_dir, subfolder), exist_ok=True)
 
             # --- Create Memory_Templates folder and copy default template ---

@@ -339,8 +339,8 @@ class ChatView(ctk.CTkFrame):
             self.chat_display.see("end")
 
         self.conversation_history.append({"role": "user", "content": user_input})
-        if len(self.conversation_history) > 10:
-            self.conversation_history = self.conversation_history[-10:]
+        if len(self.conversation_history) > 50:
+            self.conversation_history = self.conversation_history[-50:]
 
         # Start background thread to fetch response
         threading.Thread(
@@ -473,13 +473,20 @@ class ChatView(ctk.CTkFrame):
             self.thinking_label.destroy()
             self.thinking_label = None
 
-        # Insert reply text
-        clean_reply = reply.strip()
-        if not clean_reply:
-            clean_reply = "[No response received.]"
+        # Insert full trimmed conversation into chat display
+        self.chat_display.delete("1.0", "end")
 
-        speaker_name = self.llm_character_config.get("name", "Bot")
-        self.chat_display.insert("end", f"{speaker_name}: {clean_reply}\n\n", "bot")
+        for entry in self.conversation_history:
+            role = entry.get("role", "")
+            content = entry.get("content", "").strip()
+            name = (
+                self.user_character_config.get("name", "You")
+                if role == "user"
+                else self.llm_character_config.get("name", "Bot")
+            )
+            tag = "user" if role == "user" else "bot"
+            self.chat_display.insert("end", f"{name}: {content}\n\n", tag)
+
         self.chat_display.configure(state="disabled")
 
         # Scroll if setting enabled
