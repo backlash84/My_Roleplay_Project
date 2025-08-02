@@ -71,7 +71,7 @@
       ]
     },
     {
-      "label": "Characters Pesent",
+      "label": "Characters Present",
       "type": "tag",
       "usage": "Both",
       "suggested_tags": [
@@ -79,6 +79,8 @@
         "Ron",
         "Hermione",
         "Neville",
+        "Lockhart",
+        "Malfoy",
         "Luna",
         "Quirrell",
         "Ginny",
