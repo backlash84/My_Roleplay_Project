@@ -90,7 +90,9 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
     def create_new_memory(self):
         new_id = self.generate_new_memory_id()
-        new_memory = { "memory_id": new_id }
+        new_memory["memory_id"] = new_id 
+        self.memory_id_entry.delete(0, "end")
+        self.memory_id_entry.insert(0, new_id)
         new_memory["template_used"] = self.template.get("template_name", "Default")
 
         # Set default tags from template-level tags list
@@ -174,46 +176,33 @@ class MemoryMakerPanel(ctk.CTkFrame):
                 f"'{self.active_memory['memory_id']}' has unsaved changes.\nSave before switching?"
             )
             if result:
+                target_id = memory.get("memory_id")
                 self.save_current_memory()
+                # After saving, memory buttons are rebuilt. Refresh references.
+                for mem in self.loaded_memories:
+                    if mem.get("memory_id") == target_id:
+                        memory = mem
+                        row_frame = mem.get("_row_frame")
+                        mem_button = mem.get("_button")
+                        break
 
-        # Strip UI junk before copying
-        cleaned_memory = {
-            k: v
-            for k, v in memory.items()
-            if not (k.startswith("_") and not k.startswith("__"))
-        }
-
-         # Populate internal metadata fields for clean comparison
-        cleaned_memory["__created_by__"] = memory.get(
-            "Created By", self.template.get("created_by", "")
-        )
-        cleaned_memory["__tags__"] = memory.get(
-            "Tags", self.template.get("tags", [])
-        )
-        cleaned_memory["__importance__"] = memory.get("Importance", "Medium")
-        cleaned_memory["__perspective__"] = memory.get(
-            "__perspective__", "First Hand"
-        )
-        self.active_memory = copy.deepcopy(cleaned_memory)
-        self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
+        # === Original selection logic resumes here ===
+        self.active_memory = memory
+        self.last_saved_state = self.snapshot_clean_memory(memory)
 
         self.memory_id_entry.delete(0, "end")
-        self.memory_id_entry.insert(0, self.active_memory["memory_id"])
+        self.memory_id_entry.insert(0, memory["memory_id"])
 
-        # === Load correct template if available ===
-        template_name = self.active_memory.get("template_used", "Default")
+        template_name = memory.get("template_used", "Default")
         template_path = os.path.join(self.template_dir, f"{template_name}.json")
-
         if os.path.exists(template_path):
             with open(template_path, "r", encoding="utf-8") as f:
                 self.template = json.load(f)
-                if hasattr(self, "template_dropdown"):
-                    self.template_dropdown.set(template_name)
-            print(f"[TEMPLATE] Loaded template '{template_name}' for memory '{self.active_memory['memory_id']}'")
+            if hasattr(self, "template_dropdown"):
+                self.template_dropdown.set(template_name)
         else:
-            print(f"[TEMPLATE] Template '{template_name}' not found. Using current in-memory template.")
+            print(f"[TEMPLATE] Template '{template_name}' not found. Using current template in memory.")
 
-        # Safely reset previous selection color
         if self.selected_button:
             try:
                 self.selected_button.configure(fg_color=ctk.ThemeManager.theme["CTkButton"]["fg_color"])
@@ -346,49 +335,38 @@ class MemoryMakerPanel(ctk.CTkFrame):
             messagebox.showerror("No Folder", "No memory folder is currently selected.")
             return
 
-        memory = self.active_memory
-        if memory is None:
+        if self.active_memory is None:
             messagebox.showerror("No Memory", "No memory is currently selected.")
             return
+
+        memory = self.active_memory
 
         folder_name = os.path.basename(folder_path)
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
             print(f"[INFO] Created new folder: {folder_path}")
 
+        # Ensure active memory reflects current widget values
+        self.update_active_memory_from_widgets()
         memory["template_used"] = self.template.get("template_name", "Default")
 
         # Normalize built-in field labels for saving
         normalized_labels = {
             "__created_by__": "Created By",
             "__tags__": "Tags",
-            "__importance__": "Importance"
+            "__importance__": "Importance",
         }
-        # === Clear all non-internal keys from memory ===
-        for key in list(memory.keys()):
-            if not key.startswith("_") and key not in ("memory_id", "template_used", "__perspective__"):
-                del memory[key]
 
-        # Update memory fields
-        for label, (widget, ftype) in self.editor_widgets.items():
-            val = ""
-            if ftype == "tag":
-                val = widget.get().strip()
-                memory[label] = [v.strip() for v in val.split(",") if v.strip()]
-            elif ftype == "int":
-                val = widget.get().strip()
-                memory[label] = int(val) if val.isdigit() else 0
-            elif ftype == "text" and isinstance(widget, ctk.CTkTextbox):
-                val = widget.get("1.0", "end").strip()
-                memory[str(label)] = val
-            else:
-                val = widget.get().strip()
-                memory[str(label)] = val
+        # Prepare a copy for saving that excludes UI-only fields
+        save_copy = {
+            k: copy.deepcopy(v)
+            for k, v in memory.items()
+            if not (k.startswith("_") and not k.startswith("__"))
+        }
 
-            if label in normalized_labels:
-                memory[normalized_labels[label]] = memory.pop(label)
-
-        print("[DEBUG] Final saved fields:", memory)
+        for src, dest in normalized_labels.items():
+            if src in save_copy:
+                save_copy[dest] = save_copy.pop(src)
 
         # === Rename Logic ===
         old_id = memory["memory_id"]
@@ -408,9 +386,10 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
             # Update memory and UI
             memory["memory_id"] = new_id
+            save_copy["memory_id"] = new_id
             if "_button" in memory:
                 try:
-                    memory["_button"].configure(text=new_id)
+                    memory["_button"].configure(text=truncate_label(new_id))
                 except tk.TclError:
                     pass
 
@@ -427,13 +406,8 @@ class MemoryMakerPanel(ctk.CTkFrame):
                 return
 
         # Save file
-        to_save = {
-            k: v
-            for k, v in memory.items()
-            if not (k.startswith("_") and not k.startswith("__"))
-        }
         with open(final_path, "w", encoding="utf-8") as f:
-            json.dump(to_save, f, indent=2)
+            json.dump(save_copy, f, indent=2)
 
         messagebox.showinfo("Saved", f"Saved memory '{memory['memory_id']}' to '{folder_name}'.")
 
@@ -448,6 +422,7 @@ class MemoryMakerPanel(ctk.CTkFrame):
                     try:
                         btn.configure(fg_color="#444444")
                         self.selected_button = btn
+                        self.active_memory["_button"] = btn
                     except tk.TclError:
                         self.selected_button = None
                 break
@@ -619,28 +594,12 @@ class MemoryMakerPanel(ctk.CTkFrame):
         if self.last_saved_state is None:
             return True
 
-        # Update active_memory from widget values before comparing
         self.update_active_memory_from_widgets()
 
-        def clean(mem):
-            result = {}
-            for k, v in mem.items():
-                if not (k.startswith("_") and not k.startswith("__")):
-                    if isinstance(v, list):
-                        result[k] = [str(x).strip() for x in v]
-                    elif isinstance(v, int):
-                        result[k] = int(v)
-                    else:
-                        result[k] = str(v).strip()
-            return result
+        current_clean = self.snapshot_clean_memory(self.active_memory)
+        last_clean = self.last_saved_state
 
-        current_clean = clean(self.active_memory)
-        last_clean = clean(self.last_saved_state)
-
-        if current_clean != last_clean:
-            return True
-        else:
-            return False
+        return current_clean != last_clean
 
     def create_new_memory_folder(self):
         folder_name = ctk.CTkInputDialog(text="Enter new memory folder name:", title="New Folder").get_input()
@@ -660,11 +619,17 @@ class MemoryMakerPanel(ctk.CTkFrame):
         self.folder_label.configure(text=f"Folder: {folder_name}")
 
     def snapshot_clean_memory(self, memory):
-        return {
-            k: copy.deepcopy(v)
-            for k, v in memory.items()
-            if not (k.startswith("_") and not k.startswith("__"))
-        }
+        clean = {}
+        for k, v in memory.items():
+            if k.startswith("_") and not k.startswith("__"):
+                continue  # Skip UI-only fields
+            if isinstance(v, list):
+                clean[k] = [str(x).strip() for x in v]
+            elif isinstance(v, int):
+                clean[k] = int(v)
+            else:
+                clean[k] = str(v).strip()
+        return clean
 
     def update_active_memory_from_widgets(self):
         if self.active_memory is None:
@@ -683,6 +648,14 @@ class MemoryMakerPanel(ctk.CTkFrame):
             else:
                 val = widget.get().strip()
                 self.active_memory[label] = val
+
+            # Keep human-readable duplicates in sync
+            if label == "__created_by__":
+                self.active_memory["Created By"] = self.active_memory[label]
+            elif label == "__tags__":
+                self.active_memory["Tags"] = self.active_memory[label]
+            elif label == "__importance__":
+                self.active_memory["Importance"] = self.active_memory[label]
 
     def handle_new_memory_click(self):
         if not self.current_folder_path:
