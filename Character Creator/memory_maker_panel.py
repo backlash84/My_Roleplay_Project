@@ -89,8 +89,9 @@ class MemoryMakerPanel(ctk.CTkFrame):
         ctk.CTkButton(button_row, text="Reload", command=self.reload_editor_fields).pack(side="left", padx=5)
 
     def create_new_memory(self):
+        new_memory = {}
         new_id = self.generate_new_memory_id()
-        new_memory["memory_id"] = new_id 
+        new_memory["memory_id"] = new_id
         self.memory_id_entry.delete(0, "end")
         self.memory_id_entry.insert(0, new_id)
         new_memory["template_used"] = self.template.get("template_name", "Default")
@@ -411,21 +412,27 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
         messagebox.showinfo("Saved", f"Saved memory '{memory['memory_id']}' to '{folder_name}'.")
 
+        saved_id = memory["memory_id"]
         self.load_memory_folder_from_path(folder_path)
-        self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
 
-        # Re-highlight the active memory button after reload
+        # Refresh active_memory reference to the reloaded object
+        self.active_memory = None
         for mem in self.loaded_memories:
-            if mem.get("memory_id") == self.active_memory.get("memory_id"):
+            if mem.get("memory_id") == saved_id:
+                self.active_memory = mem
                 btn = mem.get("_button")
                 if btn:
                     try:
                         btn.configure(fg_color="#444444")
                         self.selected_button = btn
-                        self.active_memory["_button"] = btn
                     except tk.TclError:
                         self.selected_button = None
                 break
+
+        if self.active_memory:
+            self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
+        else:
+            self.last_saved_state = None
 
     def load_memory_folder(self):
         folder_path = filedialog.askdirectory(

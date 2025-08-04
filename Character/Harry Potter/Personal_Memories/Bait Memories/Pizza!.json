@@ -9,7 +9,7 @@
     "blue cheese",
     "favourite food"
   ],
-  "Importance": "Medium",
+  "Importance": "High",
   "Source": "My twisted imagination",
   "Full Memory": "Harry goes out with Hermione and Ron to a Pizza Place that lets you pick any toppings you can image. Hermione and Ron are both horrified when Harry orders his with blue cheese and cockroaches. He indignantly defends his decision, saying that eating insects is far more humane than eating meat from intelligent animals, and how they are actually very clean insects. Ron hand Hermione then clarify that it is the blue cheese they find disgusting, not the cockroaches.",
   "Brief Summary": "Harry shares his favourite food preferences with his friends.",
@@ -23,5 +23,6 @@
   "Emotional State": [
     "disgust"
   ],
-  "Chronological Placement": 999
+  "Chronological Placement": 999,
+  "Characters Present": []
 }
