@@ -88,7 +88,6 @@ class StartSessionPanel(ctk.CTkFrame):
             self.prefix_dropdown.configure(values=["(none found)"])
             self.prefix_dropdown.set("(none found)")
 
-
     def start_session(self):
         session_name = self.session_name_entry.get().strip()
         character = self.character_dropdown.get()
@@ -105,7 +104,8 @@ class StartSessionPanel(ctk.CTkFrame):
             "llm_character": character,
             "user_character": user,
             "scenario_file": scenario,
-            "prefix_file": prefix
+            "prefix_file": prefix,
+            "character_path": os.path.join("Character", character)
         }
 
         # Path to the character's Sessions folder

@@ -4,7 +4,6 @@ import json
 from base_settings_panel import BaseSettingsPanel
 from template_maker_panel import TemplateMakerPanel
 from memory_maker_panel import MemoryMakerPanel
-from finalizer import finalize_memories
 from tkinter import messagebox
 
 
@@ -76,25 +75,7 @@ class CharacterEditorScreen(ctk.CTkFrame):
             self.current_panel = panel
 
         elif view_name == "finalize":
-            panel = ctk.CTkFrame(self.content_area)
+            from finalizer_panel import FinalizerPanel
+            panel = FinalizerPanel(self.content_area, self.character_name, self.character_path)
             panel.grid(row=0, column=0, sticky="nsew")
-
-            label = ctk.CTkLabel(panel, text="Finalize View", font=("Arial", 20))
-            label.grid(row=0, column=0, padx=20, pady=20)
-
-            finalize_button = ctk.CTkButton(panel, text="Run Finalizer", command=self.run_finalizer)
-            finalize_button.grid(row=1, column=0, padx=20, pady=10)
-
             self.current_panel = panel
-
-    def run_finalizer(self):
-        try:
-            base_path = os.path.dirname(self.character_path)
-            finalize_memories(self.character_name, base_path)
-            messagebox.showinfo(
-                "Success", f"Finalization complete for {self.character_name}."
-            )
-        except Exception as e:
-            messagebox.showerror(
-                "Finalization Error", f"An error occurred:\n{str(e)}"
-            )

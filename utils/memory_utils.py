@@ -9,6 +9,7 @@ import re
 import faiss
 import numpy as np
 import os
+import json
 
 def load_stopwords(file_path="config/Filtered_Words_List.txt") -> set:
     if not os.path.exists(file_path):
@@ -43,6 +44,13 @@ def retrieve_relevant_memories(
     # Load stopwords (only once per call)
     stopwords = load_stopwords()
 
+    character_path = settings_data.get("character_path", "")
+    alias_map = load_alias_map(character_path)
+    alias_lookup = {
+        alias.lower(): root for root, aliases in alias_map.items()
+        for alias in aliases
+    }
+
     # === Step 1: Extract questions and emphasize them ===
     question_sentences = [s.strip() for s in re.split(r'(?<=[?!.])\s+', user_message) if s.strip().rstrip('"\'').endswith('?')]
     emphasized_input = " ".join(question_sentences + [user_message])
@@ -57,6 +65,14 @@ def retrieve_relevant_memories(
 
     # === Step 2: Extract keywords with capitalized emphasis ===
     words = re.findall(r'\b\w+\b', user_message)
+    # Lowercased normalized alias-aware lookup
+    cleaned_words = [w.strip(".,!?\"'").lower() for w in words]
+    expanded_keywords = set(lemmatizer.lemmatize(w) for w in cleaned_words if w not in stopwords)
+
+    # Add alias roots for matches
+    for word in cleaned_words:
+        if word in alias_lookup:
+            expanded_keywords.add(alias_lookup[word].lower())
     lemmatized_keywords = set()
     capitalized_flags = set()
 
@@ -95,7 +111,7 @@ def retrieve_relevant_memories(
 
         matched = set()
         for word in lemmatized_tag_words:
-            if word in lemmatized_keywords or word + "_CAP" in lemmatized_keywords:
+            if word in expanded_keywords or word + "_CAP" in expanded_keywords:
                 matched.add(word)
 
         similarity = dist
@@ -135,3 +151,14 @@ def retrieve_relevant_memories(
         debug_lines.append("=== End ===\n")
 
     return selected, debug_lines if debug_mode else []
+
+def load_alias_map(character_path):
+    alias_path = os.path.join(character_path, "alias_map.json")
+    if not os.path.exists(alias_path):
+        return {}
+    try:
+        with open(alias_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"[WARN] Failed to load alias map: {e}")
+        return {}

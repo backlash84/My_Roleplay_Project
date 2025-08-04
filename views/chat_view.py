@@ -352,6 +352,12 @@ class ChatView(ctk.CTkFrame):
         os.system("cls" if os.name == "nt" else "clear")
         self.last_prompt = user_message
 
+        if "character_path" not in settings_data:
+            character_path = self.controller.active_session_data.get("character_path")
+            if not character_path:
+                raise ValueError("character_path not found in active_session_data")
+            settings_data["character_path"] = character_path
+
         # Retrieve relevant memories
         memory_objects, memory_debug_lines = retrieve_relevant_memories(
             user_message,

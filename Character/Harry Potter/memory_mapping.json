@@ -1,36 +1,269 @@
 [
   {
+    "memory_id": "Pizza! 2",
+    "prompt_text": "[PERSPECTIVE: Lore]\nis it fixed?\nhere\nthem\nslightly annoyed",
+    "search_text": "Lore\ni dunno\nhere\nthem\nslightly annoyed\n77",
+    "tags": [
+      "here",
+      "them",
+      "slightly annoyed"
+    ],
+    "importance": "Medium",
+    "token_count": 25
+  },
+  {
     "memory_id": "Pizza!",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry goes out with Hermione and Ron to a Pizza Place that lets you pick any toppings you can image. Hermione and Ron are both horrified when Harry orders his with blue cheese and cockroaches. He indignantly defends his decision, saying that eating insects is far more humane than eating meat from intelligent animals, and how they are actually very clean insects. Ron hand Hermione then clarify that it is the blue cheese they find disgusting, not the cockroaches.\nPizza Place\nRon, Hermione\ndisgust",
-    "search_text": "First Hand\nHarry shares his favourite food preferences with his friends.\nPizza Place\nRon, Hermione\ndisgust\n999",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry goes out with Hermione and Ron to a Pizza Place that lets you pick any toppings you can image. Hermione and Ron are both horrified when Harry orders his with blue cheese and cockroaches. He indignantly defends his decision, saying that eating insects is far more humane than eating meat from intelligent animals, and how they are actually very clean insects. Ron hand Hermione then clarify that it is the blue cheese they find disgusting, not the cockroaches.\nPizza Place\n\ndisgust\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry shares his favourite food preferences with his friends.\nPizza Place\n\ndisgust\n999",
     "tags": [
       "Pizza Place",
-      "Ron",
-      "Hermione",
       "disgust"
     ],
     "importance": "Medium",
-    "token_count": 132
+    "token_count": 149
   },
   {
     "memory_id": "TESTING",
-    "prompt_text": "[PERSPECTIVE: Second Hand]\ntests\nhere\nyou\nannoyed",
-    "search_text": "Second Hand\ntest2\nhere\nyou\nannoyed\n84",
+    "prompt_text": "[PERSPECTIVE: Second Hand]\ntests\nhere\n\nannoyed",
+    "search_text": "Second Hand\ntest2\nhere\n\nannoyed\n84",
     "tags": [
       "here",
-      "you",
       "annoyed"
     ],
     "importance": "Medium",
-    "token_count": 20
+    "token_count": 18
   },
   {
     "memory_id": "Chamber of Secrets 26",
-    "prompt_text": "[PERSPECTIVE: First Hand]",
-    "search_text": "First Hand\n\n\n\n\n0",
-    "tags": [],
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry Potter is living with the Dursleys for the summer holiday in mid-1992, and things are very bad for him. The Dursleys have become so fearful of Harry's new-found magical abilities that they have locked away all of Harry's magical supplies. They have also banned Harry from saying words such as \"magic\" in the house. The Dursleys have let him keep his pet snowy owl Hedwig, but have put a lock on her cage to keep her inside day and night to avoid suspicion from the neighbours. Naturally, this does not go well for the bird. Every time she gets bored, her screech rings throughout the house, causing an irritated Vernon to warn Harry that if he cannot control her, she will have to go.\n\nOn July 31 (Harry's twelfth birthday), Harry has never felt so lonely, for he misses Hogwarts and his best friends there, Ron Weasley and Hermione Granger. Neither of them have written to him all summer, not even to send birthday wishes. The Dursleys seem to have also forgotten his birthday, as they are busy preparing for a dinner party for one of Uncle Vernon's clients, Mr Mason, from whom Vernon is hoping to get a huge order. The only thing that the Dursleys care about is that Harry has to stay in his room for the night, making no noise and \"pretending he doesn't exist\". Later, Dudley comes waddling over and starts mocking Harry for not receiving a party on his birthday, Harry gets annoyed and scares him away by pretending to think out loud of a spell. Unfortunately, Petunia comes out when Dudley calls for her and beats her nephew with a soapy frying pan. She then gives Harry some chores to do, and once he is finished, Harry goes up to his room without making a sound.\nPrivet Drive\nHarry, Vernon, Dudley, Petunia\nlonely\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry is spending the summer with the Dursleys, who lock up his magic supplies and ban him from speaking about magic. They have an important dinner planned, and send Harry to his room. Harry is sad he hasn't heard from Ron or Hermione since they parted ways at Hogwarts.\nPrivet Drive\nHarry, Vernon, Dudley, Petunia\nlonely\n26",
+    "tags": [
+      "Privet Drive",
+      "Harry",
+      "Vernon",
+      "Dudley",
+      "Petunia",
+      "lonely"
+    ],
     "importance": "Medium",
-    "token_count": 14
+    "token_count": 475
+  },
+  {
+    "memory_id": "Chamber of Secrets 27",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nAs Harry enters his bedroom he finds a strange creature on his bed, a house elf named Dobby, who tells Harry that he must not go back to Hogwarts, as it will be dangerous because terrible things are going to happen there. The elf, however, can't tell him what things, and continues to be vague because every time he gets close to letting something slip he starts hurting himself. In the process, he makes a lot of noise, which is noticed by the group downstairs. When he hears Uncle Vernon coming upstairs, Harry hides the elf in his closet right before Vernon comes in and scolds his nephew for making such a racket. Harry lets Dobby out as soon as his uncle leaves, and insists that he has to go back to Hogwarts since that's where he has friends despite them not writing to him. But to his surprise, Dobby then reveals that he has stopped letters being sent to Harry, and offers them to him if Harry will stay away from Hogwarts. Harry refuses and, making a frustrated Dobby run downstairs and use a Hover Charm to smash the dinner party's pudding.\nHarry is blamed for the incident once Dobby disappears. The evening is almost saved until an owl from the Ministry of Magic is promptly received (scaring away Mrs Mason, who is mortally afraid of birds) with a warning saying that Harry has violated the Decree for the Reasonable Restriction of Underage Sorcery, though he is not actually punished (possibly because it is only his first offence). After realising that Harry is not allowed to do magic outside of Hogwarts grounds, Uncle Vernon locks Harry in his room. Vernon reasons that if Harry uses magic to get himself out, he will be expelled anyway.\nPrivet Drive\nHarry, Dobby, Vernon\ndefiant, upset, annoyed",
+    "search_text": "First Hand\nDobby the house elf warns Harry not to return to Hogwarts, as it is very dangerous. Dobby reveals he's been intersepting letters from Hermione and Ron, and says he will give them to Harry if he agrees not to return to Hogwarts. When Harry refuses, Dobby gets him in trouble.\nPrivet Drive\nHarry, Dobby, Vernon\ndefiant, upset, annoyed\n27",
+    "tags": [
+      "Privet Drive",
+      "Harry",
+      "Dobby",
+      "Vernon",
+      "defiant",
+      "upset",
+      "annoyed"
+    ],
+    "importance": "Medium",
+    "token_count": 419
+  },
+  {
+    "memory_id": "Chamber of Secrets 28",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nThe Dursleys' punishment for Harry ruining the Dursley’s dinner lasts for three days, until Ron, Fred, and George Weasley, worried about not hearing from Harry all summer, borrow their father's flying Ford Anglia and come to the rescue. They break the metal bars off Harry's window and help him to pick the lock to his door so he can get his Nimbus 2000 and trunk. The Dursleys discover his escape attempt, but by the time they can intervene, Fred, George, Ron and Harry have got everything of Harry's and have flown away. On the flight to The Burrow, Harry explains Dobby's warning. They all agree that it is very fishy and speculate that Dobby most likely belongs to the Malfoys who sent Dobby to Harry as a joke, since the Malfoys are an old wizarding family of great wealth. Fred and George tell Harry that Lucius Malfoy formerly worked for Voldemort but claimed that the Dark Lord bewitched him after Voldemort lost his powers. Harry is taken to The Burrow, the Weasleys' home, and he finds the house truly amazing. Since Ron, Fred and George took the car without permission, they are yelled at by Molly Weasley, who was waiting in the kitchen. After their scolding, she makes them breakfast and has the three Weasley boys (and Harry who volunteered) de-gnome the garden, refusing to use a technique from Gilderoy Lockhart's Guide to Household Pests, and do it their own way. Arthur Weasley soon comes home and is honoured to meet Harry after they are introduced to each other. Molly, his wife, yells at him for enchanting the car. Ginny Weasley, who was enrolling at Hogwarts that year, is very obviously enamoured with Harry and spends most of her time hiding from him.\nPrivet Drive, The Burrow\nHarry, Fred, George, Ginny, Ron\nexcited, happy\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.",
+    "search_text": "First Hand\nThe Weasley's, concerned over not having heard from him in a long time, come to rescue Harry in a flying car. They take him back home, where he meets the rest of the members of the Weasley family, including Ginny, who is particularly shy.\nPrivet Drive, The Burrow\nHarry, Fred, George, Ginny, Ron\nexcited, happy\n28",
+    "tags": [
+      "Privet Drive",
+      "The Burrow",
+      "Harry",
+      "Fred",
+      "George",
+      "Ginny",
+      "Ron",
+      "excited",
+      "happy"
+    ],
+    "importance": "Medium",
+    "token_count": 484
+  },
+  {
+    "memory_id": "Chamber of Secrets 29",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry stays at The Burrow until his departure for Hogwarts. The Weasleys make it clear that they all like Harry. During that period, he and the Weasleys travel to Diagon Alley with Floo Powder to get their school supplies. Harry has difficulty with the smoke around him and says \"Diagon Alley\" unclearly, and thus he accidentally lands in a shop in the ill-reputed Knockturn Alley instead. The shop is Borgin and Burkes, specialising in objects related to Dark magic. There he sees Lucius Malfoy, father of Draco Malfoy, selling items imbued with Dark magic to a dark arts salesman, Mr Borgin. Lucius Malfoy explains that the Ministry has been conducting raids on wizard houses to uncover illegal artefacts, so he is selling his more problematic possessions. He also expresses his disdain for a rumoured Muggle Protection Act, which he (rightly) assumes Arthur Weasley is behind.\n\nHarry leaves the shop and is found by Hagrid and taken back to Diagon Alley to reunite with the Weasleys and Hermione Granger, who is also there with her parents. In Flourish and Blotts, he and the Weasleys meet the famous wizard/author Gilderoy Lockhart, who announces that he will be taking over as Hogwarts's new Defence Against the Dark Arts teacher. He then forces Harry to have his picture taken with him for the front page of the Daily Prophet. They also meet Draco and Lucius Malfoy there. The elder Malfoy continuously taunts and insults Arthur and his family and eventually Arthur lunges at him. During the fight, Malfoy grabs one of the Weasleys' second-hand books and, after Hagrid breaks the fight up, throws the book back at Ginny in contempt.\nDiagon Alley, Knockturn Alley, Borgin and Burkes\nLucius, Arthur, Harry, Lockheart\nsuspicious, angry\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry accidently ends up in Borgin and Burkes, where he sees Lucius Malfoy selling illegal dark magic items. Harry meets Lockheart, who says he will be teaching at Hogwarts. Later, after Harry reunites with the Weasleys, Lucius insults the Weasleys, starting a fight with Arthur.\nDiagon Alley, Knockturn Alley, Borgin and Burkes\nLucius, Arthur, Harry, Lockheart\nsuspicious, angry\n29",
+    "tags": [
+      "Diagon Alley",
+      "Knockturn Alley",
+      "Borgin and Burkes",
+      "Lucius",
+      "Arthur",
+      "Harry",
+      "Lockheart",
+      "suspicious",
+      "angry"
+    ],
+    "importance": "Medium",
+    "token_count": 494
+  },
+  {
+    "memory_id": "Chamber of Secrets 30",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nIt is time to return to Hogwarts, Harry and the Weasleys arrives at King's Cross Station on the Ford Anglia, after several delays (Fred and George forgetting their broomsticks, and Ginny forgetting her diary.) On the way to the Hogwarts Express, when Harry and Ron try to go through the barrier to Platform Nine and Three-Quarters after everyone else went through, the barrier is mysteriously sealed against them. Having missed the train, Harry and Ron thus decide to fly Mr Weasley's flying Ford Anglia to Hogwarts. They end up getting spotted by many Muggles and crash into the Whomping Willow, the impact breaking Ron's wand. The giant tree starts pounding the car. The battered car manages to escape, ejecting Harry, Ron, and their luggage, before quickly driving off into the Forbidden Forest.\n\nAfter they make it to the castle, Professor Snape catches the boys and attempts to have them expelled for being sighted and breaking wizard law to get to the castle. Albus Dumbledore, however, says he will send a letter to Harry and Ron's families. Still, Professor McGonagall gives a warning and separate detentions to both boys, and pointed out that they hadn't thought things through as they could have just sent a letter to Hogwarts with Hedwig. She also tells them that Ginny had been sorted into Gryffindor.\nPlatform Nine and Three Quarters, Hogwarts\nRon, Harry, Snape, McGonagall\ndistressed, afraid, disappointed",
+    "search_text": "First Hand\nWhen Harry and Ron attempt to cross into platform nine and three quarters, they find they are blocked. In desperation they fly the flying car to Hogwarts, crashing into the Whomping Willow and getting in trouble.\nPlatform Nine and Three Quarters, Hogwarts\nRon, Harry, Snape, McGonagall\ndistressed, afraid, disappointed\n30",
+    "tags": [
+      "Platform Nine and Three Quarters",
+      "Hogwarts",
+      "Ron",
+      "Harry",
+      "Snape",
+      "McGonagall",
+      "distressed",
+      "afraid",
+      "disappointed"
+    ],
+    "importance": "Medium",
+    "token_count": 368
+  },
+  {
+    "memory_id": "Chamber of Secrets 31",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nRon receives a Howler from his mother during breakfast in the Great Hall. Then, Minerva McGonagall hands out timetables and the first class is Herbology with the Hufflepuffs. In the class, Professor Sprout teaches how to transplant Mandrake seedlings, which have restorative properties when mature. When pulled from their pots, the Mandrakes let out a terrible screeching sound. The next class is Transfiguration, where Ron has problems with his broken wand, even when he repaired it with some Spellotape. \n\nLater, the trio have their first lesson with Gilderoy Lockhart, appointed as the new Defence Against the Dark Arts teacher. His way of teaching is a complete disaster. He releases a bunch of Cornish Pixies into the classroom, expecting the students to subdue them. When it is clear things aren’t going as planned, Lockhart slips out of the classroom, leaving his students to handle the chaos he unleashed on their own. \n\nMuch to Harry's chagrin, he receives constant attention from Lockhart and Colin Creevey, a first year student. Both constantly interact with him on the base of his fame (Colin treats Harry as a celebrity and Lockhart hopes to actually bring him to that state).\nHogwarts, Great Hall\nRon, McGonagall, Lockhart, Harry\nashamed, annoyed",
+    "search_text": "First Hand\nRon receives a Howler from his mother during breakfast in the Great Hall. In transfiguration class, Ron has problems with his broken wand. Later, Harry's first lesson with Gilderoy Lockhart in Defence Against the Dark Arts is a complete disaster.\nHogwarts, Great Hall\nRon, McGonagall, Lockhart, Harry\nashamed, annoyed\n31",
+    "tags": [
+      "Hogwarts",
+      "Great Hall",
+      "Ron",
+      "McGonagall",
+      "Lockhart",
+      "Harry",
+      "ashamed",
+      "annoyed"
+    ],
+    "importance": "Medium",
+    "token_count": 327
+  },
+  {
+    "memory_id": "Chamber of Secrets 32",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nThe Gryffindor Quidditch team has a very early practice on Saturday morning, where they are treated to an hour-long introduction to a new training programme Oliver Wood spent the summer working on. Soon after the actual practice starts, the Slytherin Quidditch team, with new Nimbus 2001 broomsticks, arrives, and an argument over field time ensues. During the confrontation, Malfoy is revealed to be the new Slytherin seeker, and the one responsible for getting the Slytherin team new brooms. Hermione says that nobody on the Gryffindor team had to buy their way in, they made it on pure talent. to which Malfoy calls Hermione a Mudblood, for which the Gryffindor team react angrily and Ron tries to curse him. However, his damaged wand causes the curse to backfire and he is rushed to Hagrid's cabin when he starts vomiting slugs. Ron and Hagrid both explain to Harry that Mudblood is a very insulting name for Muggle-Borns like Hermione. They also explain that there are some wizards like the Malfoys who think they are better than everyone else because they are Purebloods. After they return to the castle, Professor McGonagall assigns Harry and Ron their detentions. Harry is made to help Lockhart answer his fan mail, while Ron polishes the school's prizes and trophies. During his detention, Harry hears a disembodied sinister voice which Lockhart cannot hear.\nHogwarts, Quidditch Pitch\nHarry, Hermione, Malfoy\noutrage, unease\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nIt is revealed that Malfoy bought the entire Slytherin Quidditch team new brooms, and they made Malfoy their new seeker. Hermione says he bought his way onto the team, to which he responds by calling her a mudblood. Later, in detention, Harry hears sinister voices.\nHogwarts, Quidditch Pitch\nHarry, Hermione, Malfoy\noutrage, unease\n32",
+    "tags": [
+      "Hogwarts",
+      "Quidditch Pitch",
+      "Harry",
+      "Hermione",
+      "Malfoy",
+      "outrage",
+      "unease"
+    ],
+    "importance": "Medium",
+    "token_count": 410
+  },
+  {
+    "memory_id": "Chamber of Secrets 33",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nIn return for distracting Argus Filch just when he is about to give Harry severe punishment, Harry promises he will come to Nearly Headless Nick's Deathday Party on Halloween. He brings Ron and Hermione along as well. While there, they meet Moaning Myrtle. There are trays holding piles of rotting food, and no other living guests are present. The three of them quickly get sickened by the ghostly party and return to the Great Hall.\nHogwarts\nHarry, Ron, Hermione\ndisturbed\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nOn Halloween Harry, Ron, and Hermione attend Nearly Headless Nick's death day party, but are soon grossed out and leave.\nHogwarts\nHarry, Ron, Hermione\ndisturbed\n33",
+    "tags": [
+      "Hogwarts",
+      "Harry",
+      "Ron",
+      "Hermione",
+      "disturbed"
+    ],
+    "importance": "Medium",
+    "token_count": 149
+  },
+  {
+    "memory_id": "Chamber of Secrets 34",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nBefore they get to the Halloween feast, Harry hears the disembodied voice again (which Ron and Hermione cannot hear) and follows it to the second floor, where he finds  Mrs Norris, Filch's cat, hanging from a torch bracket, petrified and next to her, a threatening message is written on the wall, reading \"THE CHAMBER OF SECRETS HAS BEEN OPENED. ENEMIES OF THE HEIR, BEWARE\". Then, students leaving the Hallowe'en Feast surround them. And Malfoy yells: \"Enemies of the Heir, beware! You'll be next, Mudbloods!\"\n\nFilch and Snape try to get Harry in trouble for what happened, but Dumbledore says that it is powerful dark magic that no second year student could perform. They decide that Professor Sprout's mandrakes will be used, once they are mature enough, to create a draught that can revive Mrs Norris. Hermione wants to research the Chamber, so she persuades Professor Binns (the History of Magic teacher) into telling the class about it. He explains that one of the founders of Hogwarts, Salazar Slytherin, got into an argument with the others about whether Muggle-borns should be admitted. When the rift grew too large, he left the school. According to legend, as a going-away present to the school, he built a secret chamber that could only be opened by his true heir. This \"Chamber of Secrets\" contains a monster that only the Heir of Slytherin can control and that, once released, would purge the school of all Muggle-borns. Binns unsuccessfully tries to assure the class that the Chamber does not actually exist and that the school has been searched many times in vain.\nHogwarts\nHarry, Ron, Hermione, Binns\ndisturbed, frightened\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry hears a sinister disembodied voice, but Hermione and Ron don't hear it. The three discover Ms. Norris the cat, petrified, hanging next to a sinister message. Later, a teacher tells them the legend of the chamber of secrets, but insists it's just a legend.\nHogwarts\nHarry, Ron, Hermione, Binns\ndisturbed, frightened\n34",
+    "tags": [
+      "Hogwarts",
+      "Harry",
+      "Ron",
+      "Hermione",
+      "Binns",
+      "disturbed",
+      "frightened"
+    ],
+    "importance": "Medium",
+    "token_count": 463
+  },
+  {
+    "memory_id": "Chamber of Secrets 35",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry, Ron and Hermione decide that Slytherin’s heir is probably Draco Malfoy, since he is a Pureblood supremacist, and because his father worked for Voldemort. To try to confirm it, Hermione proposes to use Polyjuice Potion, which can change a person into somebody else for an hour. After getting Lockhart's signature to check out the book Moste Potente Potions from the Restricted Section that has the recipe, Hermione warns them that the potion will take a month to brew, supposing they gather all the necessary ingredients. Since no one comes into Moaning Myrtle's bathroom, the three of them decide it is the best place to brew the potion unnoticed.\n\nDuring the month that it takes the Polyjuice Potion to brew, a Quidditch match between Gryffindor and Slytherin takes place. During the match, one of the Bludgers stakes after Harry and focuses completely on him, indicating the Bludger has been tampered with. Harry still manages to catch the Golden Snitch and allow for Gryffindor to win thanks to the Slytherin Seeker Draco Malfoy wasting his time insulting Harry and not paying attention. However, before Harry could catch the Snitch, the Bludger broke Harry's arm, and Lockhart, attempting to fix it, gets rid of all the bones in his arm instead. Madam Pomfrey gives Harry Skele-Gro potion to counter this and Harry is forced to stay in the Hospital Wing overnight.\n\nDuring that night, Dobby visits Harry and reveals that it was he who made the Bludger chase after Harry, and was also responsible for the barrier of Platform Nine and Three-Quarters not letting him in for in hopes of Harry leaving or never arriving at Hogwarts. He also reveals that the Chamber of Secrets has been opened before and immediately punishes himself, as he is not supposed to reveal anything. After Dobby disappears, Dumbledore, McGonagall, and Madam Pomfrey enter with Colin Creevey, who has been petrified.\nHogwarts, Hospital Wing\nHarry, Hermione, Lockhart, Dobby\nsuspicion, anger\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry, Ron, and Hermione believe Malfoy to be the heir of Slytherin, so they begin work on a polyjuice potion. A Bludger breaks Harry's arm during Quidditch, and Lockhart removes the bones in his arm. Dobby reveals he is responsible for the Bludger and Harry not being able to get on platform nine and three quarters.\nHogwarts, Hospital Wing\nHarry, Hermione, Lockhart, Dobby\nsuspicion, anger\n35",
+    "tags": [
+      "Hogwarts",
+      "Hospital Wing",
+      "Harry",
+      "Hermione",
+      "Lockhart",
+      "Dobby",
+      "suspicion",
+      "anger"
+    ],
+    "importance": "Medium",
+    "token_count": 561
+  },
+  {
+    "memory_id": "Chamber of Secrets 36",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHermione comes up with a plan of Harry and Ron providing a distraction in Potions so she can steal the remaining ingredients for the Polyjuice Potion from Snape's private stores. Shortly afterwards, when McGonagall comes around with the sign-up list for the students who will remain in the school during Christmas, learning that Malfoy, Crabbe, and Goyle have signed up, Harry, Ron, and Hermione do this as well, since this gives them the perfect opportunity to use their Polyjuice Potion. With Harry providing a distraction during Potions class by throwing a firework into Goyle's cauldron, it creates the necessary disturbance allowing Hermione to succeed without trouble. Harry later signs up for a Duelling Club which, to Harry's great displeasure, is taught by his two least favourite teachers, Lockhart and Snape. During a practice battle in the first meeting, Draco Malfoy conjures a snake to attack Harry. Lockhart tries to banish it, but all he manages is to set it loose on the students. Harry sees that the snake is advancing on a Hufflepuff student named Justin Finch-Fletchley and instinctively tells it to stop, which-to Harry's great surprise-it does. He expects Justin to be grateful, but all they saw was Harry speaking Parseltongue, the language of snakes, and since they cannot understand it, it seemed to them that he was egging the snake on. Harry learns that Parseltongue is a very rare gift that is closely associated with Salazar Slytherin. Due to this, Harry becomes the number one suspect among students for being the heir of Slytherin. Seconds after leaving Hagrid, Harry runs into a petrified Justin Finch-Fletchley and a black, also petrified, Nearly-Headless Nick. Peeves alerts the whole school, and a Hufflepuff student called Ernie Macmillan claims that Harry has been caught red-handed.\nHogwarts\nHarry, Malfoy, Hermione, Fletchley, Macmillan\nconfused, shocked\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHermione steals potion ingredients from Snape with help from Harry and Ron. Harry unknowingly reveals he speaks Parseltongue during a Dueling Club, alarming students. This, plus being found near two petrified victims, causes many to suspect he’s the Heir of Slytherin.\nHogwarts\nHarry, Malfoy, Hermione, Fletchley, Macmillan\nconfused, shocked\n36",
+    "tags": [
+      "Hogwarts",
+      "Harry",
+      "Malfoy",
+      "Hermione",
+      "Fletchley",
+      "Macmillan",
+      "confused",
+      "shocked"
+    ],
+    "importance": "Medium",
+    "token_count": 504
+  },
+  {
+    "memory_id": "Chamber of Secrets 37",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nFor the first time, Harry is taken to Dumbledore's office, and there he witnesses Fawkes—Dumbledore's phoenix—bursting into flames and then being reborn from the ashes. Dumbledore says that he does not believe Harry to be behind the attacks, a belief reinforced by Hagrid backing Harry's alibi, but a large portion of the school is now sure that Harry is Slytherin's heir. When Christmas arrives (Harry's gifts: a toothpick, fudge in a tin, a copy of Flying with the Cannons, a new quill, a jumper and plum cake), with the Polyjuice Potion ready and Hermione having acquired some spare Slytherin robes to use, they give to Crabbe and Goyle two chocolate cakes containing \"sleeping pills\" that made Crabbe and Goyle fall asleep after eating the cakes. Harry and Ron take their hairs (and shoes, because Crabbe and Goyle have larger feet) and assume their form. Hermione tries to use a hair she thought belongs to Millicent Bulstrode, but it is actually her cat's hair and Hermione is transformed into a cat/human hybrid. Hermione is forced to spend a few weeks in the Hospital Wing. As Crabbe and Goyle, once Draco leads them to the Slytherin common room, Harry and Ron interrogate an unsuspecting Malfoy and discover that even though he wishes he were, Draco is not the Heir of Slytherin. They also hear that Lucius Malfoy mentioned that the last time the chamber was opened, fifty years ago, a Muggle-born student died and whoever was responsible was expelled. Malfoy also mentions his father's secret stash of illegal artefacts.\nHogwarts, Slytherin Common Room\nHarry, Ron, Hermione, Crabbe, Goyle, Malfoy\nshocked\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry visits Dumbledore and meets Fawkes, the phoenix. At Christmas, the trio uses Polyjuice Potion to question Malfoy. Hermione’s dose goes wrong, turning her part-cat. Disguised as Crabbe and Goyle, Harry and Ron learn Malfoy isn’t the Heir, but hear clues about Lucius Malfoy’s secrets.\nHogwarts, Slytherin Common Room\nHarry, Ron, Hermione, Crabbe, Goyle, Malfoy\nshocked\n37",
+    "tags": [
+      "Hogwarts",
+      "Slytherin Common Room",
+      "Harry",
+      "Ron",
+      "Hermione",
+      "Crabbe",
+      "Goyle",
+      "Malfoy",
+      "shocked"
+    ],
+    "importance": "Medium",
+    "token_count": 468
+  },
+  {
+    "memory_id": "Chamber of Secrets 38",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nRon and Harry arrive at Moaning Myrtle's bathroom to find it flooded. Myrtle, a sulking ghost, explains that she had flooded it because somebody flushed a diary down the toilet and onto her. Harry picks it up; he discovers that it once belonged to somebody called T.M. Riddle, but the diary is completely blank. Ron remembers from his detention that Riddle had won an award for special service to the school fifty years before. Hermione deduces that since this coincides with the last time the Chamber was opened, Tom Riddle might have received his prize for catching whoever was responsible for the attacks back then. Even though all attempts to extract information from the diary fail, Harry feels a strange compulsion to keep it. On Valentine's Day, Ron and Harry are dismayed to find out Lockhart has spread dwarves dressed as cupids throughout the school to receive and deliver Valentines as a morale booster due to believing that he made the attacks stop. One cupid-dwarf manages to deliver one (a singing valentine from Ginny) to Harry. While struggling to avoid him, the embarrassed Harry trips and falls, having ink spilled all over the contents of his bag. Ginny notices the diary and assumes a horrified expression. Draco Malfoy also tries to steal the diary as Harry is picking up his stuff, but an angered Harry casts Expelliarmus on him, ignoring that Percy Weasley was also there trying to handle the situation, which results in Percy reprimanding Harry.\nHogwarts, Girls Bathroom\nMalfoy, Harry, Ginny\ncurious, angry, embarrassed\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
+    "search_text": "First Hand\nHarry finds a blank diary belonging to T.M. Riddle, suspected to be linked to the last Chamber attacks. Despite no visible writing, Harry feels drawn to it. On Valentine’s Day, Ginny panics upon seeing the diary, and Harry casts a spell at Malfoy after he tries to steal it.\nHogwarts, Girls Bathroom\nMalfoy, Harry, Ginny\ncurious, angry, embarrassed\n38",
+    "tags": [
+      "Hogwarts",
+      "Girls Bathroom",
+      "Malfoy",
+      "Harry",
+      "Ginny",
+      "curious",
+      "angry",
+      "embarrassed"
+    ],
+    "importance": "Medium",
+    "token_count": 399
+  },
+  {
+    "memory_id": "Chamber of Secrets 39",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry realises that even if ink is spilled all over the diary, it is not stained at all. He tries writing to the diary and, to his surprise, Riddle writes back. He explains that he was the one who caught the person who opened the Chamber of Secrets the last time, and he can show Harry what happened. Harry agrees and gets sucked into a \"recording\" of Riddle's memory. Transported back to 13 June 1943, he witnesses the school's previous headmaster, Armando Dippet, informing Riddle that the school will be closed, since now a Muggle-born girl has died. Riddle is apprehensive of this, since it would mean getting sent back to the Muggle orphanage he grew up in and grown to hate. Dippet guesses that Riddle is Muggle-born as well, but Riddle corrects him by revealing that he's actually half-blood, having been left at the orphanage after his witch mother died, but not before requesting her son's first name to be Tom, after his Muggle father, and his middle name to be Marvolo, after his wizard grandfather. When dismissed by Dippet and a 50-years-younger Dumbledore, Harry follows Riddle down into the dungeons, where Riddle catches a 50-years-younger Hagrid fiddling with a young Acromantula (giant spider) in a cupboard. Accusing the giant of harbouring the monster behind the death of the Muggle-born girl in question, Riddle reports Hagrid to Dippet, despite Hagrid protesting that that his Acromantula, who he has seemingly named Aragog, has never killed anyone. Having seen this, Harry now believes that Hagrid was the one who opened the Chamber fifty years before and he is responsible this time.\nHogwarts\nHagrid, Harry, Tom Riddle\nsurprised, intrigued",
+    "search_text": "First Hand\nHarry writes in the diary and is shown Tom Riddle’s memory from 1943. Riddle blames Hagrid for the Chamber attacks, claiming Hagrid kept a deadly spider named Aragog. Harry, convinced by the scene, now suspects Hagrid was behind both the past and current attacks.\nHogwarts\nHagrid, Harry, Tom Riddle\nsurprised, intrigued\n39",
+    "tags": [
+      "Hogwarts",
+      "Hagrid",
+      "Harry",
+      "Tom Riddle",
+      "surprised",
+      "intrigued"
+    ],
+    "importance": "Medium",
+    "token_count": 455
   },
   {
     "memory_id": "Philosopher's Stone 1",
@@ -45,7 +278,7 @@
       "indifferent"
     ],
     "importance": "Medium",
-    "token_count": 392
+    "token_count": 391
   },
   {
     "memory_id": "Philosopher's Stone 10",
@@ -61,11 +294,11 @@
       "happy"
     ],
     "importance": "Medium",
-    "token_count": 346
+    "token_count": 345
   },
   {
     "memory_id": "Philosopher's Stone 11",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nAll of Harry’s classes are very interesting to Harry, with the only exception being History of Magic, taught by Professor Binns. In his first Transfiguration class on Thursday, Professor McGonagall transfigures her desk into a pig and then back again while explaining how Transfiguration itself is some of the most complex and dangerous magic to be learned, and anyone who will get caught messing around with it will have to be banned from the class. Only Hermione is able to make any progress at turning a match into a needle, for which McGonagall gives her a rare smile, but Harry is relieved to see that most of his peers are just as lost as he is. When the time comes to transition to Defence Against the Dark Arts class every morning, the lesson turns into more of a joke, as Quirrell keeps going on with stories about his travels in the year prior, such as when he had ward off a vampire in Romania, and when he had earned his turban from an African prince for saving him from a troublesome zombie. \n\nDuring breakfast on the first Friday, Hedwig arrives with a tea invitation from Hagrid. Later, in his Potions class, Harry discovers that Professor Snape hates him, mocking Harry as \"our new celebrity\" and then humiliating Harry for his ignorance of potion-making materials, asking him a series of questions he doesn’t know the answer to, all why Hermione is raising her hand, being completely ignored by Snape, much to her frustration.\nHogwarts, Transfiguration Classroom, Potions Classroom\nHarry, McGonagall, Snape, Hermione\ninterested, embarrassed",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nAll of Harry’s classes are very interesting to Harry, with the only exception being History of Magic, taught by Professor Binns. In his first Transfiguration class on Thursday, Professor McGonagall transfigures her desk into a pig and then back again while explaining how Transfiguration itself is some of the most complex and dangerous magic to be learned, and anyone who will get caught messing around with it will have to be banned from the class. Only Hermione is able to make any progress at turning a match into a needle, for which McGonagall gives her a rare smile, but Harry is relieved to see that most of his peers are just as lost as he is. When the time comes to transition to Defence Against the Dark Arts class every morning, the lesson turns into more of a joke, as Quirrell keeps going on with stories about his travels in the year prior, such as when he had ward off a vampire in Romania, and when he had earned his turban from an African prince for saving him from a troublesome zombie. \n\nDuring breakfast on the first Friday, Hedwig arrives with a tea invitation from Hagrid. Later, in his Potions class, Harry discovers that Professor Snape hates him, mocking Harry as \"our new celebrity\" and then humiliating Harry for his ignorance of potion-making materials, asking him a series of questions he doesn’t know the answer to, all why Hermione is raising her hand, being completely ignored by Snape, much to her frustration.\nHogwarts, Transfiguration Classroom, Potions Classroom\nHarry, McGonagall, Snape, Hermione\ninterested, embarrassed\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry experiences his first classes at Hogwarts, and is pleased to see most other students (except for Hermione) are just as clueless as he is. In his first potions class, Snape makes it a point to embarrass Harry as much as possible. Snape clearly has a grudge against Harry.\nHogwarts, Transfiguration Classroom, Potions Classroom\nHarry, McGonagall, Snape, Hermione\ninterested, embarrassed\n11",
     "tags": [
       "Hogwarts",
@@ -79,7 +312,7 @@
       "embarrassed"
     ],
     "importance": "Medium",
-    "token_count": 373
+    "token_count": 395
   },
   {
     "memory_id": "Philosopher's Stone 12",
@@ -96,11 +329,11 @@
       "surprised"
     ],
     "importance": "Medium",
-    "token_count": 327
+    "token_count": 326
   },
   {
     "memory_id": "Philosopher's Stone 13",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nMalfoy comes over with his cronies Vincent Crabbe and Gregory Goyle and teases Harry about getting in trouble during flying practice. The tension grows and Malfoy challenges Harry to a wizard's duel. Harry accepts, in spite of Hermione's attempt to dissuade them from breaking the school rules. As Harry and Ron sneak out later that night, Hermione tries to stop them but gets locked out of the dorm (the Fat Lady has gone for an evening stroll) and must tag along. Neville also joins them, as he has forgotten the password to the common room and ended up sleeping on the floor outside. They arrive at the Trophy Room, the site of the duel, but Malfoy is nowhere to be found. Suddenly, they hear Argus Filch and his cat, Mrs Norris, enter the room. With it obvious that Malfoy tricked them, they begin to hide and then run away. Not sure where they are going, they accidentally end up in the forbidden area on the third floor, staring at a large and scary three-headed dog (named Fluffy). The children manage to get back to their dorm safely, though they are terrified. Hermione reprimands Harry, saying they could have ended up dead, or worse, expelled. Hermione stirs Harry's curiosity by pointing out that the dog was standing on a trapdoor.\nHogwarts, Gryffindor Tower\nHarry, Ron, Hermione, Malfoy, Filch, Fluffy\ntense, scared",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nMalfoy comes over with his cronies Vincent Crabbe and Gregory Goyle and teases Harry about getting in trouble during flying practice. The tension grows and Malfoy challenges Harry to a wizard's duel. Harry accepts, in spite of Hermione's attempt to dissuade them from breaking the school rules. As Harry and Ron sneak out later that night, Hermione tries to stop them but gets locked out of the dorm (the Fat Lady has gone for an evening stroll) and must tag along. Neville also joins them, as he has forgotten the password to the common room and ended up sleeping on the floor outside. They arrive at the Trophy Room, the site of the duel, but Malfoy is nowhere to be found. Suddenly, they hear Argus Filch and his cat, Mrs Norris, enter the room. With it obvious that Malfoy tricked them, they begin to hide and then run away. Not sure where they are going, they accidentally end up in the forbidden area on the third floor, staring at a large and scary three-headed dog (named Fluffy). The children manage to get back to their dorm safely, though they are terrified. Hermione reprimands Harry, saying they could have ended up dead, or worse, expelled. Hermione stirs Harry's curiosity by pointing out that the dog was standing on a trapdoor.\nHogwarts, Gryffindor Tower\nHarry, Ron, Hermione, Malfoy, Filch, Fluffy\ntense, scared\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry is challenged to a duel by Malfoy, which Harry accepts. Sneaking out to attend the duel Hermione tries to talk them out of breaking the rules, but gets locked out and tags along. Malfoy doesn't show up to the duel, tipping of Filch. Trying to escape Filch they run into a giant, three headed dog (named Fluffy). The three return to Gryffindor tower without getting caught.\nHogwarts, Gryffindor Tower\nHarry, Ron, Hermione, Malfoy, Filch, Fluffy\ntense, scared\n13",
     "tags": [
       "Hogwarts",
@@ -115,7 +348,7 @@
       "scared"
     ],
     "importance": "Medium",
-    "token_count": 342
+    "token_count": 364
   },
   {
     "memory_id": "Philosopher's Stone 14",
@@ -131,11 +364,11 @@
       "Happy"
     ],
     "importance": "Medium",
-    "token_count": 209
+    "token_count": 208
   },
   {
     "memory_id": "Philosopher's Stone 15",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nOn Halloween, Flitwick begins teaching his students how to make things fly, using the Wingardium Leviosa spell. Hermione is the first to succeed; Ron, offended by her air of superiority, utters a nasty comment about Hermione not having any friends that Hermione overhears. Harry notices her running off in tears.\n\nHarry and Ron arrive at the Halloween feast to hear Professor Quirrell, the teacher of Defence Against the Dark Arts, burst in and give a terrifying announcement about a twelve-foot troll in the building. As the prefects lead the students back to their dorms, Harry realises that Hermione does not know about the troll. They head off to warn her and come upon the troll. Unwittingly, they lock it in the girls' bathroom only to realise that Hermione is trapped in there with the troll. Rushing into the bathroom they first try to distract the troll by throwing things. Harry jumps on its back and inadvertently jams his wand up its nose. Ron casts Wingardium Leviosa on the trolls club, dropping it on the trolls head, knocking it out. Professor McGonagall finds them and begins to scold the boys. Hermione interjects that Harry and Ron were looking for her. She then lies, saying that she went to face the troll herself and that Ron and Harry had been trying to save her from it. At this point, Hermione befriends them.\nHogwarts, Girls Washroom\nHarry, Ron, Hermione, Troll\nscared, triumphant",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nOn Halloween, Flitwick begins teaching his students how to make things fly, using the Wingardium Leviosa spell. Hermione is the first to succeed; Ron, offended by her air of superiority, utters a nasty comment about Hermione not having any friends that Hermione overhears. Harry notices her running off in tears.\n\nHarry and Ron arrive at the Halloween feast to hear Professor Quirrell, the teacher of Defence Against the Dark Arts, burst in and give a terrifying announcement about a twelve-foot troll in the building. As the prefects lead the students back to their dorms, Harry realises that Hermione does not know about the troll. They head off to warn her and come upon the troll. Unwittingly, they lock it in the girls' bathroom only to realise that Hermione is trapped in there with the troll. Rushing into the bathroom they first try to distract the troll by throwing things. Harry jumps on its back and inadvertently jams his wand up its nose. Ron casts Wingardium Leviosa on the trolls club, dropping it on the trolls head, knocking it out. Professor McGonagall finds them and begins to scold the boys. Hermione interjects that Harry and Ron were looking for her. She then lies, saying that she went to face the troll herself and that Ron and Harry had been trying to save her from it. At this point, Hermione befriends them.\nHogwarts, Girls Washroom\nHarry, Ron, Hermione, Troll\nscared, triumphant\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nAfter Hermione corrects Ron during charms class he insults her, causing Hermione to run and cry in the girls bathroom. Later, when a troll shows up, Harry and Ron work together to rescue Hermione. Hermione becomes their friend.\nHogwarts, Girls Washroom\nHarry, Ron, Hermione, Troll\nscared, triumphant\n15",
     "tags": [
       "Hogwarts",
@@ -148,11 +381,11 @@
       "triumphant"
     ],
     "importance": "Medium",
-    "token_count": 362
+    "token_count": 384
   },
   {
     "memory_id": "Philosopher's Stone 16",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry borrows a book entitled Quidditch Through the Ages from Hermione. Professor Snape discovers Ron, Harry, and Hermione out with the book and confiscates it. Harry notices that Snape is limping. Going off to retrieve the book from Snape, Harry overhears Snape talking to Argus Filch about the fact that the three-headed dog has attacked him, leaving a cut on his leg, which makes Harry very suspicious.\n\nThe next morning, the Quidditch match begins. Harry spots the Golden Snitch early in the game and is flying toward it when the Slytherin Captain pushes him out of the way and is penalised. Later in the game, Harry's broom begins jerking uncontrollably. Hagrid comments that only Dark magic could make a broomstick so hard to manage. Hermione notices that Snape is staring at Harry and muttering to himself (Unaware Quirrell is the one hexing Harry), signs of casting a curse. Hermione rushes over to Snape in such a hurry that she knocks Quirrell over, sneaks behind Snape, and sets his robe on fire. Suddenly, the spell on Harry's broom is broken and Harry is once again in control. He starts speeding toward the ground and lands, catching the Snitch in his mouth and nearly swallowing it.\n\nHagrid takes Harry back to his hut with Hermione and Ron, who tells Harry that Snape was putting a curse on his broomstick. Hagrid does not believe this, asking why Snape would try to kill Harry. Harry tells Hagrid about Snape getting injured by the dog in the third-floor corridor. Hagrid involuntarily reveals that the three-headed dog, Fluffy, is his, and that what the dog is guarding is a secret known only to Albus Dumbledore and a man named Nicolas Flamel.\nHogwarts, The Quidditch Pitch\nHarry, Hermione, Snape, Quirrell, Hagrid\ndistressed, triumphant, intrigued",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry borrows a book entitled Quidditch Through the Ages from Hermione. Professor Snape discovers Ron, Harry, and Hermione out with the book and confiscates it. Harry notices that Snape is limping. Going off to retrieve the book from Snape, Harry overhears Snape talking to Argus Filch about the fact that the three-headed dog has attacked him, leaving a cut on his leg, which makes Harry very suspicious.\n\nThe next morning, the Quidditch match begins. Harry spots the Golden Snitch early in the game and is flying toward it when the Slytherin Captain pushes him out of the way and is penalised. Later in the game, Harry's broom begins jerking uncontrollably. Hagrid comments that only Dark magic could make a broomstick so hard to manage. Hermione notices that Snape is staring at Harry and muttering to himself (Unaware Quirrell is the one hexing Harry), signs of casting a curse. Hermione rushes over to Snape in such a hurry that she knocks Quirrell over, sneaks behind Snape, and sets his robe on fire. Suddenly, the spell on Harry's broom is broken and Harry is once again in control. He starts speeding toward the ground and lands, catching the Snitch in his mouth and nearly swallowing it.\n\nHagrid takes Harry back to his hut with Hermione and Ron, who tells Harry that Snape was putting a curse on his broomstick. Hagrid does not believe this, asking why Snape would try to kill Harry. Harry tells Hagrid about Snape getting injured by the dog in the third-floor corridor. Hagrid involuntarily reveals that the three-headed dog, Fluffy, is his, and that what the dog is guarding is a secret known only to Albus Dumbledore and a man named Nicolas Flamel.\nHogwarts, The Quidditch Pitch\nHarry, Hermione, Snape, Quirrell, Hagrid\ndistressed, triumphant, intrigued\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nDuring Harry's first Quidditch match his broom starts behaving erratically. suspecting his is being cursed by Snape, Hermione sneaks up behind him and secretly sets his robes on fire. Harry regains control of his broom, winning the match. Later, Hagrid reveals the three headed dog (Fluffy) is his, and its guarding something to do with Nicolas Flamel.\nHogwarts, The Quidditch Pitch\nHarry, Hermione, Snape, Quirrell, Hagrid\ndistressed, triumphant, intrigued\n16",
     "tags": [
       "Hogwarts",
@@ -167,11 +400,11 @@
       "intrigued"
     ],
     "importance": "Medium",
-    "token_count": 467
+    "token_count": 489
   },
   {
     "memory_id": "Philosopher's Stone 17",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nChristmas is approaching. Malfoy teases Harry about having to stay at Hogwarts for the holiday, as he does not have parents. Harry, however, is looking forward to spending Christmas away from the Dursleys, especially because Ron is also staying at Hogwarts, as Mr and Mrs Weasley are going to visit Ron's older brother Charlie in Romania. The day before the holidays, Hermione tears Ron and Harry away from a conversation with Hagrid to look in the library for more information about Nicolas Flamel. The librarian, Madam Pince, catches Harry prowling around the restricted-books section of the library and kicks him out.\n\nOn Christmas Day, Harry and Ron awaken to presents, though Harry's are fewer. Harry receives a flute from Hagrid, a 50 pence coin from the Dursleys, some fudge and Chocolate Frogs from Hermione, and a knitted jumper from Ron's mother. He also receives an Invisibility cloak accompanied only by an anonymous note telling him that the cloak once belonged to Harry's father and to \"use it well.\"\nHogwarts, Gryffindor Tower\nHarry, Ron\nHappy, amazed",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nChristmas is approaching. Malfoy teases Harry about having to stay at Hogwarts for the holiday, as he does not have parents. Harry, however, is looking forward to spending Christmas away from the Dursleys, especially because Ron is also staying at Hogwarts, as Mr and Mrs Weasley are going to visit Ron's older brother Charlie in Romania. The day before the holidays, Hermione tears Ron and Harry away from a conversation with Hagrid to look in the library for more information about Nicolas Flamel. The librarian, Madam Pince, catches Harry prowling around the restricted-books section of the library and kicks him out.\n\nOn Christmas Day, Harry and Ron awaken to presents, though Harry's are fewer. Harry receives a flute from Hagrid, a 50 pence coin from the Dursleys, some fudge and Chocolate Frogs from Hermione, and a knitted jumper from Ron's mother. He also receives an Invisibility cloak accompanied only by an anonymous note telling him that the cloak once belonged to Harry's father and to \"use it well.\"\nHogwarts, Gryffindor Tower\nHarry, Ron\nHappy, amazed\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry spends Chistmas at Hogwarts with Ron, recieving gifts from friends for the first time. He also recieves an invisibility cloak from an unknown individual.\nHogwarts, Gryffindor Tower\nHarry, Ron\nHappy, amazed\n17",
     "tags": [
       "Hogwarts",
@@ -182,7 +415,7 @@
       "amazed"
     ],
     "importance": "Medium",
-    "token_count": 285
+    "token_count": 307
   },
   {
     "memory_id": "Philosopher's Stone 18",
@@ -196,11 +429,11 @@
       "amazed"
     ],
     "importance": "Medium",
-    "token_count": 363
+    "token_count": 362
   },
   {
     "memory_id": "Philosopher's Stone 19",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry suddenly remembers that he read the name Nicolas Flamel on a chocolate frog card, which reminds Hermione that she had seen the name in a book she picked up from the library, and the team discover that he was a famous alchemist who is the only known maker of the Philosopher's Stone, whose powers include turning any metal to gold and producing the Elixir of Life, a potion that can make the drinker immortal.\n\nThe Gryffindor versus Hufflepuff Quidditch match arrives and Snape, who referees the match, is predictably biased, while on the stands Ron and Neville get into a scuffle with Malfoy, Crabbe, and Goyle after Malfoy made some rude comments towards the players of their house's team as well as both of them. Harry catches the snitch and wins the match under five minutes, though Ron did not see this due to fighting Draco Malfoy, and Neville is sent to the hospital wing due to the injuries he sustained from fighting both Crabbe and Goyle. Later, Harry notices and follows Snape into the Forbidden Forest by broomstick where he meets Quirrell and they speak of the Philosopher's Stone. Harry thinks that Snape is trying to force Quirrell to help him get the stone so he can get rich, to the alarm of both Ron and Hermione who fear Quirrell will talk.\nHogwarts\nHarry, Snape, Quirrell\nsuspicious",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry suddenly remembers that he read the name Nicolas Flamel on a chocolate frog card, which reminds Hermione that she had seen the name in a book she picked up from the library, and the team discover that he was a famous alchemist who is the only known maker of the Philosopher's Stone, whose powers include turning any metal to gold and producing the Elixir of Life, a potion that can make the drinker immortal.\n\nThe Gryffindor versus Hufflepuff Quidditch match arrives and Snape, who referees the match, is predictably biased, while on the stands Ron and Neville get into a scuffle with Malfoy, Crabbe, and Goyle after Malfoy made some rude comments towards the players of their house's team as well as both of them. Harry catches the snitch and wins the match under five minutes, though Ron did not see this due to fighting Draco Malfoy, and Neville is sent to the hospital wing due to the injuries he sustained from fighting both Crabbe and Goyle. Later, Harry notices and follows Snape into the Forbidden Forest by broomstick where he meets Quirrell and they speak of the Philosopher's Stone. Harry thinks that Snape is trying to force Quirrell to help him get the stone so he can get rich, to the alarm of both Ron and Hermione who fear Quirrell will talk.\nHogwarts\nHarry, Snape, Quirrell\nsuspicious\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry discovers Nicolas Flamel is an alchemist who created the Philosophers Stone, which can make a person immortal. Later, Harry sees Snape talk about the Philosophers Stone, causing Harry to think Snape intends to steal it.\nHogwarts\nHarry, Snape, Quirrell\nsuspicious\n19",
     "tags": [
       "Hogwarts",
@@ -210,7 +443,7 @@
       "suspicious"
     ],
     "importance": "Medium",
-    "token_count": 345
+    "token_count": 367
   },
   {
     "memory_id": "Philosopher's Stone 2",
@@ -225,11 +458,11 @@
       "angry"
     ],
     "importance": "Medium",
-    "token_count": 405
+    "token_count": 404
   },
   {
     "memory_id": "Philosopher's Stone 20",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry, Ron and Hermione meet with Hagrid, who confirms the Stone is being kept at Hogwarts. Hermione charms him into talking about the enchantments used to guard it: Fluffy, the three-headed dog, is Hagrid's, along with enchantments from Professors Sprout, Flitwick, McGonagall, Quirrell, and Snape. After this, Harry complains about the high temperature in Hagrid's hut, only to discover he has a Norwegian Ridgeback dragon egg, which he names Norbert once it has hatched. Malfoy, who has been spying on them, discovers the dragon. To solve the problem, they convince Hagrid to send the dragon off to Ron's brother Charlie. Ron's hand is bitten by the dragon, and he is sent off to Madam Pomfrey. Harry and Hermione smuggle Norbert in a crate up to the tallest tower under Harry's Invisibility cloak and on the way they see Professor McGonagall hauling Malfoy away to detention for being out of bed at night and speaking \"lies\" about Harry and a dragon. They pass the crate off to Charlie's friends, and head back down the stairs, where they meet up with Filch, realising too late they have left the Invisibility Cloak behind. Filch takes Harry and Hermione to McGonagall's office, where they meet Neville. McGonagall, very disappointed, takes 50 points each from the three of them and gives them all detention, which they will serve with Malfoy. Their popularity with the other students suffers because of this.\nHogwarts, Hagrids Hut\nHarry, Ron, Hermione, McGonagall, Hagrid\nsurprised, guilty",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry, Ron and Hermione meet with Hagrid, who confirms the Stone is being kept at Hogwarts. Hermione charms him into talking about the enchantments used to guard it: Fluffy, the three-headed dog, is Hagrid's, along with enchantments from Professors Sprout, Flitwick, McGonagall, Quirrell, and Snape. After this, Harry complains about the high temperature in Hagrid's hut, only to discover he has a Norwegian Ridgeback dragon egg, which he names Norbert once it has hatched. Malfoy, who has been spying on them, discovers the dragon. To solve the problem, they convince Hagrid to send the dragon off to Ron's brother Charlie. Ron's hand is bitten by the dragon, and he is sent off to Madam Pomfrey. Harry and Hermione smuggle Norbert in a crate up to the tallest tower under Harry's Invisibility cloak and on the way they see Professor McGonagall hauling Malfoy away to detention for being out of bed at night and speaking \"lies\" about Harry and a dragon. They pass the crate off to Charlie's friends, and head back down the stairs, where they meet up with Filch, realising too late they have left the Invisibility Cloak behind. Filch takes Harry and Hermione to McGonagall's office, where they meet Neville. McGonagall, very disappointed, takes 50 points each from the three of them and gives them all detention, which they will serve with Malfoy. Their popularity with the other students suffers because of this.\nHogwarts, Hagrids Hut\nHarry, Ron, Hermione, McGonagall, Hagrid\nsurprised, guilty\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry learns more about the protections guarding the philosophers stone, and discovers Hagrid has an illegal dragons egg. After the egg hatches they convince Hagrid to let them send it to Ron's brother Charlie. After successfully getting rid of the dragon, Harry and Hermione are caught and punished.\nHogwarts, Hagrids Hut\nHarry, Ron, Hermione, McGonagall, Hagrid\nsurprised, guilty\n20",
     "tags": [
       "Hogwarts",
@@ -243,11 +476,11 @@
       "guilty"
     ],
     "importance": "Medium",
-    "token_count": 416
+    "token_count": 438
   },
   {
     "memory_id": "Philosopher's Stone 21",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nFilch takes Harry, Hermione, Neville, and Malfoy out to the Forbidden Forest to serve their detention, where Hagrid awaits to take them in to do a bit of investigating. Hagrid shows them some silver unicorn blood and says they need to find the unicorn that is hurt. They split up, with Hagrid taking Harry and Hermione, and Neville and Malfoy going with Fang. Hagrid encounters a few centaurs, named Ronan and Bane, but gets no useful information from them. Suddenly, Hagrid sees red sparks in the air, signalling the other party is in trouble. He runs for them and returns, scolding Malfoy for startling Neville into sending up the sparks. Hagrid switches Harry and Neville, sending Harry off with Malfoy instead. They eventually find the dead unicorn and see something drinking its blood. Malfoy screams and runs with Fang, leaving Harry, who is saved from the figure by a centaur, named Firenze, who tells Harry that unicorn blood can keep you alive, even if you are an inch from death, but curses you with a half-life in the process. He then reveals that the person who was drinking it was doing so to remain alive until they were able to drink the Elixir of Life and wants the Stone. He also asks Harry if he would not know anyone who has been waiting for years to regain power and Harry realises that the mysterious figure was a weakened but still alive Voldemort.\nBack in the common room, Harry tells Hermione and Ron Voldemort's in the forest and that Snape wants the Stone to help Voldemort restore his powers. Afterwards, going into his bed, Harry finds that his Invisibility Cloak has been returned to him.\nHogwarts, Forbidden Forest\nHarry, Hermione, Hagrid, Voldemort, Firenze\nscared, disturbed",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nFilch takes Harry, Hermione, Neville, and Malfoy out to the Forbidden Forest to serve their detention, where Hagrid awaits to take them in to do a bit of investigating. Hagrid shows them some silver unicorn blood and says they need to find the unicorn that is hurt. They split up, with Hagrid taking Harry and Hermione, and Neville and Malfoy going with Fang. Hagrid encounters a few centaurs, named Ronan and Bane, but gets no useful information from them. Suddenly, Hagrid sees red sparks in the air, signalling the other party is in trouble. He runs for them and returns, scolding Malfoy for startling Neville into sending up the sparks. Hagrid switches Harry and Neville, sending Harry off with Malfoy instead. They eventually find the dead unicorn and see something drinking its blood. Malfoy screams and runs with Fang, leaving Harry, who is saved from the figure by a centaur, named Firenze, who tells Harry that unicorn blood can keep you alive, even if you are an inch from death, but curses you with a half-life in the process. He then reveals that the person who was drinking it was doing so to remain alive until they were able to drink the Elixir of Life and wants the Stone. He also asks Harry if he would not know anyone who has been waiting for years to regain power and Harry realises that the mysterious figure was a weakened but still alive Voldemort.\nBack in the common room, Harry tells Hermione and Ron Voldemort's in the forest and that Snape wants the Stone to help Voldemort restore his powers. Afterwards, going into his bed, Harry finds that his Invisibility Cloak has been returned to him.\nHogwarts, Forbidden Forest\nHarry, Hermione, Hagrid, Voldemort, Firenze\nscared, disturbed\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry and Hermione have to spend their detention with Hagrid, who is looking for a wounded unicorn in the forbidden forest. Harry finds the unicorn, with a shadowy cloaked figure drinking its blood. Harry is saved from the figure by centaurs, and told that unicorn blood can prolong a persons life. Harry believes the figure to have been Voldemort.\nHogwarts, Forbidden Forest\nHarry, Hermione, Hagrid, Voldemort, Firenze\nscared, disturbed\n21",
     "tags": [
       "Hogwarts",
@@ -261,11 +494,11 @@
       "disturbed"
     ],
     "importance": "Medium",
-    "token_count": 448
+    "token_count": 491
   },
   {
     "memory_id": "Philosopher's Stone 22",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nAfter finishing their exams, Harry realises the suspicious coincidence in Hagrid wanting a dragon more than anything else, only to meet a stranger who had one to give him. He, Ron, and Hermione run to ask him about the man who gave Norbert to him, and he says he never saw his face because he kept his hood up. Hagrid also mentions that they talked about Hogwarts and Fluffy the three-headed dog. He also mentions that the stranger gave him drinks while getting information out of him. Hagrid lets it slip how to get past Fluffy, which sends Harry, Ron and Hermione off. They head for Dumbledore's office, only to see McGonagall, who tells them he has left for London. After Harry reveals that they know about the Stone, McGonagall insists no one could steal the Stone. The trio realise that Dumbledore has been lured away and that Snape's going after the Stone that night so they decide to head out that night to try to get it themselves. After Hermione curses Neville in a Full Body-Bind Curse for refusing to allow them to leave, they head up to the third-floor room and start their intense trip into the seven Philosopher's Stone Chambers. They find the door ajar, and a harp in the room. Harry plays the flute Hagrid got him for Christmas, and Fluffy goes back to sleep. They head down through the trapdoor. They land in Professor Sprout's room, full of Devil's Snare, which almost smothers them before Hermione lights a fire and drives it off.\nHogwarts\nHarry, Ron, Hermione, Fluffy\ndetermined, surprised, tense",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nAfter finishing their exams, Harry realises the suspicious coincidence in Hagrid wanting a dragon more than anything else, only to meet a stranger who had one to give him. He, Ron, and Hermione run to ask him about the man who gave Norbert to him, and he says he never saw his face because he kept his hood up. Hagrid also mentions that they talked about Hogwarts and Fluffy the three-headed dog. He also mentions that the stranger gave him drinks while getting information out of him. Hagrid lets it slip how to get past Fluffy, which sends Harry, Ron and Hermione off. They head for Dumbledore's office, only to see McGonagall, who tells them he has left for London. After Harry reveals that they know about the Stone, McGonagall insists no one could steal the Stone. The trio realise that Dumbledore has been lured away and that Snape's going after the Stone that night so they decide to head out that night to try to get it themselves. After Hermione curses Neville in a Full Body-Bind Curse for refusing to allow them to leave, they head up to the third-floor room and start their intense trip into the seven Philosopher's Stone Chambers. They find the door ajar, and a harp in the room. Harry plays the flute Hagrid got him for Christmas, and Fluffy goes back to sleep. They head down through the trapdoor. They land in Professor Sprout's room, full of Devil's Snare, which almost smothers them before Hermione lights a fire and drives it off.\nHogwarts\nHarry, Ron, Hermione, Fluffy\ndetermined, surprised, tense\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nAfter discovering that Hagrid let slip how to get past Fluffy, Harry, Ron, and Hermione decide to stop Voldemort themselves. They lull the three headed dog to sleep by playing the flute, and pass through the trap door. They get tangled in Devil Snare, but Hermione's knowledge allows them to escape unharmed.\nHogwarts\nHarry, Ron, Hermione, Fluffy\ndetermined, surprised, tense\n22",
     "tags": [
       "Hogwarts",
@@ -278,11 +511,11 @@
       "tense"
     ],
     "importance": "Medium",
-    "token_count": 390
+    "token_count": 412
   },
   {
     "memory_id": "Philosopher's Stone 23",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nThe next room, Professor Flitwick's, holds a bunch of flying keys and some broomsticks. Harry finds a silver one with a broken wing that is different from the others and uses a nearby broom and skills as a Seeker to catch it, unlocking the next door with it. The next room is Professor McGonagall's, and has a large chessboard, for a game of Wizard's Chess that requires Harry, Ron, and Hermione to play as pieces. Ron uses his skill at chess to help them win, at the cost of having to sacrifice himself and getting knocked out. Harry and Hermione continue to the next room, Professor Quirrell's, where they find an unconscious troll laying on the floor. Lastly, they enter Professor Snape's room and find seven potions in bottles along with a roll of paper giving clues on which one to drink to continue, noting that three bottles have poison, two have nettle wine, one will send the drinker back, and the other will let the drinker move forward into the next room. Hermione tells Harry that it is a test of logic and not magic wherein most wizards fail. She solves the puzzle, and at Harry's instruction, drinks the one that will allow her to head back through the purple flame, while Harry drinks the one to head into the black flame and into the final room.\nHogwarts\nHarry, Ron, Hermione\nDetermined",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nThe next room, Professor Flitwick's, holds a bunch of flying keys and some broomsticks. Harry finds a silver one with a broken wing that is different from the others and uses a nearby broom and skills as a Seeker to catch it, unlocking the next door with it. The next room is Professor McGonagall's, and has a large chessboard, for a game of Wizard's Chess that requires Harry, Ron, and Hermione to play as pieces. Ron uses his skill at chess to help them win, at the cost of having to sacrifice himself and getting knocked out. Harry and Hermione continue to the next room, Professor Quirrell's, where they find an unconscious troll laying on the floor. Lastly, they enter Professor Snape's room and find seven potions in bottles along with a roll of paper giving clues on which one to drink to continue, noting that three bottles have poison, two have nettle wine, one will send the drinker back, and the other will let the drinker move forward into the next room. Hermione tells Harry that it is a test of logic and not magic wherein most wizards fail. She solves the puzzle, and at Harry's instruction, drinks the one that will allow her to head back through the purple flame, while Harry drinks the one to head into the black flame and into the final room.\nHogwarts\nHarry, Ron, Hermione\nDetermined\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry, Ron, and Hermione work their way through the obstacles keeping them from the philosophers stone. Harry uses his skills flying a broom to catch a flying key, Ron uses his skills at Wizard chess, sacrificing himself, and Hermione completes a logic puzzle. Harry continues on alone.\nHogwarts\nHarry, Ron, Hermione\nDetermined\n23",
     "tags": [
       "Hogwarts",
@@ -292,11 +525,11 @@
       "Determined"
     ],
     "importance": "Medium",
-    "token_count": 327
+    "token_count": 349
   },
   {
     "memory_id": "Philosopher's Stone 24",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nAs Harry enters the final chamber, where the philosophers stone is kept, it is Quirrell whom Harry sees in the room, not Snape. Harry, astonished, hears Quirrell tell him that, next to Snape, no one would expect him to try to steal the Stone and that Snape was actually protecting Harry. Harry notices the Mirror of Erised, and Quirrell stops to examine it, saying it is the key to getting the Stone. Harry questions Quirrell, who says he is serving Lord Voldemort, and although Snape hated Harry because of his father, he never wanted Harry dead. He explains how Snape and Harry's father went to school together when they were younger, and how it was there where their hatred against each other started. Quirrell asks for help from his master to get the Stone, and a snake-like voice tells him to use the boy. Harry is told to look into the Mirror. He sees his reflection pull the Stone out of his pocket and put it back in, and Harry feels it drop into his own pocket. He tells Quirrell that he sees himself shaking hands with Dumbledore, after winning the House Cup for Gryffindor. The snake-like voice tells Quirrell Harry is lying and Quirrell takes his turban off to show Harry what lies on the back of his head. Harry is shocked to see another face where the back of Quirrell's head should be. The face has red eyes and a snake-like slit where the nose should be. Harry realises this is the face of Voldemort and Voldemort demands Harry give him the Stone. Harry refuses and runs, but Quirrell seizes him. However, the contact with Harry's skin burns Quirrell and causes him to have boils all over the area in which Harry touched him. Harry grabs Quirrell's face, then his arm, and holds on, with the blinding pain in his scar building, until he feels the arm wrenched away before he blacks out.\nHogwarts\nHarry, Quirrell\nshock, brave, determined",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nAs Harry enters the final chamber, where the philosophers stone is kept, it is Quirrell whom Harry sees in the room, not Snape. Harry, astonished, hears Quirrell tell him that, next to Snape, no one would expect him to try to steal the Stone and that Snape was actually protecting Harry. Harry notices the Mirror of Erised, and Quirrell stops to examine it, saying it is the key to getting the Stone. Harry questions Quirrell, who says he is serving Lord Voldemort, and although Snape hated Harry because of his father, he never wanted Harry dead. He explains how Snape and Harry's father went to school together when they were younger, and how it was there where their hatred against each other started. Quirrell asks for help from his master to get the Stone, and a snake-like voice tells him to use the boy. Harry is told to look into the Mirror. He sees his reflection pull the Stone out of his pocket and put it back in, and Harry feels it drop into his own pocket. He tells Quirrell that he sees himself shaking hands with Dumbledore, after winning the House Cup for Gryffindor. The snake-like voice tells Quirrell Harry is lying and Quirrell takes his turban off to show Harry what lies on the back of his head. Harry is shocked to see another face where the back of Quirrell's head should be. The face has red eyes and a snake-like slit where the nose should be. Harry realises this is the face of Voldemort and Voldemort demands Harry give him the Stone. Harry refuses and runs, but Quirrell seizes him. However, the contact with Harry's skin burns Quirrell and causes him to have boils all over the area in which Harry touched him. Harry grabs Quirrell's face, then his arm, and holds on, with the blinding pain in his scar building, until he feels the arm wrenched away before he blacks out.\nHogwarts\nHarry, Quirrell\nshock, brave, determined\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.",
     "search_text": "First Hand\nUpon entering the final chamber where the philosophers stone is kept, Harry is shocked to discover it is Quirrell helping Voldemort, and that Snape has been trying to pretect Harry the whole time. Voldemort is revealed to be attached to the back of Querrill's head, and as Quirrell tries to take the stone, Harry passes out.\nHogwarts\nHarry, Quirrell\nshock, brave, determined\n24",
     "tags": [
       "Hogwarts",
@@ -307,11 +540,11 @@
       "determined"
     ],
     "importance": "Medium",
-    "token_count": 469
+    "token_count": 491
   },
   {
     "memory_id": "Philosopher's Stone 25",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry awakes in the hospital wing with Dumbledore there, telling him Quirrell did not succeed at getting the Stone, and indeed the Stone has been destroyed. In spite of this, there are other ways in which Voldemort can return. He cannot be killed, and he left Quirrell to die. Dumbledore explains the reason why Quirrell could not touch Harry was because Harry's mother had died to save him, protecting him with her love. Harry also told Dumbledore about what Quirrell mentioned to him earlier regarding Snape hating Harry due to hatred for his father. Dumbledore responds that Snape was only grudgingly protecting Harry this year to pay off a debt he owed due to James Potter saving his life during their Hogwarts years. Harry then receives a visit from Ron and Hermione. Hagrid shows up later and gives Harry a book of photos of his parents and family.\n\nThe following day, at the end of term feast, Dumbledore awards some last-minute points for the recent events. He gives Ron and Hermione fifty points each, and Harry sixty, which places them in a tie with Slytherin for first place. Dumbledore then recognises that while it is hard to stand up to enemies, it is even harder to stand up to friends as Neville did, and he awards Neville 10 more points. This puts Gryffindor in the lead and the winners of the House Cup, to much rejoicing from everyone but the Slytherins. Not only were Gryffindor students happy, but Hufflepuff and Ravenclaw were happy to see Slytherins downfall. Soon, their trunks are all packed, and they take the Hogwarts Express back towards the muggle world. Harry, Ron and Hermione all say their goodbyes before heading home.\nHogwarts, Hospital Wing\nHarry, Dumbledore, Ron, Hermione\nrelieved, celebratory",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry awakes in the hospital wing with Dumbledore there, telling him Quirrell did not succeed at getting the Stone, and indeed the Stone has been destroyed. In spite of this, there are other ways in which Voldemort can return. He cannot be killed, and he left Quirrell to die. Dumbledore explains the reason why Quirrell could not touch Harry was because Harry's mother had died to save him, protecting him with her love. Harry also told Dumbledore about what Quirrell mentioned to him earlier regarding Snape hating Harry due to hatred for his father. Dumbledore responds that Snape was only grudgingly protecting Harry this year to pay off a debt he owed due to James Potter saving his life during their Hogwarts years. Harry then receives a visit from Ron and Hermione. Hagrid shows up later and gives Harry a book of photos of his parents and family.\n\nThe following day, at the end of term feast, Dumbledore awards some last-minute points for the recent events. He gives Ron and Hermione fifty points each, and Harry sixty, which places them in a tie with Slytherin for first place. Dumbledore then recognises that while it is hard to stand up to enemies, it is even harder to stand up to friends as Neville did, and he awards Neville 10 more points. This puts Gryffindor in the lead and the winners of the House Cup, to much rejoicing from everyone but the Slytherins. Not only were Gryffindor students happy, but Hufflepuff and Ravenclaw were happy to see Slytherins downfall. Soon, their trunks are all packed, and they take the Hogwarts Express back towards the muggle world. Harry, Ron and Hermione all say their goodbyes before heading home.\nHogwarts, Hospital Wing\nHarry, Dumbledore, Ron, Hermione\nrelieved, celebratory\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry wakes up in the hospital wing of Hogwarts, where Dumbledore informs Harry that Voldemort was defeated, but that he is likely to return. Harry attends the end of year feast, in which Gryffindor is awarded enough house points to win the house cup. Harry then says goodbye to Hermione and Ron before returning home.\nHogwarts, Hospital Wing\nHarry, Dumbledore, Ron, Hermione\nrelieved, celebratory\n25",
     "tags": [
       "Hogwarts",
@@ -324,7 +557,7 @@
       "celebratory"
     ],
     "importance": "Medium",
-    "token_count": 440
+    "token_count": 483
   },
   {
     "memory_id": "Philosopher's Stone 3",
@@ -339,11 +572,11 @@
       "determined."
     ],
     "importance": "Medium",
-    "token_count": 407
+    "token_count": 406
   },
   {
     "memory_id": "Philosopher's Stone 4",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nIn an attempt to escape the letters arriving for Harry, the Dursleys head to a remote cabin on a small rock island. Harry remembers that the next day will be his eleventh birthday. There is a loud knocking at the door.\n\nUncle Vernon comes through with Aunt Petunia cowering behind him. The door is blasted off its hinges and hits the floor. The giant turns his eyes to Harry and greets him, saying he hasn't seen him since he was a baby. The giant presents Harry with a birthday cake. Harry asks the giant who he is, and he says he is Rubeus Hagrid, the Keeper of Keys and Grounds at Hogwarts School of Witchcraft and Wizardry. He is shocked to discover that Harry knows nothing about Hogwarts. He gets angry at the Dursleys for not telling him anything about his parents' world, his world. Hagrid tells Harry his parents are famous and that he's a wizard. Hagrid gives Harry the letter that he has been craving. It tells him that he has been accepted into Hogwarts School of Witchcraft and Wizardry.\n\nUncle Vernon tells Hagrid that Harry won't be going, but the giant knows that a Muggle like him can't stop Harry from going to Hogwarts. Uncle Vernon reveals he knew that Harry's a wizard, and Aunt Petunia tells Harry that her sister, Harry's mother, was a witch. Petunia said another wizard killed them, and Harry screams that Petunia said they got killed in a car crash. Hagrid is as outraged as Harry is that the Dursleys have lied that much. He sits down and tells Harry that a Dark wizard named Lord Voldemort killed Harry's parents and tried to kill Harry too. But the spell he used backfired, only leaving Harry his scar. Voldemort vanished and hasn't been seen since.\n\nHarry doubts he is a wizard until Hagrid asks if he ever made anything he couldn't explain happen when he was angry or scared. When Uncle Vernon makes the mistake of mocking Dumbledore, Hagrid swishes the umbrella in Dudley's direction, and Dudley sprouts a curly pig's tail. Hagrid asks Harry not to mention it at Hogwarts.\nIsland Cabin\nHarry, Hagrid, Vernon, Petunia\nSurprise, wonder",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nIn an attempt to escape the letters arriving for Harry, the Dursleys head to a remote cabin on a small rock island. Harry remembers that the next day will be his eleventh birthday. There is a loud knocking at the door.\n\nUncle Vernon comes through with Aunt Petunia cowering behind him. The door is blasted off its hinges and hits the floor. The giant turns his eyes to Harry and greets him, saying he hasn't seen him since he was a baby. The giant presents Harry with a birthday cake. Harry asks the giant who he is, and he says he is Rubeus Hagrid, the Keeper of Keys and Grounds at Hogwarts School of Witchcraft and Wizardry. He is shocked to discover that Harry knows nothing about Hogwarts. He gets angry at the Dursleys for not telling him anything about his parents' world, his world. Hagrid tells Harry his parents are famous and that he's a wizard. Hagrid gives Harry the letter that he has been craving. It tells him that he has been accepted into Hogwarts School of Witchcraft and Wizardry.\n\nUncle Vernon tells Hagrid that Harry won't be going, but the giant knows that a Muggle like him can't stop Harry from going to Hogwarts. Uncle Vernon reveals he knew that Harry's a wizard, and Aunt Petunia tells Harry that her sister, Harry's mother, was a witch. Petunia said another wizard killed them, and Harry screams that Petunia said they got killed in a car crash. Hagrid is as outraged as Harry is that the Dursleys have lied that much. He sits down and tells Harry that a Dark wizard named Lord Voldemort killed Harry's parents and tried to kill Harry too. But the spell he used backfired, only leaving Harry his scar. Voldemort vanished and hasn't been seen since.\n\nHarry doubts he is a wizard until Hagrid asks if he ever made anything he couldn't explain happen when he was angry or scared. When Uncle Vernon makes the mistake of mocking Dumbledore, Hagrid swishes the umbrella in Dudley's direction, and Dudley sprouts a curly pig's tail. Hagrid asks Harry not to mention it at Hogwarts.\nIsland Cabin\nHarry, Hagrid, Vernon, Petunia\nSurprise, wonder\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.",
     "search_text": "First Hand\nWhen the Dursleys go to a remote cabin to hide from the unending letters, Hagrid arrives to deliver one in person. He tells Harry he is a wizard and about his family history, and that he will be attending Hogwarts School of Witchcraft and Wizardry, despite Vernon's protests.\nIsland Cabin\nHarry, Hagrid, Vernon, Petunia\nSurprise, wonder\n4",
     "tags": [
       "Island Cabin",
@@ -355,7 +588,7 @@
       "wonder"
     ],
     "importance": "Medium",
-    "token_count": 568
+    "token_count": 590
   },
   {
     "memory_id": "Philosopher's Stone 5",
@@ -370,7 +603,7 @@
       "excitement"
     ],
     "importance": "Medium",
-    "token_count": 463
+    "token_count": 462
   },
   {
     "memory_id": "Philosopher's Stone 6",
@@ -386,11 +619,11 @@
       "curious"
     ],
     "importance": "Medium",
-    "token_count": 336
+    "token_count": 335
   },
   {
     "memory_id": "Philosopher's Stone 7",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry and Hagrid travel around Diagon Alley, picking up various things Harry will need for school. They continue shopping until all Harry needs is his wand and (Hagrid insists) a birthday present. \n\nIn Ollivanders, the wand shop, Mr Ollivander puts Harry off with his creepy demeanour while discussing the wands purchased by Hagrid, Harry's parents, and Voldemort. Ollivander touches Harry's scar and apologises for the fact that he sold the wand that caused it. Ollivander gives Harry a wand and tells him to give it a wave. Harry does so, but it isn't suitable for him, so Ollivander takes it back. Harry tries many wands, but none work well enough for him. Eventually, he picks up a wand and feels warmth in his fingers. Ollivander states that it is very curious that Harry should be destined for that wand when its brother gave Harry his scar. \n\nFor Harry's birthday, Hagrid buys Harry a snowy owl named Hedwig. Hagrid provides Harry with a train ticket, giving him the date, time, and location to catch the Hogwarts Express and tells Harry that if he ever needs anything, he is to write a letter, and Hedwig will know where to find him. Harry catches a train back to the Dursleys.\nDiagon Alley, Ollivander's wand shop\nOllivander, Hagrid, Harry\namazed, happy",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry and Hagrid travel around Diagon Alley, picking up various things Harry will need for school. They continue shopping until all Harry needs is his wand and (Hagrid insists) a birthday present. \n\nIn Ollivanders, the wand shop, Mr Ollivander puts Harry off with his creepy demeanour while discussing the wands purchased by Hagrid, Harry's parents, and Voldemort. Ollivander touches Harry's scar and apologises for the fact that he sold the wand that caused it. Ollivander gives Harry a wand and tells him to give it a wave. Harry does so, but it isn't suitable for him, so Ollivander takes it back. Harry tries many wands, but none work well enough for him. Eventually, he picks up a wand and feels warmth in his fingers. Ollivander states that it is very curious that Harry should be destined for that wand when its brother gave Harry his scar. \n\nFor Harry's birthday, Hagrid buys Harry a snowy owl named Hedwig. Hagrid provides Harry with a train ticket, giving him the date, time, and location to catch the Hogwarts Express and tells Harry that if he ever needs anything, he is to write a letter, and Hedwig will know where to find him. Harry catches a train back to the Dursleys.\nDiagon Alley, Ollivander's wand shop\nOllivander, Hagrid, Harry\namazed, happy\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.",
     "search_text": "First Hand\nHarry and Hagrid shop for school supplies, eventually reaching Ollivander's wand shop. After trying many wands Harry finds one that responds well to him, and Ollivander informs him that his wand is a \"brother\" of Voldemorts. Hagrid buys Harry an owl named Hedwig.\nDiagon Alley, Ollivander's wand shop\nOllivander, Hagrid, Harry\namazed, happy\n7",
     "tags": [
       "Diagon Alley",
@@ -402,11 +635,11 @@
       "happy"
     ],
     "importance": "Medium",
-    "token_count": 348
+    "token_count": 370
   },
   {
     "memory_id": "Philosopher's Stone 8",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry arrives at King Cross station to depart for Hogwarts. He stands between Platforms Nine and Ten, wondering how to find Platform Nine and Three-Quarters. He overhears Molly Weasley using the word \"muggles\" and asks her for help. She tells him to run through the barrier between Platforms Nine and Ten, which he does, and he is astonished to find the train to Hogwarts on the other side of the station. \n\nHarry and Ron get on the train together, and bond over their anxiety about Hogwarts, and Harry buys a lot of sweets for them to share. Ron introduces Harry to elements of the wizarding world like Quidditch, Bertie Bott's Every Flavour Beans, and Famous Witches and Wizards cards. One of Harry's cards bears the picture of Albus Dumbledore.\n\nHarry also meets a slightly annoying, overachieving girl named Hermione Granger, a boy named Neville Longbottom who has lost his toad, Trevor. Hermione shows off her magical knowledge and strong personality, impressing Harry and slightly irritating Ron. \n\nLater, Draco Malfoy enters and offers to “help” Harry make the right friends, insulting Ron and Hagrid. Harry refuses his handshake, marking the beginning of their rivalry.\nKings Cross, Platform Nine and Three Quarters, Hogwarts Express\nHarry, Ron, Hermione, Neville, Malfoy\nawe, excited, happy",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry arrives at King Cross station to depart for Hogwarts. He stands between Platforms Nine and Ten, wondering how to find Platform Nine and Three-Quarters. He overhears Molly Weasley using the word \"muggles\" and asks her for help. She tells him to run through the barrier between Platforms Nine and Ten, which he does, and he is astonished to find the train to Hogwarts on the other side of the station. \n\nHarry and Ron get on the train together, and bond over their anxiety about Hogwarts, and Harry buys a lot of sweets for them to share. Ron introduces Harry to elements of the wizarding world like Quidditch, Bertie Bott's Every Flavour Beans, and Famous Witches and Wizards cards. One of Harry's cards bears the picture of Albus Dumbledore.\n\nHarry also meets a slightly annoying, overachieving girl named Hermione Granger, a boy named Neville Longbottom who has lost his toad, Trevor. Hermione shows off her magical knowledge and strong personality, impressing Harry and slightly irritating Ron. \n\nLater, Draco Malfoy enters and offers to “help” Harry make the right friends, insulting Ron and Hagrid. Harry refuses his handshake, marking the beginning of their rivalry.\nKings Cross, Platform Nine and Three Quarters, Hogwarts Express\nHarry, Ron, Hermione, Neville, Malfoy\nawe, excited, happy\n\n\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry, confused about how to get to platform nine and three quarters, seeks the help of Molly Weasley. Boarding the train, Harry and Ron discuss things until Hermione and Neville interrupt. Later, Malfoy insults Ron while offering Harry friendship, which Harry rejects.\nKings Cross, Platform Nine and Three Quarters, Hogwarts Express\nHarry, Ron, Hermione, Neville, Malfoy\nawe, excited, happy\n8",
     "tags": [
       "Kings Cross",
@@ -422,11 +655,11 @@
       "happy"
     ],
     "importance": "Medium",
-    "token_count": 355
+    "token_count": 377
   },
   {
     "memory_id": "Philosopher's Stone 9",
-    "prompt_text": "[PERSPECTIVE: First Hand]\nThe Hogwarts Express arrives at Hogsmeade Station, and Hagrid escorts the first years across the Lake in boats, where they catch their first glimpse of Hogwarts.\n\nThe new students are greeted at the castle door by Professor Minerva McGonagall, who tells them they will soon be sorted into their houses. All Hogwarts students live in one of four residences: Gryffindor, Hufflepuff, Ravenclaw, or Slytherin, with each house having its own team for Quidditch. The houses are in a yearlong competition with one another to acquire the most points, which are earned by success in Quidditch games and given by teachers for academic achievement and lost for student infractions, in order to win the House Cup awarded at the end of the year.\n\nThe first-years wait in an antechamber while McGonagall checks to see whether it is time yet. The Hogwarts ghosts glide into the room by mistake while debating whether to offer Peeves another chance.\n\nThe students are led to the Great Hall, where the entire school and a battered old hat on a stool are waiting for them. When the students try on the Sorting Hat, it announces the house in which they are placed. Harry becomes very nervous. He has learned that he does not care for Slytherin house, as the students in it are unpleasant and Voldemort once belonged to Slytherin. Hermione is Sorted into Gryffindor, much to Ron's displeasure. Finally, it is Harry's turn to wear the hat. He quietly says to himself \"not Slytherin, not Slytherin!\" The Hat is intrigued by this. \n\nAfter a brief mental discussion with the hat in which it tries to suggest Slytherin to him, the hat places Harry in Gryffindor. Harry is pleased to find that Ron joins in Gryffindor with him. Draco Malfoy is placed in Slytherin.\nHogwarts, Great Hall\nHarry, Ron, Hermione, Malfoy\nexcited, nervous, celebratory",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nThe Hogwarts Express arrives at Hogsmeade Station, and Hagrid escorts the first years across the Lake in boats, where they catch their first glimpse of Hogwarts.\n\nThe new students are greeted at the castle door by Professor Minerva McGonagall, who tells them they will soon be sorted into their houses. All Hogwarts students live in one of four residences: Gryffindor, Hufflepuff, Ravenclaw, or Slytherin, with each house having its own team for Quidditch. The houses are in a yearlong competition with one another to acquire the most points, which are earned by success in Quidditch games and given by teachers for academic achievement and lost for student infractions, in order to win the House Cup awarded at the end of the year.\n\nThe first-years wait in an antechamber while McGonagall checks to see whether it is time yet. The Hogwarts ghosts glide into the room by mistake while debating whether to offer Peeves another chance.\n\nThe students are led to the Great Hall, where the entire school and a battered old hat on a stool are waiting for them. When the students try on the Sorting Hat, it announces the house in which they are placed. Harry becomes very nervous. He has learned that he does not care for Slytherin house, as the students in it are unpleasant and Voldemort once belonged to Slytherin. Hermione is Sorted into Gryffindor, much to Ron's displeasure. Finally, it is Harry's turn to wear the hat. He quietly says to himself \"not Slytherin, not Slytherin!\" The Hat is intrigued by this. \n\nAfter a brief mental discussion with the hat in which it tries to suggest Slytherin to him, the hat places Harry in Gryffindor. Harry is pleased to find that Ron joins in Gryffindor with him. Draco Malfoy is placed in Slytherin.\nHogwarts, Great Hall\nHarry, Ron, Hermione, Malfoy\nexcited, nervous, celebratory\n\n\nvoldemort also goes by the names tom riddle, he who must not be named.\nhermione also goes by the names hermione granger, lord fuzzy bottom.",
     "search_text": "First Hand\nHarry and the other first years are welcomed to Hogwarts, and are informed they are to be sorted into the four houses of Hogwarts. The sorting hat is placed on their head, and after some deliberation, the hat sorts Harry, Ron, and Hermione into Gryffindor, and Malfoy into Slytherin.\nHogwarts, Great Hall\nHarry, Ron, Hermione, Malfoy\nexcited, nervous, celebratory\n9",
     "tags": [
       "Hogwarts",
@@ -440,7 +673,7 @@
       "celebratory"
     ],
     "importance": "Medium",
-    "token_count": 489
+    "token_count": 532
   },
   {
     "memory_id": "Accio",
@@ -448,7 +681,7 @@
     "search_text": "Lore\nAccio\nCharm\nSummons an object to the caster by saying the name of the spell, followed by the item the caster wishes to summon.  For example, \"Accio broom\" would summon a broom from nearby. Ineffective on very large objects, such as buildings. The caster does not need to be in line of sight of the object, or even know what it looks like.\n\nThe caster has to clearly visualise the object in their mind before trying to summon it. Any distraction will make the spell ineffective.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 175
+    "token_count": 174
   },
   {
     "memory_id": "Age Line",
@@ -456,7 +689,7 @@
     "search_text": "Lore\nAge Line\nCharm\nPrevents an individual either above or below a certain age from crossing a line.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 55
+    "token_count": 54
   },
   {
     "memory_id": "Aguamenti",
@@ -464,7 +697,7 @@
     "search_text": "Lore\nAguamenti\nCharm, Conjuration\nProduces a jet of clean water from the tip of the casters wand. Depending on the caster's concentration and intentions, this charm can produce anything from a simple trickle of water to a wave.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 151
+    "token_count": 150
   },
   {
     "memory_id": "Alarte Ascendare",
@@ -472,7 +705,7 @@
     "search_text": "Lore\nAlarte Ascendare\nCharm\nCauses the object the caster points their wand at to fly upward into the air.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 99
+    "token_count": 98
   },
   {
     "memory_id": "Alohomora",
@@ -480,7 +713,7 @@
     "search_text": "Lore\nAlohomora\nCharm\nUnlocked doors and other locked objects. It could also unlock doors that had been sealed with a Locking Spell, although it was possible to bewitch doors to become unaffected by this spell.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 227
+    "token_count": 226
   },
   {
     "memory_id": "Amato Animo Animato Animagus",
@@ -488,7 +721,7 @@
     "search_text": "Lore\nAmato Animo Animato Animagus\nTransfiguration\nPart of the process of becoming an Animagus. The incantation had to be recited at sunrise and sundown, every day before the consumption of the Animagus Potion. The incantation was also recited just prior to the consumption of the potion, which had to take place just after a lightning storm started. The incantation was recited while placing the wand's tip over one's heart.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 179
+    "token_count": 178
   },
   {
     "memory_id": "Anapneo",
@@ -496,7 +729,7 @@
     "search_text": "Lore\nAnapneo\nHealing, Vanishing, Charm\nClears the target's airway if they are choking on something.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 63
+    "token_count": 62
   },
   {
     "memory_id": "Anteoculatia",
@@ -504,7 +737,7 @@
     "search_text": "Lore\nAnteoculatia\nDark charm\nCauses the target to grow antlers on their head.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 41
+    "token_count": 39
   },
   {
     "memory_id": "Aparecium",
@@ -512,7 +745,7 @@
     "search_text": "Lore\nAparecium\nCharm\nReveals secret messages written in invisible ink, or any other hidden markings. Also works against Concealing charms",
     "tags": [],
     "importance": "Medium",
-    "token_count": 65
+    "token_count": 64
   },
   {
     "memory_id": "Appare Vestigium",
@@ -520,7 +753,7 @@
     "search_text": "Lore\nAppare Vestigium\nCharm\nReveals and illuminates traces of recent magical activity and shows magical footprints and track marks in an area.",
     "tags": [],
     "importance": "Medium",
-    "token_count": 53
+    "token_count": 51
   },
   {
     "memory_id": "Apparition",
@@ -528,7 +761,7 @@
     "search_text": "Lore\nApparition\nTransportation\nMagically teleports a witch or wizard to another location instantly. The destination is one that the primary user has been to or seen in some fashion previously. Can be used to Apparate two or more people at once if holding onto each other (i.e. Side-Along Apparition).",
     "tags": [],
     "importance": "Medium",
-    "token_count": 192
+    "token_count": 191
   },
   {
     "memory_id": "Arania Exumai",
@@ -536,6 +769,6 @@
     "search_text": "Lore\nArania Exumai\nCharm\nUsed to blast away Acromantulas or other large spiders. If the spell missed and struck a stone, it would produce a large black scorch mark, and thus was not recommended for use on humans,",
     "tags": [],
     "importance": "Medium",
-    "token_count": 73
+    "token_count": 71
   }
 ]
