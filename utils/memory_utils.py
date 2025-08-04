@@ -47,7 +47,8 @@ def retrieve_relevant_memories(
     character_path = settings_data.get("character_path", "")
     alias_map = load_alias_map(character_path)
     alias_lookup = {
-        alias.lower(): root for root, aliases in alias_map.items()
+        alias.lower(): root.lower()
+        for root, aliases in alias_map.items()
         for alias in aliases
     }
 
@@ -65,14 +66,20 @@ def retrieve_relevant_memories(
 
     # === Step 2: Extract keywords with capitalized emphasis ===
     words = re.findall(r'\b\w+\b', user_message)
-    # Lowercased normalized alias-aware lookup
     cleaned_words = [w.strip(".,!?\"'").lower() for w in words]
-    expanded_keywords = set(lemmatizer.lemmatize(w) for w in cleaned_words if w not in stopwords)
 
-    # Add alias roots for matches
-    for word in cleaned_words:
-        if word in alias_lookup:
-            expanded_keywords.add(alias_lookup[word].lower())
+    # Join words to search/replace multi-word aliases
+    normalized_message = " ".join(cleaned_words)
+    for alias_phrase, root in alias_lookup.items():
+        pattern = r"\b" + re.escape(alias_phrase) + r"\b"
+        normalized_message = re.sub(pattern, root.lower(), normalized_message)
+
+    expanded_keywords = {
+        lemmatizer.lemmatize(w)
+        for w in normalized_message.split()
+        if w not in stopwords
+    }
+
     lemmatized_keywords = set()
     capitalized_flags = set()
 
@@ -96,7 +103,10 @@ def retrieve_relevant_memories(
 
         memory = memory_mapping[idx]
         summary = memory.get("prompt_text", "")
-        tags = set(t.lower() for t in memory.get("tags", []))
+        tags = set()
+        for t in memory.get("tags", []):
+            t_low = t.lower()
+            tags.add(alias_lookup.get(t_low, t_low))
 
         print(f"  Summary: {summary[:60]}...")
         print(f"  Tags: {tags}")
@@ -128,6 +138,15 @@ def retrieve_relevant_memories(
         else:
             print("   Rejected: similarity below threshold")
 
+    # === Construct alias clarification lines ONLY for mentioned root tags ===
+    mentioned_clarifications = []
+    for root_tag, aliases in alias_map.items():
+        if root_tag.lower() in normalized_message:
+            if aliases:
+                mentioned_clarifications.append(
+                    f"{root_tag} also goes by the names {', '.join(aliases)}."
+                )
+
     results.sort(reverse=True, key=lambda x: x[0])
     selected = []
     debug_lines = []
@@ -141,6 +160,15 @@ def retrieve_relevant_memories(
             debug_lines.append(f"  Total: {score:.4f}")
             debug_lines.append(f"  Matched words: {', '.join(sorted(matched)) or '(none)'}")
             debug_lines.append("")
+
+    # === Inject alias clarifications for roots actually mentioned in user input ===
+    if selected and mentioned_clarifications:
+        clarification_block = "\n\n" + "\n".join(mentioned_clarifications)
+        selected[0]["prompt_text"] += clarification_block
+
+        print("\n[DEBUG] Injected Alias Clarifications (only once):")
+        for line in mentioned_clarifications:
+            print(f"  - {line}")
 
     if debug_mode:
         debug_lines.insert(0, "_-- Raw FAISS Scores and Boosted Results ---")
