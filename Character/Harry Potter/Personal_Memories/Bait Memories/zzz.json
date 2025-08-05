@@ -1,0 +1,25 @@
+{
+  "memory_id": "zzz",
+  "template_used": "HP Memory Template",
+  "Tags": [
+    "Tags",
+    "Field"
+  ],
+  "__template_name__": "",
+  "__perspective__": "Lore",
+  "Source": "me",
+  "Full Memory": "Full Memory text",
+  "Brief Summary": "Summary Text",
+  "Location": [
+    "Here"
+  ],
+  "Characters Present": [
+    "Me"
+  ],
+  "Emotional State": [
+    "Tired"
+  ],
+  "Chronological Placement": 735,
+  "Created By": "Chearted By Field",
+  "Importance": "Low"
+}

@@ -6,7 +6,7 @@
   "Tags": [
     "test"
   ],
-  "Importance": "Low",
+  "Importance": "High",
   "Source": "https://harrypotter.fandom.com/wiki/Main_Page",
   "Full Memory": "tests",
   "Brief Summary": "test2",
@@ -19,5 +19,6 @@
   "Emotional State": [
     "annoyed"
   ],
-  "Chronological Placement": 84
+  "Chronological Placement": 84,
+  "Characters Present": []
 }

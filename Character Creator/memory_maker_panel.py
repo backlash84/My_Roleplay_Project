@@ -438,6 +438,8 @@ class MemoryMakerPanel(ctk.CTkFrame):
                 break
 
         if self.active_memory:
+            self.build_editor_fields()
+            self.update_active_memory_from_widgets()
             self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
         else:
             self.last_saved_state = None
