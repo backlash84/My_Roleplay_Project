@@ -189,8 +189,6 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
         # === Original selection logic resumes here ===
         self.active_memory = memory
-        self.last_saved_state = self.snapshot_clean_memory(memory)
-
         self.memory_id_entry.delete(0, "end")
         self.memory_id_entry.insert(0, memory["memory_id"])
 
@@ -218,6 +216,10 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
         self.build_editor_fields()
 
+        # Ensure internal fields reflect widget values before snapshot
+        self.update_active_memory_from_widgets()
+        self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
+
     def build_editor_fields(self):
         for widget in self.editor_container.winfo_children():
             widget.destroy()
@@ -233,7 +235,13 @@ class MemoryMakerPanel(ctk.CTkFrame):
         # Created By
         ctk.CTkLabel(self.editor_container, text="Created By:").pack(anchor="w", pady=(5, 0))
         created_by_entry = ctk.CTkEntry(self.editor_container)
-        created_by_entry.insert(0, self.template.get("created_by", ""))
+        created_by_entry.insert(
+            0,
+            self.active_memory.get(
+                "__created_by__",
+                self.active_memory.get("Created By", self.template.get("created_by", ""))
+            ),
+        )
         created_by_entry.pack(fill="x", pady=2)
         self.editor_widgets["__created_by__"] = (created_by_entry, "text")
 
