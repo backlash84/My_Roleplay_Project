@@ -1,10 +1,68 @@
 {
   "voldemort": [
     "tom riddle",
-    "he who must not be named"
+    "he-who-must-not-be-named",
+    "dark lord"
   ],
   "hermione": [
     "hermione granger",
-    "lord fuzzy bottom"
+    "granger",
+    "hermy"
+  ],
+  "harry": [
+    "harry potter",
+    "potter",
+    "the boy who lived",
+    "the chosen one"
+  ],
+  "ron": [
+    "ron weasley",
+    "ronald weasley"
+  ],
+  "dumbledore": [
+    "headmaster",
+    "albus dumbledore",
+    "albus"
+  ],
+  "arther": [
+    "arther weasley",
+    "mr. weasley"
+  ],
+  "molly": [
+    "molly weasley",
+    "mrs. weasley",
+    "ms. weasley"
+  ],
+  "fred": [
+    "fred weasley"
+  ],
+  "george": [
+    "george weasley"
+  ],
+  "ginny": [
+    "ginny weasley"
+  ],
+  "philosophers stone": [
+    "sorcerers stone"
+  ],
+  "vernon": [
+    "vernon dursley",
+    "mr. dursley"
+  ],
+  "petunia": [
+    "petunia dursley",
+    "mrs. dursley",
+    "ms. dursley"
+  ],
+  "pettigrew": [
+    "peter",
+    "peter pettigrew",
+    "wormtail"
+  ],
+  "sirius": [
+    "sirius black",
+    "padfoot",
+    "snuffles",
+    "stubby boardman"
   ]
 }
