@@ -3,7 +3,6 @@ import json
 import os
 import sys
 from tkinter import messagebox, filedialog
-from transformers import AutoTokenizer
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils.token_utils import count_tokens
 
@@ -68,11 +67,11 @@ class BaseSettingsPanel(ctk.CTkFrame):
 
         # --- Token counting ---
         try:
-            total_tokens = count_tokens(data["name"]) + count_tokens(data["character_information"])
-            info_tokens = tokenizer.encode(data["character_information"], add_special_tokens=False)
-            total_tokens = len(name_tokens) + len(info_tokens)
+            name_tok = count_tokens(data.get("name", "") or "")
+            info_tok = count_tokens(data.get("character_information", "") or "")
+            total_tokens = name_tok + info_tok
             data["token_estimate"] = total_tokens
-        except Exception as e:
+        except Exception:
             total_tokens = -1
             data["token_estimate"] = -1
 
