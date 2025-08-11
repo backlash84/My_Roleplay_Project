@@ -108,7 +108,7 @@ class AdvancedSettings(CenteredFrame):
 
         # Column 3: API + Paths
         self.llm_url_entry = add_labeled_entry(col3, "LLM URL", self.settings.get("llm_url", "http://localhost:1234/v1/chat/completions"))
-        self.model_entry = add_labeled_entry(col3, "Model Name", self.settings.get("model", "neural-chat-7b-v3.1"))
+        self.model_entry = add_labeled_entry(col3, "Model Name", self.settings.get("model", "mistral-nemo-instruct-2407"))
         self.save_path_entry = add_labeled_entry(col3, "Save Path Override", self.settings.get("save_path", ""))
         self.clear_console_var = add_labeled_checkbox(col3, "Clear Console on Send", self.settings.get("clear_console_on_send", True))
 
@@ -334,7 +334,7 @@ class AdvancedSettings(CenteredFrame):
             self.llm_url_entry.insert(0, data.get("llm_url", "http://localhost:1234/v1/chat/completions"))
 
             self.model_entry.delete(0, "end")
-            self.model_entry.insert(0, data.get("model", "neural-chat-7b-v3.1"))
+            self.model_entry.insert(0, data.get("model", "mistral-nemo-instruct-2407"))
 
             self.save_path_entry.delete(0, "end")
             self.save_path_entry.insert(0, data.get("save_path", ""))

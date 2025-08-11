@@ -1,0 +1,20 @@
+{
+  "memory_id": "Anapneo",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Anapneo",
+    "choking"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Anapneo",
+  "Spell Type": "Healing, Vanishing, Charm",
+  "Spell Effects": "Clears the target's airway if they are choking on something.",
+  "Visuals": "No visual effect.",
+  "Year Level": "None",
+  "Other": "From the Greek verb anapneo, meaning \"I breathe in.\"",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

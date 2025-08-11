@@ -1,0 +1,20 @@
+{
+  "memory_id": "Alohomora",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "unlock",
+    "Alohomora"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Alohomora",
+  "Spell Type": "Charm",
+  "Spell Effects": "Unlocked doors and other locked objects. It could also unlock doors that had been sealed with a Locking Spell, although it was possible to bewitch doors to become unaffected by this spell.",
+  "Visuals": "No visual effect if cast correctly, can produce coloured lights with sloppy casting.",
+  "Year Level": "First",
+  "Other": "Alohomora is derived from the West African Sidiki dialect used in geomancy; it means \"friendly to thieves\". Invented by Eldon Elsrickle in the early 1600s. Before the discovery of Alohomora, the most popular unlocking spell was Portaberto, which splintered the lock from a door but occasionally left a smoking hole where the key should have gone. Before Portaberto, however, the most popular opening spell was Open Sesame, which ripped doors from their hinges and tore them into firewood. All of these were more rudimentary and by far less subtle than Alohomora.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

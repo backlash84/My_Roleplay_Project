@@ -1,0 +1,19 @@
+{
+  "memory_id": "Appare Vestigium",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "tracking"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Appare Vestigium",
+  "Spell Type": "Charm",
+  "Spell Effects": "Reveals and illuminates traces of recent magical activity and shows magical footprints and track marks in an area.",
+  "Visuals": "Golden swirl",
+  "Year Level": "None",
+  "Other": "",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

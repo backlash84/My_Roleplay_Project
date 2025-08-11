@@ -1,0 +1,21 @@
+{
+  "memory_id": "Alarte Ascendare",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Alarte Ascendare",
+    "fly upward",
+    "jump"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Alarte Ascendare",
+  "Spell Type": "Charm",
+  "Spell Effects": "Causes the object the caster points their wand at to fly upward into the air.",
+  "Visuals": "Red bolt of light.",
+  "Year Level": "None",
+  "Other": "Alarte comes from the Latin adjective Alate 'winged', and ascendare is a Latin verb meaning 'to climb' or 'to ascend'. Therefore, the whole incantation may be translated roughly as \"winged ascent\".",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

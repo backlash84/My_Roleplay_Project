@@ -1,0 +1,19 @@
+{
+  "memory_id": "Age Line",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "age line"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Age Line",
+  "Spell Type": "Charm",
+  "Spell Effects": "Prevents an individual either above or below a certain age from crossing a line.",
+  "Visuals": "The line produces a pale blue light.",
+  "Year Level": "None",
+  "Other": "Cannot be fooled with aging potions.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

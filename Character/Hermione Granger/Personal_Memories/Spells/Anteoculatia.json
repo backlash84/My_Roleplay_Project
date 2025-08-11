@@ -1,0 +1,20 @@
+{
+  "memory_id": "Anteoculatia",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Anteoculatia",
+    "antlers"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Anteoculatia",
+  "Spell Type": "Dark charm",
+  "Spell Effects": "Causes the target to grow antlers on their head.",
+  "Visuals": "No visual effect.",
+  "Year Level": "None",
+  "Other": "",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells"
+}

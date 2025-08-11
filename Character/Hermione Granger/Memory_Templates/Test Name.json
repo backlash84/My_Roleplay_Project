@@ -8,22 +8,13 @@
   ],
   "fields": [
     {
-      "label": "__template_name__",
-      "type": "text",
-      "usage": "Neither"
-    },
-    {
       "label": "__created_by__",
       "type": "text",
-      "usage": "Neither"
+      "usage": "Neither",
+      "default_value": "Me"
     },
     {
       "label": "__tags__",
-      "type": "tag",
-      "usage": "Search"
-    },
-    {
-      "label": "Tags",
       "type": "tag",
       "usage": "Search"
     },
@@ -47,7 +38,7 @@
         "Second Hand",
         "Lore"
       ],
-      "default_value": "First Hand"
+      "default_value": "Second Hand"
     },
     {
       "label": "custom Text Field",

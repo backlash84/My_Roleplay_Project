@@ -1,0 +1,21 @@
+{
+  "memory_id": "Aparecium",
+  "template_used": "Spell Type",
+  "__perspective__": "Lore",
+  "Created By": "Me",
+  "Tags": [
+    "spell",
+    "magic",
+    "Aparecium",
+    "secret message",
+    "hidden writing"
+  ],
+  "Importance": "Medium",
+  "Spell Name": "Aparecium",
+  "Spell Type": "Charm",
+  "Spell Effects": "Reveals secret messages written in invisible ink, or any other hidden markings. Also works against Concealing charms",
+  "Visuals": "White light.",
+  "Year Level": "Second",
+  "Other": "From the latin \"apparere\", meaning \"to appear\"",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells, made it up."
+}

@@ -52,9 +52,44 @@ class ConversationService:
                                    buffer_tokens: int = 50) -> int:
         return count_tokens(system_message) + buffer_tokens
 
+    def build_payload(self, prompt: str, settings_data: dict) -> dict:
+        payload = {
+            "model": settings_data.get("model"),
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": settings_data.get("temperature", 0.7),
+            "frequency_penalty": settings_data.get("frequency_penalty", 0.0),
+            "presence_penalty": settings_data.get("presence_penalty", 0.0),
+        }
+
+        top_p = settings_data.get("top_p")
+        if isinstance(top_p, (int, float)):
+            payload["top_p"] = float(top_p)
+
+        try:
+            max_tokens = settings_data.get("max_tokens")
+            if isinstance(max_tokens, int) and max_tokens > 0:
+                payload["max_tokens"] = max_tokens
+        except (ValueError, TypeError):
+            pass
+
+        stops = settings_data.get("stop", [])
+        if isinstance(stops, (list, tuple)) and all(isinstance(s, str) for s in stops):
+            payload["stop"] = list(stops)
+
+        stream = settings_data.get("stream", False)
+        if isinstance(stream, bool):
+            payload["stream"] = stream
+
+        return payload
+
+    def fetch_reply(self, payload, conversation_history, prompt, debug_mode=False):
+        # Forward request to the LLM API.
+        url = self.controller.frames["AdvancedSettings"].get_llm_url()
+        return call_llm_api(url, payload, debug_mode, conversation_history, prompt)
+
     def build_prompt(self, user_message, memories, scenario, prefix,
-                     conversation_history,
-                     llm_character_config=None, user_character_config=None) -> str:
+                        conversation_history,
+                        llm_character_config=None, user_character_config=None) -> str:
         config = llm_character_config or {}
         llm_name = config.get("name", "Unnamed Character").strip()
         llm_info = config.get("character_information", "").strip()
@@ -74,7 +109,20 @@ class ConversationService:
         )
         system_prompt = f"{system_instructions}\n\n{user_instructions}"
 
-        max_tokens = config.get("max_tokens", self.DEFAULT_CONTEXT_TOKEN_BUDGET)
+        # Use Advanced Settings token budget (not character config)
+        max_tokens = self.DEFAULT_CONTEXT_TOKEN_BUDGET
+        settings_frame = self.controller.frames.get("AdvancedSettings")
+        if settings_frame and hasattr(settings_frame, "get_max_tokens"):
+            try:
+                mt = settings_frame.get_max_tokens()  # may be None if "No Token Limit" is enabled
+                if isinstance(mt, int) and mt > 0:
+                    max_tokens = mt
+                elif mt is None:
+                    # Effectively unlimited budget
+                    max_tokens = 10**9
+            except Exception:
+                pass
+
         system_tokens = count_tokens(system_prompt)
         scenario_tokens = count_tokens(scenario)
         prefix_tokens = count_tokens(prefix)
@@ -93,8 +141,6 @@ class ConversationService:
             total += tokens
 
         self.trimmed_history = rolling_memory
-
-        # Save token statistics for debugging purposes
         self.last_token_stats = {
             "max_tokens": max_tokens,
             "system_tokens": system_tokens,
@@ -117,65 +163,34 @@ class ConversationService:
             f"User: {user_message.strip()}"
         )
 
-    def build_payload(self, prompt: str, settings_data: dict) -> dict:
-        """
-        Builds the API payload for the LLM from current settings.
-
-        Includes model type, generation parameters (temperature, penalties),
-        and vector memory retrieval settings (top_k, similarity_threshold).
-        Optionally includes max_tokens if a valid number is set.
-        """
-
-        payload = {
-            "model": settings_data.get("model"),
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": settings_data.get("temperature", 0.7),
-            "frequency_penalty": settings_data.get("frequency_penalty", 0.0),
-            "presence_penalty": settings_data.get("presence_penalty", 0.0),
-            "top_k": settings_data.get("top_k", 10),
-            "similarity_threshold": settings_data.get("similarity_threshold", 0.7)
-        }
-
-        try:  # Ensure max_tokens is numeric and positive before including
-            max_tokens = settings_data.get("max_tokens")
-            if isinstance(max_tokens, int) and max_tokens > 0:
-                payload["max_tokens"] = max_tokens
-        except (ValueError, TypeError):
-            pass
-
-        return payload
-
     def build_chat_messages(self, conversation_history, scenario, prefix, memories,
                             llm_character_config, user_character_config):
-        """
-        Build the list of messages for the LLM.  Includes a system message and
-        as much recent history as fits into the token budget.
-        """
         system_content = self._build_system_message(
             scenario, prefix, memories, llm_character_config, user_character_config
         )
 
-        # Choose token budget: use UI setting if available.
+        # Source token budget from Advanced Settings
         max_budget = self.DEFAULT_CONTEXT_TOKEN_BUDGET
         settings_frame = self.controller.frames.get("AdvancedSettings")
-        if settings_frame and hasattr(settings_frame, "get_max_context_length"):
+        if settings_frame and hasattr(settings_frame, "get_max_tokens"):
             try:
-                custom = settings_frame.get_max_context_length()
-                if isinstance(custom, int) and custom > 0:
-                    max_budget = custom
+                mt = settings_frame.get_max_tokens()  # may be None if "No Token Limit" is enabled
+                if isinstance(mt, int) and mt > 0:
+                    max_budget = mt
+                elif mt is None:
+                    # Treat as effectively unlimited for rolling history
+                    max_budget = 10**9
             except Exception:
                 pass
 
         overhead_tokens = self._calculate_overhead_tokens(system_content)
         available_tokens = max(max_budget - overhead_tokens, 0)
 
-        # Select messages starting from the most recent until tokens run out.
         trimmed_history = []
         used_tokens = 0
         for entry in reversed(conversation_history):
             content = entry.get("content", "") or ""
             tokens = count_tokens(content)
-            # Always include the latest message.
             if trimmed_history:
                 if used_tokens + tokens > available_tokens:
                     break
@@ -191,8 +206,3 @@ class ConversationService:
                 messages.append({"role": role, "content": content})
 
         return messages, trimmed_history
-
-    def fetch_reply(self, payload, conversation_history, prompt, debug_mode=False):
-        # Forward request to the LLM API.
-        url = self.controller.frames["AdvancedSettings"].get_llm_url()
-        return call_llm_api(url, payload, debug_mode, conversation_history, prompt)

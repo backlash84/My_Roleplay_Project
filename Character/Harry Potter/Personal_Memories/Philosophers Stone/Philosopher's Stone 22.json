@@ -1,7 +1,7 @@
 {
   "memory_id": "Philosopher's Stone 22",
   "template_used": "HP Memory Template",
-  "__perspective__": "First Hand",
+  "__perspective__": "Second Hand",
   "Created By": "Me",
   "Tags": [
     "three headed dog",
@@ -16,7 +16,6 @@
     "Hogwarts"
   ],
   "Characters Present": [
-    "Harry",
     "Ron",
     "Hermione",
     "Fluffy"
