@@ -71,14 +71,34 @@ class TemplateMakerPanel(ctk.CTkFrame):
 
         perspective_value = self.perspective_var.get()
 
-        # === Hardcoded Required Fields ===
+        # === Hardcoded Required Fields (with proper defaults) ===
+        created_by_value = self.created_by_entry.get().strip()
         hardcoded_fields = [
-            {"label": "__template_name__", "type": "text", "usage": "Neither"},
-            {"label": "__created_by__", "type": "text", "usage": "Neither"},
-            {"label": "__tags__", "type": "tag", "usage": "Search"},
-            {"label": "__importance__", "type": "dropdown", "usage": "Search", "options": ["Low", "Medium", "High"], "default_value": "Medium"},
-            {"label": "__perspective__", "type": "dropdown", "usage": "Both",
-             "options": ["First Hand", "Second Hand", "Lore"], "default_value": perspective_value},
+            {
+                "label": "__created_by__",
+                "type": "text",
+                "usage": "Neither",
+                "default_value": created_by_value
+            },
+            {
+                "label": "__tags__",
+                "type": "tag",
+                "usage": "Search"
+            },
+            {
+                "label": "__importance__",
+                "type": "dropdown",
+                "usage": "Search",
+                "options": ["Low", "Medium", "High"],
+                "default_value": "Medium"
+            },
+            {
+                "label": "__perspective__",
+                "type": "dropdown",
+                "usage": "Both",
+                "options": ["First Hand", "Second Hand", "Lore"],
+                "default_value": perspective_value
+            }
         ]
 
         # === User-Defined Fields ===

@@ -1,0 +1,18 @@
+{
+  "memory_id": "Ascendio",
+  "template_used": "Spell Type",
+  "Tags": [
+    "spell",
+    "magic"
+  ],
+  "__perspective__": "Lore",
+  "Spell Name": "Ascendio",
+  "Spell Type": "Charm",
+  "Spell Effects": "The Ascension Charm was a spell which flung the caster high into the air. The charm also works underwater, propelling the caster above the surface.",
+  "Visuals": "None, or blue light",
+  "Year Level": "Seventh",
+  "Other": "\"Ascendio\" comes from the Latin word \"ascendere\", meaning \"to climb\".",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells",
+  "Created By": "Me",
+  "Importance": "Medium"
+}

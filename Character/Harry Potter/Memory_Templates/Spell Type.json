@@ -7,14 +7,10 @@
   ],
   "fields": [
     {
-      "label": "__template_name__",
-      "type": "text",
-      "usage": "Neither"
-    },
-    {
       "label": "__created_by__",
       "type": "text",
-      "usage": "Neither"
+      "usage": "Neither",
+      "default_value": "Me"
     },
     {
       "label": "__tags__",

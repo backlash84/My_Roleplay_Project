@@ -4,14 +4,10 @@
   "tags": [],
   "fields": [
     {
-      "label": "__template_name__",
-      "type": "text",
-      "usage": "Neither"
-    },
-    {
       "label": "__created_by__",
       "type": "text",
-      "usage": "Neither"
+      "usage": "Neither",
+      "default_value": "Me"
     },
     {
       "label": "__tags__",
@@ -78,6 +74,7 @@
         "Harry",
         "Ron",
         "Hermione",
+        "Myrtle",
         "Neville",
         "Lockhart",
         "Malfoy",
@@ -129,11 +126,7 @@
       "label": "Emotional State",
       "type": "tag",
       "usage": "Both",
-      "suggested_tags": [
-        "Happy",
-        "Sad",
-        "Angery"
-      ]
+      "suggested_tags": []
     },
     {
       "label": "Chronological Placement",

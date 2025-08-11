@@ -1,0 +1,19 @@
+{
+  "memory_id": "Avada Kedavra",
+  "template_used": "Spell Type",
+  "Tags": [
+    "spell",
+    "magic",
+    "killing curse"
+  ],
+  "__perspective__": "Lore",
+  "Spell Name": "Avada Kedavra",
+  "Spell Type": "Curse",
+  "Spell Effects": "When cast successfully on a living person or creature, the curse caused instantaneous and painless death, without causing any injury to the body, and without any trace of violence.",
+  "Visuals": "Very bright green energy bolt.",
+  "Year Level": "None",
+  "Other": "The only known counter-spell to this curse was sacrificial protection, which used the power of love. Can be blocked or dodged. The Killing Curse does not work on undead creatures. The curse requires great skill, power, and intent in order to be performed correctly. You must truly desire to kill.",
+  "Source": "https://harrypotter.fandom.com/wiki/List_of_spells",
+  "Created By": "Me",
+  "Importance": "Medium"
+}

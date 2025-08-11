@@ -89,6 +89,19 @@ class MemoryMakerPanel(ctk.CTkFrame):
         ctk.CTkButton(button_row, text="Reload", command=self.reload_editor_fields).pack(side="left", padx=5)
 
     def create_new_memory(self):
+        # Step 1: If editing an old memory, check for unsaved changes BEFORE creating new one
+        previous_memory = self.active_memory
+        if previous_memory and self.has_unsaved_changes():
+            result = messagebox.askyesnocancel(
+                "Unsaved Changes",
+                f"'{previous_memory['memory_id']}' has unsaved changes.\nSave before creating new memory?"
+            )
+            if result:  # Yes, save
+                self.save_current_memory()
+            elif result is None:  # Cancel
+                return
+
+        # Step 2: Create new memory
         new_memory = {}
         new_id = self.generate_new_memory_id()
         new_memory["memory_id"] = new_id
@@ -96,7 +109,7 @@ class MemoryMakerPanel(ctk.CTkFrame):
         self.memory_id_entry.insert(0, new_id)
         new_memory["template_used"] = self.template.get("template_name", "Default")
 
-        # Set default tags from template-level tags list
+        # Load default tags from template
         if "tags" in self.template:
             new_memory["Tags"] = self.template["tags"]
 
@@ -108,9 +121,9 @@ class MemoryMakerPanel(ctk.CTkFrame):
             if ftype == "tag":
                 new_memory[label] = [tag.strip() for tag in default.split(",") if tag.strip()]
             elif ftype == "int":
-                new_memory[label] = int(default) if default.isdigit() else 0
+                new_memory[label] = int(default) if str(default).isdigit() else 0
             elif ftype == "dropdown":
-                new_memory[label] = field.get("default_value", "")
+                new_memory[label] = default
             else:
                 new_memory[label] = default
 
@@ -133,7 +146,9 @@ class MemoryMakerPanel(ctk.CTkFrame):
         new_memory["_row_frame"] = row_frame
         new_memory["_button"] = mem_button
 
+        # Now it's safe to switch to the new memory
         self.select_memory(new_memory, row_frame, mem_button)
+
         self.last_saved_state = self.snapshot_clean_memory(self.active_memory)
         self.after(100, lambda: self.memory_scroll._parent_canvas.yview_moveto(1.0))
 
@@ -235,13 +250,17 @@ class MemoryMakerPanel(ctk.CTkFrame):
         # Created By
         ctk.CTkLabel(self.editor_container, text="Created By:").pack(anchor="w", pady=(5, 0))
         created_by_entry = ctk.CTkEntry(self.editor_container)
+        default_created_by = ""
+        for field in self.template.get("fields", []):
+            if field.get("label") == "__created_by__":
+                default_created_by = field.get("default_value", "")
+                break
+
         created_by_entry.insert(
             0,
-            self.active_memory.get(
-                "__created_by__",
-                self.active_memory.get("Created By", self.template.get("created_by", ""))
-            ),
+            self.active_memory.get("__created_by__", default_created_by)
         )
+        
         created_by_entry.pack(fill="x", pady=2)
         self.editor_widgets["__created_by__"] = (created_by_entry, "text")
 
@@ -257,13 +276,8 @@ class MemoryMakerPanel(ctk.CTkFrame):
         importance_options = ["Low", "Medium", "High"]
         importance_dropdown = ctk.CTkOptionMenu(self.editor_container, values=importance_options)
 
-        # Use saved memory value if available
         saved_importance = self.active_memory.get("Importance", "Medium")
-        if saved_importance in importance_options:
-            importance_dropdown.set(saved_importance)
-        else:
-            importance_dropdown.set("Medium")
-
+        importance_dropdown.set(saved_importance if saved_importance in importance_options else "Medium")
         importance_dropdown.pack(fill="x", pady=2)
         self.editor_widgets["__importance__"] = (importance_dropdown, "dropdown")
 
@@ -273,70 +287,75 @@ class MemoryMakerPanel(ctk.CTkFrame):
         perspective_dropdown = ctk.CTkOptionMenu(self.editor_container, values=perspective_options)
 
         saved_perspective = self.active_memory.get("__perspective__", "First Hand")
-        if saved_perspective in perspective_options:
-            perspective_dropdown.set(saved_perspective)
-        else:
-            perspective_dropdown.set("First Hand")
-
+        perspective_dropdown.set(saved_perspective if saved_perspective in perspective_options else "First Hand")
         perspective_dropdown.pack(fill="x", pady=2)
         self.editor_widgets["__perspective__"] = (perspective_dropdown, "dropdown")
 
+        # === Custom Template Fields ===
         for field in self.template["fields"]:
             label = field["label"]
             if label in ["__template_name__", "__created_by__", "__tags__", "__importance__", "__perspective__"]:
-                continue  # Prevent duplicate display of default metadata fields
+                continue  # Already handled above
 
             ftype = field["type"]
+            default = field.get("default_value", "")
+            saved_value = self.active_memory.get(label, default)
 
             ctk.CTkLabel(self.editor_container, text=label + ":").pack(anchor="w", pady=(5, 0))
 
             if ftype == "dropdown":
                 options = field.get("options", [])
                 widget = ctk.CTkOptionMenu(self.editor_container, values=options)
-
-                # Pull the saved value
-                saved_value = self.active_memory.get(label)
                 if saved_value in options:
                     widget.set(saved_value)
+                elif default in options:
+                    widget.set(default)
                 elif options:
                     widget.set(options[0])
                 else:
                     widget.set("")
-
                 self.editor_widgets[label] = (widget, "dropdown")
 
             elif ftype == "tag":
                 widget = ctk.CTkEntry(self.editor_container)
-                widget.insert(0, ", ".join(self.active_memory.get(label, [])))
+                widget.insert(0, ", ".join(saved_value if isinstance(saved_value, list) else []))
 
-                # Attach autocomplete if suggested_tags exist
+                # Attach autocomplete if needed
                 suggestions = field.get("suggested_tags", [])
                 if suggestions:
                     self.attach_tag_autocomplete(widget, suggestions)
 
                 self.editor_widgets[label] = (widget, "tag")
+
             elif ftype == "text":
                 rows = field.get("rows", 1)
                 if rows > 1:
                     widget = ctk.CTkTextbox(self.editor_container, height=rows * 24)
-                    widget.insert("1.0", str(self.active_memory.get(label, "")))
+                    widget.insert("1.0", str(saved_value))
                 else:
                     widget = ctk.CTkEntry(self.editor_container)
-                    widget.insert(0, str(self.active_memory.get(label, "")))
+                    widget.insert(0, str(saved_value))
+                self.editor_widgets[label] = (widget, "text")
 
             elif ftype == "int":
                 widget = ctk.CTkEntry(self.editor_container)
-                widget.insert(0, str(self.active_memory.get(label, 0)))
+                try:
+                    int_value = int(saved_value)
+                except (ValueError, TypeError):
+                    int_value = 0
+                widget.insert(0, str(int_value))
+                self.editor_widgets[label] = (widget, "int")
 
             else:
+                # Fallback to text field
                 widget = ctk.CTkEntry(self.editor_container)
-                widget.insert(0, str(self.active_memory.get(label, "")))
+                widget.insert(0, str(saved_value))
+                self.editor_widgets[label] = (widget, ftype)
 
             widget.pack(fill="x", pady=2)
-            self.editor_widgets[label] = (widget, ftype)
 
-            # Scrolls to top of memory when opened. 
-            self.editor_container._parent_canvas.yview_moveto(0.0)
+        # Scroll to top on open
+        self.editor_container._parent_canvas.yview_moveto(0.0)
 
     def save_current_memory(self):
         folder_path = getattr(self, "current_folder_path", None)
@@ -453,15 +472,15 @@ class MemoryMakerPanel(ctk.CTkFrame):
             self.load_memory_folder_from_path(folder_path)
 
     def load_memory_folder_from_path(self, folder_path):
+        folder_path = os.path.normpath(folder_path)
         if not os.path.isdir(folder_path):
+            # Be explicit so silent failures don't mask path issues
+            messagebox.showerror("Not Found", f"Folder not found:\n{folder_path}")
             return
 
         self.current_folder_path = folder_path
         folder_name = os.path.basename(folder_path)
-
-        folder_name = os.path.basename(folder_path)
         self.folder_label.configure(text=f"Folder: {folder_name}")
-        
         self.new_memory_button.configure(state="normal")
 
         self.loaded_memories.clear()
@@ -471,18 +490,22 @@ class MemoryMakerPanel(ctk.CTkFrame):
         for widget in self.memory_scroll.winfo_children():
             widget.destroy()
 
-        # Load .json files
-        def extract_number(name):
-            match = re.search(r'(\d+)', name)
-            return int(match.group(1)) if match else float('inf')
+        # Load .json files (robust to weird names)
+        def extract_number(name: str):
+            m = re.search(r'(\d+)', name)
+            return int(m.group(1)) if m else float('inf')
 
-        for file in sorted(os.listdir(folder_path), key=extract_number):
-            if file.endswith(".json"):
-                full_path = os.path.join(folder_path, file)
-                with open(full_path, "r", encoding="utf-8") as f:
-                    memory = json.load(f)
+        try:
+            for file in sorted(os.listdir(folder_path), key=extract_number):
+                if file.endswith(".json"):
+                    full_path = os.path.join(folder_path, file)
+                    with open(full_path, "r", encoding="utf-8") as f:
+                        memory = json.load(f)
                     self.loaded_memories.append(memory)
                     self.create_memory_row(memory)
+        except OSError as e:
+            messagebox.showerror("Error", f"Failed to list/load memories:\n{e}")
+            return
 
         # Recreate New Memory button
         self.new_memory_button = ctk.CTkButton(
@@ -493,6 +516,7 @@ class MemoryMakerPanel(ctk.CTkFrame):
         )
         self.new_memory_button.pack(pady=5, anchor="w")
         self.new_memory_button.configure(fg_color="orange")
+
         print(f"[LOAD] Loaded {len(self.loaded_memories)} memories from '{folder_name}'.")
 
     def reload_editor_fields(self):
@@ -619,20 +643,32 @@ class MemoryMakerPanel(ctk.CTkFrame):
         return current_clean != last_clean
 
     def create_new_memory_folder(self):
-        folder_name = ctk.CTkInputDialog(text="Enter new memory folder name:", title="New Folder").get_input()
-        if not folder_name:
+        raw_name = ctk.CTkInputDialog(
+            text="Enter new memory folder name:", title="New Folder"
+        ).get_input()
+        if raw_name is None:
             return
 
-        new_path = os.path.join(self.memory_folder_root, folder_name)
+        folder_name = self._sanitize_folder_name(raw_name)
+        if not folder_name:
+            messagebox.showerror("Invalid Name", "Please enter a valid folder name.")
+            return
+
+        new_path = os.path.normpath(os.path.join(self.memory_folder_root, folder_name))
+
         if os.path.exists(new_path):
             messagebox.showerror("Folder Exists", f"A folder named '{folder_name}' already exists.")
             return
 
-        os.makedirs(new_path)
+        try:
+            os.makedirs(new_path, exist_ok=False)
+        except OSError as e:
+            messagebox.showerror("Error", f"Failed to create folder:\n{e}")
+            return
+
         messagebox.showinfo("Created", f"Created new folder '{folder_name}'.")
         self.load_memory_folder_from_path(new_path)
-        self.new_memory_button.configure(state="normal")
-        self.new_memory_button.configure(fg_color="orange")
+        self.new_memory_button.configure(state="normal", fg_color="orange")
         self.folder_label.configure(text=f"Folder: {folder_name}")
 
     def snapshot_clean_memory(self, memory):
@@ -798,4 +834,10 @@ class MemoryMakerPanel(ctk.CTkFrame):
 
         entry_widget.bind("<KeyRelease>", on_key)
 
-   
+    def _sanitize_folder_name(self, raw: str) -> str:
+        # Trim whitespace and strip trailing dots/spaces (Windows)
+        name = (raw or "").strip().rstrip(". ")
+        # Remove Windows-invalid filename characters
+        invalid = '<>:"/\\|?*'
+        name = "".join(c for c in name if c not in invalid)
+        return name
