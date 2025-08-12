@@ -1,0 +1,54 @@
+{
+  "template_name": "Test Name",
+  "created_by": "Me",
+  "tags": [
+    "test_tag_1",
+    "test_tag_2",
+    "test_tag_3"
+  ],
+  "fields": [
+    {
+      "label": "__template_name__",
+      "type": "text",
+      "usage": "Neither"
+    },
+    {
+      "label": "__created_by__",
+      "type": "text",
+      "usage": "Neither"
+    },
+    {
+      "label": "__tags__",
+      "type": "tag",
+      "usage": "Search"
+    },
+    {
+      "label": "custom Text Field",
+      "type": "text",
+      "usage": "Prompt",
+      "default_value": "Custom Text Field Preset"
+    },
+    {
+      "label": "Custom Dropdown Menu",
+      "type": "dropdown",
+      "usage": "Search",
+      "default_value": "Option 2",
+      "options": [
+        "Option 1",
+        "Option 2",
+        "Option 3"
+      ]
+    },
+    {
+      "label": "Custom Int",
+      "type": "int",
+      "usage": "Both",
+      "default_value": "84"
+    },
+    {
+      "label": "neither",
+      "type": "text",
+      "usage": "Neither"
+    }
+  ]
+}
