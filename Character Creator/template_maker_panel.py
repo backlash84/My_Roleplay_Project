@@ -246,10 +246,14 @@ class TemplateRow:
         line2 = ctk.CTkFrame(self.frame)
         line2.pack(fill="x", padx=5)
 
+        # Reserve consistent space so rows without prompt instructions
+        # align with those that have them.
+        line2.grid_columnconfigure(1, minsize=390)
+
         self.usage_var = ctk.StringVar(value="Both")
         self.usage_dropdown = ctk.CTkOptionMenu(
-            line2, 
-            variable=self.usage_var, 
+            line2,
+            variable=self.usage_var,
             values=["Prompt", "Search", "Both", "Neither"],
             command=self.on_usage_change  # NEW
         )
@@ -265,7 +269,14 @@ class TemplateRow:
         self.extra_entry_container = ctk.CTkFrame(line2, height=30)
         self.extra_entry_container.grid(row=0, column=2, padx=5, pady=2, sticky="w")
 
-        self.delete_button = ctk.CTkButton(line2, text="X", width=30, fg_color="red", hover_color="#aa0000", command=self.remove_self)
+        self.delete_button = ctk.CTkButton(
+            line2,
+            text="X",
+            width=30,
+            fg_color="red",
+            hover_color="#aa0000",
+            command=self.remove_self,
+        )
         self.delete_button.grid(row=0, column=3, padx=5, pady=2, sticky="e")
 
         self.up_button = ctk.CTkButton(line2, text="↑", width=30, command=self.move_up)
@@ -296,7 +307,7 @@ class TemplateRow:
             self.options_entry = ctk.CTkEntry(container, placeholder_text="e.g. 1, 3, 5", width=80)
             self.options_entry.pack(side="left")
 
-    def on_usage_change(self, val):  # NEW
+    def on_usage_change(self, val):
         for w in self.prompt_instr_container.winfo_children():
             w.destroy()
         self.prompt_instr_entry = None
