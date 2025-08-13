@@ -348,98 +348,95 @@ class ChatView(ctk.CTkFrame):
             args=(user_input, settings_data, self.scenario, self.prefix)
         ).start()
 
-    def fetch_and_display_reply(self, user_message, settings_data, scenario_ui, prefix_ui):
-        os.system("cls" if os.name == "nt" else "clear")
-        self.last_prompt = user_message
+        def fetch_and_display_reply(self, user_message, settings_data, scenario_ui, prefix_ui):
+            os.system("cls" if os.name == "nt" else "clear")
+            self.last_prompt = user_message
 
-        if "character_path" not in settings_data:
-            character_path = self.controller.active_session_data.get("character_path")
-            if not character_path:
-                raise ValueError("character_path not found in active_session_data")
-            settings_data["character_path"] = character_path
+            if "character_path" not in settings_data:
+                character_path = self.controller.active_session_data.get("character_path")
+                if not character_path:
+                    raise ValueError("character_path not found in active_session_data")
+                settings_data["character_path"] = character_path
 
-        # Retrieve relevant memories
-        memory_objects, memory_debug_lines = retrieve_relevant_memories(
-            user_message,
-            self.memory_index,
-            self.memory_mapping,
-            self.embedder,
-            self.lemmatizer,
-            settings_data,
-            self.debug_mode
-        )
+            # 1) Retrieve relevant memories
+            memory_objects, memory_debug_lines = retrieve_relevant_memories(
+                user_message,
+                self.memory_index,
+                self.memory_mapping,
+                self.embedder,
+                self.lemmatizer,
+                settings_data,
+                self.debug_mode
+            )
 
-        # Build prompt using new memory system
-        prompt = self.conversation_service.build_prompt(
-            user_message,
-            memory_objects,
-            self.scenario,
-            self.prefix,
-            self.conversation_history, 
-            self.llm_character_config,
-            self.user_character_config
-        )
+            # 2) Compute trimmed history (we only need the slice for RAW)
+            _msgs_preview, filtered_history = self.conversation_service.build_chat_messages(
+                self.conversation_history,
+                self.scenario,
+                self.prefix,
+                memory_objects,
+                self.llm_character_config,
+                self.user_character_config
+            )
 
-        payload = self.conversation_service.build_payload(prompt, settings_data)
+            # 3) Build and save RAW PROMPT INPUT (only memories + rolling history)
+            raw_blob = self.conversation_service.build_raw_prompt_input(
+                memories=memory_objects,
+                trimmed_history=filtered_history,
+            )
 
-        # Save for retry functionality
-        self.last_built_prompt = prompt
-        self.last_payload_used = payload
-        self.memory_debug_lines = memory_debug_lines
+            try:
+                session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+                os.makedirs(session_dir, exist_ok=True)
+                raw_path = os.path.join(session_dir, "Raw Prompt Input.txt")
+                with open(raw_path, "w", encoding="utf-8") as f:
+                    f.write(raw_blob)
+                print(f"[Saved] {raw_path}")
+            except Exception as e:
+                print(f"[WARN] Could not save Raw Prompt Input: {e}")
 
-        # Debug memory output
-        print("\n=== RAW MEMORY OBJECTS ===")
-        print(memory_objects)
-        print("=========================\n")
+            # 4) Summarize raw to ~25% using the user's latest message and the prefix
+            enable_sum = settings_data.get("enable_summarization", True)
+            if enable_sum:
+                summary_text = self.conversation_service.summarize_text(
+                    raw_text=raw_blob,
+                    settings_data=settings_data,
+                    user_message=user_message,
+                    prefix=self.prefix,
+                )
+            else:
+                summary_text = raw_blob  # explicit bypass
 
-        self.selected_memories = [m.get("memory_id", "???") for m in memory_objects]
-
-        # Construct message list for LLM
-        messages, filtered_history = self.conversation_service.build_chat_messages(
-            self.conversation_history,
-            self.scenario,
-            self.prefix,
-            memory_objects,
-            self.llm_character_config,
-            self.user_character_config
-        )
-        payload["messages"] = messages
-
-        # Inject character names into settings_data for debug visibility
-        token_stats = getattr(self.conversation_service, "last_token_stats", {})
-        settings_data["llm_character"] = self.controller.active_session_data.get("llm_character", "(not set)")
-        settings_data["user_character"] = self.controller.active_session_data.get("user_character", "(not set)")
-
-        # Optional debug preview
-        if self.debug_mode:
-            debug_text_console = generate_advanced_debug_report(
-                settings_data=settings_data,
-                scenario_sent=self.scenario,
-                prefix_sent=self.prefix,
-                memory_debug_lines=self.memory_debug_lines,
-                selected_memories=self.selected_memories,
-                conversation_history=filtered_history,
-                prompt_payload=payload,
-                raw_prompt=prompt,
-                scenario_ui=self.scenario,
-                prefix_ui=self.prefix,
+            # 5) Build final messages: scenario + prefix + character configs + summary + latest user msg
+            final_messages = self.conversation_service.compose_final_messages(
+                summary_text=summary_text,
+                scenario=self.scenario,
+                prefix=self.prefix,
                 llm_character_config=self.llm_character_config,
                 user_character_config=self.user_character_config,
-                max_tokens=token_stats.get("max_tokens"),
-                system_tokens=token_stats.get("system_tokens"),
-                scenario_tokens=token_stats.get("scenario_tokens"),
-                prefix_tokens=token_stats.get("prefix_tokens"),
-                memory_tokens=token_stats.get("memory_tokens"),
-                available_for_rolling=token_stats.get("available_for_rolling"),
-                rolling_used_tokens=token_stats.get("rolling_used_tokens")
+                user_message=user_message
             )
-            print(debug_text_console)
 
-        # Launch LLM call in thread
-        thread = threading.Thread(
-            target=lambda: self._handle_llm_response(prompt, payload, user_message)
-        )
-        thread.start()
+            # 6) Build payload for the final generation
+            payload = self.conversation_service.build_payload(prompt="", settings_data=settings_data)
+            payload["messages"] = final_messages
+
+            # Save for retry functionality (store summary as the "prompt" snapshot)
+            self.last_built_prompt = summary_text
+            self.last_payload_used = payload
+            self.memory_debug_lines = memory_debug_lines
+            self.selected_memories = [m.get("memory_id", "???") for m in memory_objects]
+
+            # Include names for debug printing
+            token_stats = getattr(self.conversation_service, "last_token_stats", {})
+            settings_data["llm_character"] = self.controller.active_session_data.get("llm_character", "(not set)")
+            settings_data["user_character"] = self.controller.active_session_data.get("user_character", "(not set)")
+
+            # 7) Kick off the call
+            thread = threading.Thread(
+                target=lambda: self._handle_llm_response(summary_text, payload, user_message)
+            )
+            thread.start()
 
     def _handle_llm_response(self, prompt, payload, user_message):
         reply = self.conversation_service.fetch_reply(
@@ -773,3 +770,109 @@ class ChatView(ctk.CTkFrame):
             json.dump(info_data, f, indent=2)
 
         messagebox.showinfo("Session Saved", f"Session saved as '{new_name}'.")
+
+    def fetch_and_display_reply(self, user_message, settings_data, scenario_ui, prefix_ui):
+        # 1) Ensure character_path is present
+        if "character_path" not in settings_data:
+            character_path = self.controller.active_session_data.get("character_path")
+            if not character_path:
+                raise ValueError("character_path not found in active_session_data")
+            settings_data["character_path"] = character_path
+
+        # 2) Retrieve memories
+        memory_objects, memory_debug_lines = retrieve_relevant_memories(
+            user_message,
+            self.memory_index,
+            self.memory_mapping,
+            self.embedder,
+            self.lemmatizer,
+            settings_data,
+            self.debug_mode
+        )
+        self.memory_debug_lines = memory_debug_lines
+        self.selected_memories = [m.get("memory_id", "???") for m in memory_objects]
+
+        # 3) Build trimmed rolling history (for RAW only)
+        _msgs_preview, filtered_history = self.conversation_service.build_chat_messages(
+            self.conversation_history,
+            self.scenario,
+            self.prefix,
+            memory_objects,
+            self.llm_character_config,
+            self.user_character_config
+        )
+
+        # 4) Build and save Raw Prompt Input (only memories + rolling history)
+        raw_blob = self.conversation_service.build_raw_prompt_input(
+            memories=memory_objects,
+            trimmed_history=filtered_history,
+        )
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+            raw_path = os.path.join(session_dir, "Raw Prompt Input.txt")
+            with open(raw_path, "w", encoding="utf-8") as f:
+                f.write(raw_blob)
+            print(f"[Saved] {raw_path}")
+        except Exception as e:
+            print(f"[WARN] Could not save Raw Prompt Input: {e}")
+
+        # 5) Summarize RAW
+        summary_text = self.conversation_service.summarize_text(
+            raw_text=raw_blob,
+            settings_data=settings_data,
+            user_message=user_message,
+            prefix=self.prefix,
+        )
+
+        # Save summary for inspection
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+            sum_path = os.path.join(session_dir, "Raw Prompt Summary.txt")
+            with open(sum_path, "w", encoding="utf-8") as f:
+                f.write(summary_text)
+            print("[Saved]", sum_path)
+        except Exception as e:
+            print("[WARN] Could not save Raw Prompt Summary:", e)
+
+        # 6) Build final messages: system = scenario+prefix+character configs (no memories),
+        #    user = compressed context + the latest user message
+        system_content = self.conversation_service._build_system_message(
+            self.scenario,
+            self.prefix,
+            [],  # no memories in final system msg
+            self.llm_character_config or {},
+            self.user_character_config or {},
+        )
+
+        final_user_content = (
+            "Compressed context to consider:\n"
+            "<<<SUMMARY>>>\n"
+            f"{summary_text}\n"
+            "<<<END SUMMARY>>>\n\n"
+            "Now respond to my latest message while following the rules in the prefix."
+            "\n\nLatest user message:\n"
+            f"{user_message}"
+        )
+
+        messages = [
+            {"role": "system", "content": system_content},
+            {"role": "user", "content": final_user_content},
+        ]
+
+        # 7) Build payload and send
+        payload = self.conversation_service.build_payload("", settings_data)  # prompt unused; we set messages below
+        payload["messages"] = messages
+        self.last_built_prompt = summary_text
+        self.last_payload_used = payload
+
+        # 8) Call LLM and display
+        reply = self.conversation_service.fetch_reply(
+            payload, self.conversation_history, summary_text, debug_mode=self.debug_mode
+        )
+        self.after(0, lambda: self._display_reply(reply))
+        self.conversation_history.append({"role": "assistant", "content": reply})
+        if len(self.conversation_history) > 10:
+            self.conversation_history = self.conversation_history[-10:]
+        print("[DEBUG] Raw reply returned by LLM:", repr(reply))

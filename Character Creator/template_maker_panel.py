@@ -10,9 +10,9 @@ class TemplateMakerPanel(ctk.CTkFrame):
         self.template_folder = os.path.join(character_path, "Memory_Templates")
         os.makedirs(self.template_folder, exist_ok=True)
 
-        self.section_rows = []  # to store dynamically added rows
+        self.section_rows = []  # dynamic rows
 
-        # === HEADER FIELDS ===
+        # === Header ===
         ctk.CTkLabel(self, text="Template Maker", font=("Arial", 20)).pack(pady=10)
 
         form = ctk.CTkFrame(self)
@@ -43,11 +43,11 @@ class TemplateMakerPanel(ctk.CTkFrame):
         )
         self.perspective_dropdown.grid(row=3, column=1, padx=10)
 
-        # === DYNAMIC SECTION AREA ===
-        self.section_container = ctk.CTkScrollableFrame(self, label_text="Template Fields", height=300)
+        # === Dynamic section area ===
+        self.section_container = ctk.CTkScrollableFrame(self, label_text="Template Fields", height=320)
         self.section_container.pack(fill="both", expand=True, padx=20, pady=10)
 
-        # === CONTROL BUTTONS ===
+        # === Controls ===
         button_row = ctk.CTkFrame(self)
         button_row.pack(pady=15)
 
@@ -71,7 +71,7 @@ class TemplateMakerPanel(ctk.CTkFrame):
 
         perspective_value = self.perspective_var.get()
 
-        # === Hardcoded Required Fields (with proper defaults) ===
+        # Required fields (kept out of the user list)
         created_by_value = self.created_by_entry.get().strip()
         hardcoded_fields = [
             {
@@ -101,32 +101,26 @@ class TemplateMakerPanel(ctk.CTkFrame):
             }
         ]
 
-        # === User-Defined Fields ===
         user_fields = [row.to_dict() for row in self.section_rows]
 
-        # Avoid accidental duplication of mandatory labels
-        protected_labels = {field["label"] for field in hardcoded_fields}
-        filtered_user_fields = [field for field in user_fields if field["label"] not in protected_labels]
+        protected_labels = {f["label"] for f in hardcoded_fields}
+        filtered_user_fields = [f for f in user_fields if f.get("label") not in protected_labels]
 
         data = {
             "template_name": name,
-            "created_by": self.created_by_entry.get().strip(),
-            "tags": [tag.strip() for tag in self.tags_entry.get().split(",") if tag.strip()],
+            "created_by": created_by_value,
+            "tags": [t.strip() for t in self.tags_entry.get().split(",") if t.strip()],
             "fields": hardcoded_fields + filtered_user_fields
         }
 
-        save_path = os.path.join(self.template_folder, f"{name}.json")
-
-        if os.path.exists(save_path):
-            confirm = messagebox.askyesno(
-                "Overwrite Existing Template",
-                f"A template named '{name}' already exists.\nDo you want to overwrite it?"
-            )
-            if not confirm:
+        path = os.path.join(self.template_folder, f"{name}.json")
+        if os.path.exists(path):
+            if not messagebox.askyesno("Overwrite Existing Template",
+                                       f"'{name}.json' already exists.\nOverwrite?"):
                 return
 
         try:
-            with open(save_path, "w", encoding="utf-8") as f:
+            with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
             messagebox.showinfo("Saved", f"Template saved as {name}.json.")
         except Exception as e:
@@ -138,84 +132,88 @@ class TemplateMakerPanel(ctk.CTkFrame):
             initialdir=self.template_folder,
             filetypes=[("JSON Files", "*.json")]
         )
-
         if not path:
-            return  # User cancelled
+            return
 
         try:
             with open(path, "r", encoding="utf-8") as f:
-                template = json.load(f)
+                tpl = json.load(f)
         except Exception as e:
             messagebox.showerror("Load Failed", f"Could not load template:\n{e}")
             return
 
-        # Fill top-level fields
+        # Top-level fields
         self.template_name_entry.delete(0, "end")
-        self.template_name_entry.insert(0, template.get("template_name", ""))
+        self.template_name_entry.insert(0, tpl.get("template_name", ""))
 
         self.created_by_entry.delete(0, "end")
-        self.created_by_entry.insert(0, template.get("created_by", ""))
+        self.created_by_entry.insert(0, tpl.get("created_by", ""))
 
         self.tags_entry.delete(0, "end")
-        self.tags_entry.insert(0, ", ".join(template.get("tags", [])))
+        self.tags_entry.insert(0, ", ".join(tpl.get("tags", [])))
 
-        # Set default perspective
-        for field in template.get("fields", []):
-            if field.get("label") == "__perspective__":
-                default_val = field.get("default_value", "First Hand")
-                if default_val in ["First Hand", "Second Hand", "Lore"]:
-                    self.perspective_var.set(default_val)
+        # Default Perspective (from the required field in file)
+        for fld in tpl.get("fields", []):
+            if fld.get("label") == "__perspective__":
+                dv = fld.get("default_value", "First Hand")
+                if dv in ("First Hand", "Second Hand", "Lore"):
+                    self.perspective_var.set(dv)
                 break
 
-        # Clear current section rows
-        for row in self.section_rows:
-            row.frame.destroy()
+        # Clear existing rows
+        for r in self.section_rows:
+            r.frame.destroy()
         self.section_rows.clear()
 
-        # Recreate each user-defined section
-        for field in template.get("fields", []):
-            label = field.get("label")
-            if label in ["__template_name__", "__created_by__", "__tags__", "__importance__", "__perspective__"]:
-                continue  # Skip mandatory fields — handled elsewhere
+        # Recreate user-defined fields
+        for fld in tpl.get("fields", []):
+            label = fld.get("label", "")
+            if label in {"__template_name__", "__created_by__", "__tags__", "__importance__", "__perspective__"}:
+                continue
 
             row = TemplateRow(self.section_container, self.remove_section, self.move_section)
 
-            row.label_entry.insert(0, label or "")
-            row.type_var.set(field.get("type", "text"))
-            row.type_dropdown.set(field.get("type", "text"))
-            row.on_type_change(field.get("type", "text"))
+            # label
+            row.label_entry.insert(0, label)
 
-            row.usage_var.set(field.get("usage", "Both"))
-            row.usage_dropdown.set(field.get("usage", "Both"))
+            # type
+            ftype = fld.get("type", "text")
+            row.type_var.set(ftype)
+            row.type_dropdown.set(ftype)
+            row.on_type_change(ftype)
 
-            default = field.get("default_value", "")
+            # usage (this controls whether the Prompt Instructions box shows)
+            usage_val = fld.get("usage", "Both")
+            row.usage_var.set(usage_val)
+            row.usage_dropdown.set(usage_val)
+            row.on_usage_change(usage_val)
+
+            # default value
+            default = fld.get("default_value", "")
             if default:
                 row.default_entry.insert(0, default)
 
-            # Handle field-specific extras
-            if row.options_entry:
-                ftype = field.get("type")
-                if ftype == "dropdown" and "options" in field:
-                    row.options_entry.insert(0, ", ".join(field["options"]))
-                elif ftype == "tag" and "suggested_tags" in field:
-                    row.options_entry.insert(0, ", ".join(field["suggested_tags"]))
-                elif ftype == "text" and "rows" in field:
-                    row.options_entry.insert(0, str(field["rows"]))
+            # prompt instructions (if any)
+            pi = fld.get("prompt_instructions", "")
+            if pi and getattr(row, "prompt_instr_entry", None):
+                row.prompt_instr_entry.insert(0, pi)
+
+            # field-specific extras
+            if getattr(row, "options_entry", None):
+                if ftype == "dropdown" and "options" in fld:
+                    row.options_entry.insert(0, ", ".join(fld["options"]))
+                elif ftype == "tag" and "suggested_tags" in fld:
+                    row.options_entry.insert(0, ", ".join(fld["suggested_tags"]))
+                elif ftype == "text" and "rows" in fld:
+                    row.options_entry.insert(0, str(fld["rows"]))
 
             self.section_rows.append(row)
 
     def move_section(self, row, direction):
-        index = self.section_rows.index(row)
-        new_index = index + direction
-
-        if 0 <= new_index < len(self.section_rows):
-            # Swap in the list
-            self.section_rows[index], self.section_rows[new_index] = (
-                self.section_rows[new_index],
-                self.section_rows[index]
-            )
-
-            # Repack all rows in order
+        idx = self.section_rows.index(row)
+        new_idx = idx + direction
+        if 0 <= new_idx < len(self.section_rows):
+            self.section_rows[idx], self.section_rows[new_idx] = self.section_rows[new_idx], self.section_rows[idx]
             for r in self.section_rows:
                 r.frame.pack_forget()
                 r.frame.pack(fill="x", pady=5)
@@ -244,36 +242,47 @@ class TemplateRow:
         self.default_entry = ctk.CTkEntry(line1, placeholder_text="Default Value", width=200)
         self.default_entry.grid(row=0, column=2, padx=5, pady=2)
 
-        # === LINE 2: Usage, Options/Tags, Delete ===
+        # === LINE 2: Usage, Options/Tags, Prompt Instructions, Delete ===
         line2 = ctk.CTkFrame(self.frame)
         line2.pack(fill="x", padx=5)
 
         self.usage_var = ctk.StringVar(value="Both")
-        self.usage_dropdown = ctk.CTkOptionMenu(line2, variable=self.usage_var, values=["Prompt", "Search", "Both", "Neither"])
+        self.usage_dropdown = ctk.CTkOptionMenu(
+            line2, 
+            variable=self.usage_var, 
+            values=["Prompt", "Search", "Both", "Neither"],
+            command=self.on_usage_change  # NEW
+        )
         self.usage_dropdown.grid(row=0, column=0, padx=5, pady=2, sticky="w")
         self.usage_dropdown.configure(width=120)
 
-        self.extra_entry_container = ctk.CTkFrame(line2, height=30)  # fixed height
-        self.extra_entry_container.grid(row=0, column=1, padx=5, pady=2, sticky="w")
+        # NEW: container for prompt instructions
+        self.prompt_instr_container = ctk.CTkFrame(line2)
+        self.prompt_instr_container.grid(row=0, column=1, padx=5, pady=2, sticky="w")
+        self.prompt_instr_entry = None  # created dynamically
+
+        # container for type-specific extras
+        self.extra_entry_container = ctk.CTkFrame(line2, height=30)
+        self.extra_entry_container.grid(row=0, column=2, padx=5, pady=2, sticky="w")
 
         self.delete_button = ctk.CTkButton(line2, text="X", width=30, fg_color="red", hover_color="#aa0000", command=self.remove_self)
-        self.delete_button.grid(row=0, column=2, padx=5, pady=2, sticky="e")
+        self.delete_button.grid(row=0, column=3, padx=5, pady=2, sticky="e")
 
         self.up_button = ctk.CTkButton(line2, text="↑", width=30, command=self.move_up)
-        self.up_button.grid(row=0, column=3, padx=2)
+        self.up_button.grid(row=0, column=4, padx=2)
 
         self.down_button = ctk.CTkButton(line2, text="↓", width=30, command=self.move_down)
-        self.down_button.grid(row=0, column=4, padx=2)
+        self.down_button.grid(row=0, column=5, padx=2)
 
         # Initial options/tag field (if applicable)
         self.on_type_change(self.type_var.get())
+        self.on_usage_change(self.usage_var.get())  # NEW: initialize prompt box visibility
 
     def on_type_change(self, new_type):
         for widget in self.extra_entry_container.winfo_children():
             widget.destroy()
 
         self.options_entry = None
-
         if new_type == "tag":
             self.options_entry = ctk.CTkEntry(self.extra_entry_container, placeholder_text="Suggested Tags (comma-separated)", width=300)
             self.options_entry.pack()
@@ -283,10 +292,18 @@ class TemplateRow:
         elif new_type == "text":
             container = ctk.CTkFrame(self.extra_entry_container)
             container.pack()
-
             ctk.CTkLabel(container, text="Text Rows:").pack(side="left", padx=2)
             self.options_entry = ctk.CTkEntry(container, placeholder_text="e.g. 1, 3, 5", width=80)
             self.options_entry.pack(side="left")
+
+    def on_usage_change(self, val):  # NEW
+        for w in self.prompt_instr_container.winfo_children():
+            w.destroy()
+        self.prompt_instr_entry = None
+        if val in ("Prompt", "Both"):
+            ctk.CTkLabel(self.prompt_instr_container, text="Prompt Instructions:").pack(side="left", padx=(0, 4))
+            self.prompt_instr_entry = ctk.CTkEntry(self.prompt_instr_container, placeholder_text="(optional)", width=260)
+            self.prompt_instr_entry.pack(side="left")
 
     def remove_self(self):
         self.frame.destroy()
@@ -298,31 +315,32 @@ class TemplateRow:
             "type": self.type_var.get(),
             "usage": self.usage_var.get()
         }
-
         default_val = self.default_entry.get().strip()
         if default_val:
             result["default_value"] = default_val
 
+        # NEW: persist prompt instructions
+        if result["usage"] in ("Prompt", "Both") and self.prompt_instr_entry:
+            pi = self.prompt_instr_entry.get().strip()
+            if pi:
+                result["prompt_instructions"] = pi
+
         if self.options_entry:
             field_type = self.type_var.get()
-
             if field_type == "dropdown":
                 raw = self.options_entry.get().strip()
                 result["options"] = [opt.strip() for opt in raw.split(",") if opt.strip()]
-
             elif field_type == "tag":
                 raw = self.options_entry.get().strip()
                 result["suggested_tags"] = [tag.strip() for tag in raw.split(",") if tag.strip()]
-
             elif self.type_var.get() == "text" and self.options_entry:
                 rows = self.options_entry.get().strip()
                 if rows.isdigit():
                     result["rows"] = int(rows)
-
-        return result 
+        return result
 
     def move_up(self):
         self.move_callback(self, -1)
 
     def move_down(self):
-        self.move_callback(self, 1)
+        self.move_callback(self, +1)

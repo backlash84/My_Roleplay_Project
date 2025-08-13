@@ -1,0 +1,8 @@
+{
+    "session_name": "test 2",
+    "llm_character": "Harry Potter",
+    "user_character": "User Default",
+    "scenario_file": "Interview Scenario.json",
+    "prefix_file": "Default One on One Prefix.json",
+    "character_path": "Character\\Harry Potter"
+}
