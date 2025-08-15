@@ -114,130 +114,82 @@ class ConversationService:
         url = self.controller.frames["AdvancedSettings"].get_llm_url()
         return call_llm_api(url, payload, debug_mode, conversation_history, prompt)
 
-    def build_prompt(
-        self,
-        user_message,
-        memories,
-        scenario,
-        prefix,
-        conversation_history,
-        llm_character_config=None,
-        user_character_config=None
-    ) -> str:
+    def build_prompt(self, user_message: str, memories: list, scenario: str, prefix: str, llm_char_name: str = None) -> str:
         """
-        Builds a single-string prompt for legacy callers.
-        Includes:
-          - Character system info (brief)
-          - Scenario + Prefix
-          - Combined context:
-              * Memory monologue (self.last_memory_summary) if set
-              * Rolling history summary (self.last_rolling_summary) if set
-          - Latest user message
+        Flattened single-prompt mode for legacy LLMs. Returns:
+            [PREFIX]
+            [SCENARIO]
+            [MEMORIES]
+            [USER_MESSAGE]
 
-        Notes:
-          - Set self.last_memory_summary in chat_view right after you get mems_summary_text.
-          - (Optional) Set self.last_rolling_summary if you also summarize rolling history.
-          - We still compute token stats and trimmed history for debug.
+        - Memories include prompt_text and any prompt_instruction fields from their templates.
+        - All additional formatting and logging is handled outside this function.
         """
-        # Make latest retrieved memories available to other helpers
-        self.controller.last_retrieved_memories = memories
+        lines = []
 
-        # Character/user configs
-        config = llm_character_config or {}
-        llm_name = (config.get("name") or "Unnamed Character").strip()
-        llm_info = (config.get("character_information") or "").strip()
-        user_config = user_character_config or {}
-        user_name = (user_config.get("name") or "Player").strip()
-        user_info = (user_config.get("character_information") or "").strip()
+        if prefix:
+            lines.append(prefix.strip())
+        if scenario:
+            lines.append(scenario.strip())
 
-        # System prompt (compact; detailed versions live elsewhere)
-        system_instructions = (
-            f"You are playing as this character:\n"
-            f"Name: {llm_name}\n"
-            f"{llm_info}"
-        )
-        user_instructions = (
-            f"The user is playing as this character:\n"
-            f"Name: {user_name}\n"
-            f"{user_info}"
-        )
-        system_prompt = f"{system_instructions}\n\n{user_instructions}"
+        if memories:
+            template_cache = {}
+            formatted_memories = []
 
-        # Token budget
-        max_tokens = self.DEFAULT_CONTEXT_TOKEN_BUDGET
-        settings_frame = self.controller.frames.get("AdvancedSettings")
-        if settings_frame and hasattr(settings_frame, "get_max_tokens"):
-            try:
-                mt = settings_frame.get_max_tokens()
-                if isinstance(mt, int) and mt > 0:
-                    max_tokens = mt
-                elif mt is None:
-                    max_tokens = 10**9
-            except Exception:
-                pass
+            for m in memories:
+                pt = (m.get("prompt_text") or "").strip()
+                if not pt:
+                    continue
 
-        # Compute simple token stats (approximate)
-        system_tokens = count_tokens(system_prompt)
-        scenario_tokens = count_tokens(scenario or "")
-        prefix_tokens = count_tokens(prefix or "")
-        memory_tokens = sum(m.get("token_count", 0) for m in (memories or []))
-        overhead = system_tokens + scenario_tokens + prefix_tokens + memory_tokens + 50
+                entry_lines = []
+                entry_lines.append(pt)
 
-        # Build trimmed rolling history snapshot (for debug; not injected verbatim here)
-        available_for_rolling = max(0, max_tokens - overhead)
-        rolling_memory = []
-        total = 0
-        for msg in reversed(conversation_history or []):
-            tokens = count_tokens(msg.get("content", "") or "")
-            if total + tokens > available_for_rolling:
-                break
-            rolling_memory.insert(0, msg)
-            total += tokens
-        self.trimmed_history = rolling_memory
-        self.last_token_stats = {
-            "max_tokens": max_tokens,
-            "system_tokens": system_tokens,
-            "scenario_tokens": scenario_tokens,
-            "prefix_tokens": prefix_tokens,
-            "memory_tokens": memory_tokens,
-            "available_for_rolling": available_for_rolling,
-            "rolling_used_tokens": total,
-        }
+                # Load matching template
+                tmpl_name = (m.get("template_used") or "").strip()
+                tmpl = None
+                if tmpl_name:
+                    tmpl = template_cache.get(tmpl_name)
+                    if tmpl is None:
+                        tmpl = self._load_template_by_name(tmpl_name)
+                        template_cache[tmpl_name] = tmpl
 
-        # Combined context block
-        mem_summary = (getattr(self, "last_memory_summary", "") or "").strip()
-        roll_summary = (getattr(self, "last_rolling_summary", "") or "").strip()
+                # Gather prompt fields
+                pairs = self._collect_prompt_fields(tmpl) if tmpl else []
 
-        combined_lines = []
-        combined_lines.append("Combined context to consider:")
+                for label, instr in pairs:
+                    if label.lower().strip() == "prompt_text":
+                        continue  # already included
 
-        if mem_summary:
-            combined_lines.append("<<<MEMORY MONOLOGUE>>>")
-            combined_lines.append(mem_summary)
-            combined_lines.append("<<<END MEMORY MONOLOGUE>>>")
+                    val = m.get(label)
+                    if val is None:
+                        for k, v in m.items():
+                            if isinstance(k, str) and k.lower().strip() == label.lower().strip():
+                                val = v
+                                break
+                    if val is None:
+                        continue
 
-        if roll_summary:
-            combined_lines.append("")
-            combined_lines.append("<<<ROLLING HISTORY SUMMARY>>>")
-            combined_lines.append(roll_summary)
-            combined_lines.append("<<<END ROLLING HISTORY SUMMARY>>>")
+                    if isinstance(val, (list, tuple)):
+                        val_str = ", ".join(str(x).strip() for x in val if str(x).strip())
+                    else:
+                        val_str = str(val).strip()
 
-        combined_block = "\n".join(combined_lines).strip()
+                    if val_str:
+                        entry_lines.append(f"{instr.strip()}: {val_str}")
 
-        # Final prompt string (single user message style)
-        # This function returns a string; callers that use messages[] should prefer build_chat_messages.
-        prompt_parts = [
-            system_prompt.strip(),
-            (scenario or "").strip(),
-            (prefix or "").strip(),
-        ]
-        if combined_block:
-            prompt_parts.append(combined_block)
+                formatted_memories.append("\n".join(entry_lines).strip())
 
-        prompt_parts.append("Latest user message:")
-        prompt_parts.append((user_message or "").strip())
+            lines.append("Combined context to consider:")
+            lines.append("<<<MEMORY MONOLOGUE>>>")
+            lines.append("\n\n".join(formatted_memories))
+            lines.append("<<<END MEMORY MONOLOGUE>>>")
 
-        return "\n\n".join([p for p in prompt_parts if p]).strip()
+        lines.append("Now respond to my latest message while following the rules in the prefix.")
+        lines.append("")
+        lines.append("Latest user message:")
+        lines.append(user_message.strip())
+
+        return "\n".join(lines).strip()
 
     def build_chat_messages(self, conversation_history, scenario, prefix, memories, llm_character_config, user_character_config): 
         system_content = self._build_system_message(scenario, prefix, memories, llm_character_config, user_character_config)
@@ -498,66 +450,64 @@ class ConversationService:
     def build_raw_memories_input(self, memories: list, llm_char_name=None, user_message=None) -> str:
         """
         EXACTLY what the LLM should see for the memory-summarization step:
-        - Your instruction paragraph (editor wording)
+        - Instruction paragraph (editor wording)
         - Three sections (First Hand, Second Hand, Lore)
-        - Each entry: (Memory N) followed by lines of '(Prompt Instructions): <value>'
+        - Each memory shows:
+            (Memory N)
+            <prompt_text>
+            <annotated lines from template fields>
         - Ends with (END)
 
-        We use the memory's 'template_used' to load:
-        Character/<LLM Character>/Memory_Templates/<template_used>.json
+        Templates are loaded from:
+            Character/<LLM Character>/Memory_Template/<template_used>.json
 
-        From that template we include ONLY fields where:
-            usage in {Prompt, Both} AND prompt_instructions is present.
-
-        For each such field, we render:
-            (<prompt_instructions>): <value from memory>
+        Includes only fields where:
+            usage in {"Prompt", "Both"} AND prompt_instructions is present
 
         Notes:
-        - Values may be strings or lists (joined with ', ').
-        - Perspective is inferred via _extract_perspective(...).
-        - If a section is empty, we write '(none)'.
-        - llm_char_name and user_message are accepted but unused (kept for call-site compatibility).
+        - Values may be strings or lists (joined with ', ')
+        - Perspective is inferred via _extract_perspective(...)
+        - If a section is empty, we write '(none)'
         """
         buckets = {"First Hand": [], "Second Hand": [], "Lore": []}
         counters = {"First Hand": 0, "Second Hand": 0, "Lore": 0}
 
-        # Pre-load template cache by name to avoid repeated disk IO
+        # Cache templates to avoid redundant disk IO
         template_cache: dict[str, dict] = {}
 
         for m in memories or []:
-            # Resolve perspective
+            # Resolve memory perspective
             p = self._extract_perspective(m)
             if p not in buckets:
                 continue
 
-            # Resolve template
+            # Resolve memory template
             tmpl_name = (m.get("template_used") or "").strip()
             tmpl = None
             if tmpl_name:
                 tmpl = template_cache.get(tmpl_name)
                 if tmpl is None:
                     tmpl = self._load_template_by_name(tmpl_name)
-                    template_cache[tmpl_name] = tmpl
+                    if tmpl:
+                        template_cache[tmpl_name] = tmpl
 
-            # Collect label->instructions pairs from template
+            # Collect label -> instruction mappings
             pairs: list[tuple[str, str]] = []
             if tmpl:
                 pairs = self._collect_prompt_fields(tmpl)
 
-            # Build one memory entry, using ONLY template-defined prompt fields
+            # Build formatted memory block
             entry_lines = []
             counters[p] += 1
             idx = counters[p]
             entry_lines.append(f"(Memory {idx})")
 
-            # Always start with prompt_text
             pt = (m.get("prompt_text") or "").strip()
             if not pt:
                 counters[p] -= 1
                 continue
             entry_lines.append(pt)
 
-            # Then add all annotated fields from the template
             for label, instr in pairs:
                 if label.strip().lower() == "prompt_text":
                     continue
@@ -570,10 +520,10 @@ class ConversationService:
                         break
 
                 if val is None:
-                    print(f"[DEBUG] Skipped missing field: {label}")
+                    print(f"[DEBUG] Missing field for label: '{label}' in memory ID: {m.get('memory_id')}")
                     continue
 
-                # Format value
+                # Format list or string values
                 if isinstance(val, (list, tuple)):
                     val_str = ", ".join(str(x).strip() for x in val if str(x).strip())
                 else:
@@ -581,18 +531,16 @@ class ConversationService:
 
                 if not val_str:
                     continue
-             
-                # Add the template's prompt instructions before the value
+
                 entry_lines.append(f"{instr.strip()}: {val_str}")
 
+            # Add memory to correct section
             buckets[p].append("\n".join(entry_lines).strip())
 
-        # Build top instructions and the 3 sections
+        # Build final LLM input
         lines = []
-        # EXACT instruction text you provided (ASCII only)
         lines.append(
-            "You are functioning as an editor. "
-            "Your job is to look at the users message, then at the memories that have been pulled that relate to that message.\n\n"
+            "You are functioning as an editor. Your job is to look at the users message, then at the memories that have been pulled that relate to that message.\n\n"
             "Your job is to determine what information is relevant to what is going on in the story, and copy it verbatim, including the context around the relevant information."
         )
         lines.append("")
@@ -608,8 +556,8 @@ class ConversationService:
         lines.append("These are facts about the world your character is aware of:")
         lines.append("\n\n".join(buckets["Lore"]) if buckets["Lore"] else "(none)")
         lines.append("")
-        lines.append("(END)")
 
+        lines.append("(END)")
         return "\n".join(lines).strip()
 
     def summarize_memories(self, raw_mems_text: str = "", settings_data: dict = None, user_message: str = "", llm_char_name: str = "", **_ignored) -> str:
@@ -681,6 +629,7 @@ class ConversationService:
                     return None
                 char_path = os.path.join("Character", char)
 
+            # Templates are stored under 'Memory_Templates'
             tmpl_path = os.path.join(char_path, "Memory_Templates", f"{template_name}.json")
             if not os.path.exists(tmpl_path):
                 return None
