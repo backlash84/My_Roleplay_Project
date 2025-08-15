@@ -171,7 +171,13 @@ class TemplateMakerPanel(ctk.CTkFrame):
             if label in {"__template_name__", "__created_by__", "__tags__", "__importance__", "__perspective__"}:
                 continue
 
-            row = TemplateRow(self.section_container, self.remove_section, self.move_section)
+            usage_val = fld.get("usage", "Both")
+            row = TemplateRow(
+                self.section_container,
+                self.remove_section,
+                self.move_section,
+                usage=usage_val,
+            )
 
             # label
             row.label_entry.insert(0, label)
@@ -181,12 +187,6 @@ class TemplateMakerPanel(ctk.CTkFrame):
             row.type_var.set(ftype)
             row.type_dropdown.set(ftype)
             row.on_type_change(ftype)
-
-            # usage (this controls whether the Prompt Instructions box shows)
-            usage_val = fld.get("usage", "Both")
-            row.usage_var.set(usage_val)
-            row.usage_dropdown.set(usage_val)
-            row.on_usage_change(usage_val)
 
             # default value
             default = fld.get("default_value", "")
@@ -219,7 +219,7 @@ class TemplateMakerPanel(ctk.CTkFrame):
                 r.frame.pack(fill="x", pady=5)
 
 class TemplateRow:
-    def __init__(self, parent, remove_callback, move_callback):
+    def __init__(self, parent, remove_callback, move_callback, usage="Both"):
         self.frame = ctk.CTkFrame(parent)
         self.frame.pack(fill="x", pady=5)
 
@@ -246,24 +246,20 @@ class TemplateRow:
         line2 = ctk.CTkFrame(self.frame)
         line2.pack(fill="x", padx=5)
 
-        # Reserve consistent space so rows without prompt instructions
-        # align with those that have them.
-        line2.grid_columnconfigure(1, minsize=390)
-
-        self.usage_var = ctk.StringVar(value="Both")
+        self.usage_var = ctk.StringVar(value=usage)
         self.usage_dropdown = ctk.CTkOptionMenu(
             line2,
             variable=self.usage_var,
             values=["Prompt", "Search", "Both", "Neither"],
-            command=self.on_usage_change  # NEW
+            command=self.on_usage_change,
         )
         self.usage_dropdown.grid(row=0, column=0, padx=5, pady=2, sticky="w")
         self.usage_dropdown.configure(width=120)
+        self.usage_dropdown.set(usage)
 
-        # NEW: container for prompt instructions
+        # container for prompt instructions
         self.prompt_instr_container = ctk.CTkFrame(line2)
-        self.prompt_instr_container.grid(row=0, column=1, padx=5, pady=2, sticky="w")
-        self.prompt_instr_entry = None  # created dynamically
+        self.prompt_instr_entry = None
 
         # container for type-specific extras
         self.extra_entry_container = ctk.CTkFrame(line2, height=30)
@@ -287,7 +283,7 @@ class TemplateRow:
 
         # Initial options/tag field (if applicable)
         self.on_type_change(self.type_var.get())
-        self.on_usage_change(self.usage_var.get())  # NEW: initialize prompt box visibility
+        self.on_usage_change(usage)
 
     def on_type_change(self, new_type):
         for widget in self.extra_entry_container.winfo_children():
@@ -308,13 +304,9 @@ class TemplateRow:
             self.options_entry.pack(side="left")
 
     def on_usage_change(self, val):
-        for w in self.prompt_instr_container.winfo_children():
-            w.destroy()
-        self.prompt_instr_entry = None
-        if val in ("Prompt", "Both"):
-            ctk.CTkLabel(self.prompt_instr_container, text="Prompt Instructions:").pack(side="left", padx=(0, 4))
-            self.prompt_instr_entry = ctk.CTkEntry(self.prompt_instr_container, placeholder_text="(optional)", width=260)
-            self.prompt_instr_entry.pack(side="left")
+        show = val in ("Prompt", "Both")
+        self._place_prompt_instr(show)
+        self._layout_line2(show)
 
     def remove_self(self):
         self.frame.destroy()
@@ -355,3 +347,22 @@ class TemplateRow:
 
     def move_down(self):
         self.move_callback(self, +1)
+
+    def _place_prompt_instr(self, show: bool):
+        for w in self.prompt_instr_container.winfo_children():
+            w.destroy()
+        # always hide first
+        self.prompt_instr_container.grid_forget()
+        self.prompt_instr_entry = None
+
+        if show:
+            ctk.CTkLabel(self.prompt_instr_container, text="Prompt Instructions:").pack(side="left", padx=(0, 4))
+            self.prompt_instr_entry = ctk.CTkEntry(self.prompt_instr_container, placeholder_text="(optional)", width=260)
+            self.prompt_instr_entry.pack(side="left")
+            self.prompt_instr_container.grid(row=0, column=1, padx=5, pady=2, sticky="ew")
+
+    def _layout_line2(self, show_prompt: bool):
+        # extras live in column 2 when prompt box is visible, otherwise in column 1
+        self.extra_entry_container.grid_forget()
+        col = 2 if show_prompt else 1
+        self.extra_entry_container.grid(row=0, column=col, padx=5, pady=2, sticky="ew")

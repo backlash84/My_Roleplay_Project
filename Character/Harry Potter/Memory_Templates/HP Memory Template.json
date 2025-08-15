@@ -47,6 +47,7 @@
       "label": "Full Memory",
       "type": "text",
       "usage": "Prompt",
+      "prompt_instructions": "These are the events that took place.",
       "rows": 5
     },
     {
@@ -59,6 +60,7 @@
       "label": "Location",
       "type": "tag",
       "usage": "Both",
+      "prompt_instructions": "This is where the memory took place.",
       "suggested_tags": [
         "Hogwarts",
         "Hogwarts Express",
@@ -70,6 +72,7 @@
       "label": "Characters Present",
       "type": "tag",
       "usage": "Both",
+      "prompt_instructions": "These were the main people present",
       "suggested_tags": [
         "Harry",
         "Ron",
@@ -126,6 +129,7 @@
       "label": "Emotional State",
       "type": "tag",
       "usage": "Both",
+      "prompt_instructions": "These are how the characters felt during the event.",
       "suggested_tags": []
     },
     {

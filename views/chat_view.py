@@ -771,6 +771,86 @@ class ChatView(ctk.CTkFrame):
 
         messagebox.showinfo("Session Saved", f"Session saved as '{new_name}'.")
 
+    def _extract_perspective_local(self, mem: dict) -> str:
+        # Try explicit field first
+        for key in ("perspective", "__perspective__", "Perspective", "PERSPECTIVE"):
+            v = mem.get(key)
+            if isinstance(v, str) and v.strip():
+                lv = v.lower()
+                if "first" in lv: return "First Hand"
+                if "second" in lv: return "Second Hand"
+                if "lore" in lv: return "Lore"
+        # Fallback: parse [PERSPECTIVE: ...] header in prompt_text
+        pt = (mem.get("prompt_text") or "").strip()
+        m = re.search(r"\[PERSPECTIVE:\s*([^\]]+)\]", pt, flags=re.IGNORECASE)
+        if m:
+            lv = m.group(1).strip().lower()
+            if "first" in lv: return "First Hand"
+            if "second" in lv: return "Second Hand"
+            if "lore" in lv: return "Lore"
+        return "Unknown"
+
+    def _fallback_build_raw_memories_input(self, memories: list, llm_char_name: str, user_message: str) -> str:
+        buckets = {"First Hand": [], "Second Hand": [], "Lore": []}
+        counters = {"First Hand": 0, "Second Hand": 0, "Lore": 0}
+        for m in memories or []:
+            pt = (m.get("prompt_text") or "").strip()
+            if not pt:
+                continue
+            p = self._extract_perspective_local(m)
+            if p not in buckets:
+                continue
+            counters[p] += 1
+            idx = counters[p]
+            buckets[p].append(f"(Memory {idx})\n{pt}")
+
+        lines = []
+        lines.append(f"LLM Character: {llm_char_name}")
+        lines.append("")
+        lines.append("User's latest message (for relevance):")
+        lines.append((user_message or "").strip())
+        lines.append("")
+
+        lines.append("These are events your character personally witnessed:")
+        lines.append("\n\n".join(buckets["First Hand"]) if buckets["First Hand"] else "(none)")
+        lines.append("")
+
+        lines.append("These are events your character heard about from a third party:")
+        lines.append("\n\n".join(buckets["Second Hand"]) if buckets["Second Hand"] else "(none)")
+        lines.append("")
+
+        lines.append("These are facts about the world your character is aware of:")
+        lines.append("\n\n".join(buckets["Lore"]) if buckets["Lore"] else "(none)")
+
+        return "\n".join(lines).strip()
+
+    def _summarize_memories_safe(self, raw_mems, settings_data, user_message, llm_char_name):
+        """
+        Call ConversationService.summarize_memories with positional args.
+        Fall back to older signatures if needed. On failure, return raw_mems.
+        """
+        svc = self.conversation_service
+        if not hasattr(svc, "summarize_memories"):
+            return raw_mems
+        try:
+            # Newer signature: (raw_mems_text, settings_data, user_message, llm_char_name)
+            return svc.summarize_memories(raw_mems, settings_data, user_message, llm_char_name)
+        except TypeError:
+            # Try older variants
+            try:
+                # (raw_mems_text, settings_data, user_message)
+                return svc.summarize_memories(raw_mems, settings_data, user_message)
+            except TypeError:
+                try:
+                    # (raw_mems_text, settings_data)
+                    return svc.summarize_memories(raw_mems, settings_data)
+                except Exception as e:
+                    print(f"[WARN] summarize_memories fallback failed: {e}")
+                    return raw_mems
+        except Exception as e:
+            print(f"[WARN] summarize_memories failed: {e}")
+            return raw_mems
+
     def fetch_and_display_reply(self, user_message, settings_data, scenario_ui, prefix_ui):
         # 1) Ensure character_path is present
         if "character_path" not in settings_data:
@@ -792,6 +872,9 @@ class ChatView(ctk.CTkFrame):
         self.memory_debug_lines = memory_debug_lines
         self.selected_memories = [m.get("memory_id", "???") for m in memory_objects]
 
+        # HOOK: store for later human-readable formatting
+        self.controller.last_retrieved_memories = memory_objects
+
         # 3) Build trimmed rolling history (for RAW only)
         _msgs_preview, filtered_history = self.conversation_service.build_chat_messages(
             self.conversation_history,
@@ -802,41 +885,90 @@ class ChatView(ctk.CTkFrame):
             self.user_character_config
         )
 
-        # 4) Build and save Raw Prompt Input (only memories + rolling history)
-        raw_blob = self.conversation_service.build_raw_prompt_input(
-            memories=memory_objects,
-            trimmed_history=filtered_history,
+        # 4) Build and save Raw Rolling Memory (history only)
+        raw_history = self.conversation_service.build_raw_history_input(
+            trimmed_history=filtered_history
         )
         try:
             session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
             os.makedirs(session_dir, exist_ok=True)
-            raw_path = os.path.join(session_dir, "Raw Prompt Input.txt")
-            with open(raw_path, "w", encoding="utf-8") as f:
-                f.write(raw_blob)
-            print(f"[Saved] {raw_path}")
+            raw_hist_path = os.path.join(session_dir, "Raw Rolling Memory.txt")
+            with open(raw_hist_path, "w", encoding="utf-8") as f:
+                f.write(raw_history)
+            print(f"[Saved] {raw_hist_path}")
         except Exception as e:
-            print(f"[WARN] Could not save Raw Prompt Input: {e}")
+            print(f"[WARN] Could not save Raw Rolling Memory: {e}")
 
-        # 5) Summarize RAW
-        summary_text = self.conversation_service.summarize_text(
-            raw_text=raw_blob,
+        # 5) Summarize ONLY the rolling history (no memories)
+        #    Save as Rolling Memory Summary.txt
+        hist_summary_text = self.conversation_service.summarize_text(
+            raw_text=raw_history,
             settings_data=settings_data,
             user_message=user_message,
             prefix=self.prefix,
         )
-
-        # Save summary for inspection
         try:
             session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
             os.makedirs(session_dir, exist_ok=True)
-            sum_path = os.path.join(session_dir, "Raw Prompt Summary.txt")
-            with open(sum_path, "w", encoding="utf-8") as f:
-                f.write(summary_text)
-            print("[Saved]", sum_path)
+            hist_sum_path = os.path.join(session_dir, "Rolling Memory Summary.txt")
+            with open(hist_sum_path, "w", encoding="utf-8") as f:
+                f.write(hist_summary_text)
+            print(f"[Saved] {hist_sum_path}")
         except Exception as e:
-            print("[WARN] Could not save Raw Prompt Summary:", e)
+            print(f"[WARN] Could not save Rolling Memory Summary: {e}")
 
-        # 6) Build final messages: system = scenario+prefix+character configs (no memories),
+        self.conversation_service.last_rolling_summary = hist_summary_text
+
+        # 6) Build and save Raw Retrieved Memories (with your instruction sections)
+        raw_mems = self.conversation_service.build_raw_memories_input(
+            memories=memory_objects,
+            llm_char_name=self.llm_character,
+            user_message=user_message,
+        )
+
+        # Save EXACT input used for the memory summarizer
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+            rag_in_path = os.path.join(session_dir, "RAG Memory Input.txt")
+            with open(rag_in_path, "w", encoding="utf-8") as f:
+                f.write(raw_mems)
+            print(f"[Saved] {rag_in_path}")
+        except Exception as e:
+            print(f"[WARN] Could not save RAG Memory Input: {e}")
+
+        # 7) Summarize ONLY the retrieved memories (no history), using the exact same string
+        has_any_memory = (re.search(r"\(Memory\s+\d+\)", raw_mems) is not None)
+        if not raw_mems.strip() or not has_any_memory:
+            mems_summary_text = "(no relevant memories)"
+        else:
+            # If you added summarize_memories_exact earlier, use it; otherwise fallback to summarize_memories
+            if hasattr(self.conversation_service, "summarize_memories_exact"):
+                mems_summary_text = self.conversation_service.summarize_memories_exact(
+                    human_prompt=raw_mems,
+                    settings_data=settings_data,
+                )
+            else:
+                # positional call to avoid keyword mismatches
+                mems_summary_text = self.conversation_service.summarize_memories(
+                    raw_mems, settings_data, user_message, self.llm_character
+                )
+
+        # Always stash the latest memory summary, even if it is "(no relevant memories)"
+        self.conversation_service.last_memory_summary = mems_summary_text
+
+        # Save RAG Memory Output (the monologue)
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+            rag_out_path = os.path.join(session_dir, "RAG Memory Output.txt")
+            with open(rag_out_path, "w", encoding="utf-8") as f:
+                f.write(mems_summary_text)
+            print(f"[Saved] {rag_out_path}")
+        except Exception as e:
+            print(f"[WARN] Could not save RAG Memory Output: {e}")
+
+        # 8) Build final messages: system = scenario+prefix+character configs (no memories),
         #    user = compressed context + the latest user message
         system_content = self.conversation_service._build_system_message(
             self.scenario,
@@ -847,29 +979,82 @@ class ChatView(ctk.CTkFrame):
         )
 
         final_user_content = (
-            "Compressed context to consider:\n"
-            "<<<SUMMARY>>>\n"
-            f"{summary_text}\n"
-            "<<<END SUMMARY>>>\n\n"
-            "Now respond to my latest message while following the rules in the prefix."
-            "\n\nLatest user message:\n"
+            "Combined context to consider:\n"
+            "<<<MEMORY MONOLOGUE>>>\n"
+            f"{mems_summary_text}\n"
+            "<<<END MEMORY MONOLOGUE>>>\n\n"
+            "<<<ROLLING HISTORY SUMMARY>>>\n"
+            f"{hist_summary_text}\n"
+            "<<<END ROLLING HISTORY SUMMARY>>>\n\n"
+            "Now respond to my latest message while following the rules in the prefix.\n\n"
+            "Latest user message:\n"
             f"{user_message}"
         )
+
+        # Optional: save the combined context alone for quick inspection
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+            combined_context_path = os.path.join(session_dir, "Combined Context.txt")
+            with open(combined_context_path, "w", encoding="utf-8") as f:
+                f.write(
+                    "<<<MEMORY MONOLOGUE>>>\n"
+                    f"{mems_summary_text}\n"
+                    "<<<END MEMORY MONOLOGUE>>>\n\n"
+                    "<<<ROLLING HISTORY SUMMARY>>>\n"
+                    f"{hist_summary_text}\n"
+                    "<<<END ROLLING HISTORY SUMMARY>>>"
+                )
+            print(f"[Saved] {combined_context_path}")
+        except Exception as e:
+            print(f"[WARN] Could not save Combined Context: {e}")
 
         messages = [
             {"role": "system", "content": system_content},
             {"role": "user", "content": final_user_content},
         ]
 
-        # 7) Build payload and send
+        # 9) Build payload and send
         payload = self.conversation_service.build_payload("", settings_data)  # prompt unused; we set messages below
         payload["messages"] = messages
-        self.last_built_prompt = summary_text
+
+        # --- Debug: save exactly what we send to the LLM ---
+        try:
+            session_dir = os.path.join("Character", self.llm_character, "Sessions", self.session_name)
+            os.makedirs(session_dir, exist_ok=True)
+
+            # 2a) Human-readable messages only (no JSON appended)
+            messages_txt_path = os.path.join(session_dir, "Final LLM Request - Messages.txt")
+            lines = []
+            lines.append("=== Final LLM Request (messages) ===")
+            lines.append(f"Model: {payload.get('model')}")
+            for i, msg in enumerate(payload.get("messages", [])):
+                role = msg.get("role", "?")
+                content = msg.get("content", "")
+                lines.append(f"\n[{i}] role={role}")
+                lines.append("content:")
+                lines.append(content)
+            with open(messages_txt_path, "w", encoding="utf-8") as f:
+                f.write("\n".join(lines))
+            print(f"[Saved] {messages_txt_path}")
+
+            # 2b) Save the compact JSON as a separate file for byte-for-byte inspection
+            payload_json_path = os.path.join(session_dir, "Final LLM Payload.json")
+            import json as _json
+            with open(payload_json_path, "w", encoding="utf-8") as f:
+                _json.dump(payload, f, ensure_ascii=True, separators=(",", ":"))
+            print(f"[Saved] {payload_json_path}")
+
+        except Exception as e:
+            print(f"[WARN] Could not save final request debug files: {e}")
+
+        # Snapshot exactly what the LLM saw (user-side content) for retry
+        self.last_built_prompt = final_user_content
         self.last_payload_used = payload
 
-        # 8) Call LLM and display
+        # 10) Call LLM and display
         reply = self.conversation_service.fetch_reply(
-            payload, self.conversation_history, summary_text, debug_mode=self.debug_mode
+            payload, self.conversation_history, final_user_content, debug_mode=self.debug_mode
         )
         self.after(0, lambda: self._display_reply(reply))
         self.conversation_history.append({"role": "assistant", "content": reply})

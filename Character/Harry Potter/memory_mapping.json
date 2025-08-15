@@ -1,14 +1,16 @@
 [
   {
     "memory_id": "Pizza!",
-    "prompt_text": "[PERSPECTIVE: Second Hand]\nHarry goes out with Hermione and Ron to a Pizza Place that lets you pick any toppings you can image. Hermione and Ron are both horrified when Harry orders his with blue cheese and cockroaches. He indignantly defends his decision, saying that eating insects is far more humane than eating meat from intelligent animals, and how they are actually very clean insects. Ron hand Hermione then clarify that it is the blue cheese they find disgusting, not the cockroaches.\nPizza Place\n\ndisgust\n\n\nhermione also goes by the names hermione granger, granger, hermy.\nharry also goes by the names harry potter, potter, the boy who lived, the chosen one.\nron also goes by the names ron weasley, ronald weasley.",
-    "search_text": "Second Hand\nHarry shares his favourite food preferences with his friends.\nPizza Place\n\ndisgust\n999",
+    "prompt_text": "[PERSPECTIVE: First Hand]\nHarry goes out with Hermione and Ron to a Pizza Place that lets you pick any toppings you can image. Hermione and Ron are both horrified when Harry orders his with blue cheese and cockroaches. He indignantly defends his decision, saying that eating insects is far more humane than eating meat from intelligent animals, and how they are actually very clean insects. Ron hand Hermione then clarify that it is the blue cheese they find disgusting, not the cockroaches.\nPizza Place\nRon, Hermione\ndisgust\n\n\nhermione also goes by the names hermione granger, granger, hermy.\nharry also goes by the names harry potter, potter, the boy who lived, the chosen one.\nron also goes by the names ron weasley, ronald weasley.",
+    "search_text": "First Hand\nHarry shares his favourite food preferences with his friends.\nPizza Place\nRon, Hermione\ndisgust\n999",
     "tags": [
       "Pizza Place",
+      "Ron",
+      "Hermione",
       "disgust"
     ],
     "importance": "Medium",
-    "token_count": 194
+    "token_count": 199
   },
   {
     "memory_id": "TESTING",

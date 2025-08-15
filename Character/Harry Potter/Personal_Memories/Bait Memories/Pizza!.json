@@ -1,7 +1,7 @@
 {
   "memory_id": "Pizza!",
   "template_used": "HP Memory Template",
-  "__perspective__": "Second Hand",
+  "__perspective__": "First Hand",
   "Created By": "Me",
   "Tags": [
     "pizza",
@@ -24,5 +24,8 @@
     "disgust"
   ],
   "Chronological Placement": 999,
-  "Characters Present": []
+  "Characters Present": [
+    "Ron",
+    "Hermione"
+  ]
 }
