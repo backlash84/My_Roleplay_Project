@@ -504,7 +504,7 @@ class ConversationService:
         - Ends with (END)
 
         We use the memory's 'template_used' to load:
-        Character/<LLM Character>/Memory_Template/<template_used>.json
+        Character/<LLM Character>/Memory_Templates/<template_used>.json
 
         From that template we include ONLY fields where:
             usage in {Prompt, Both} AND prompt_instructions is present.
@@ -581,10 +581,8 @@ class ConversationService:
 
                 if not val_str:
                     continue
-
-                # ? This line is what should show up
-                entry_lines.append(f"{instr.strip()}: {val_str}")
-
+             
+                # Add the template's prompt instructions before the value
                 entry_lines.append(f"{instr.strip()}: {val_str}")
 
             buckets[p].append("\n".join(entry_lines).strip())
@@ -669,7 +667,7 @@ class ConversationService:
 
     def _load_template_by_name(self, template_name: str) -> dict | None:
         """
-        Loads Character/<LLM Character>/Memory_Template/<template_name>.json
+        Loads Character/<LLM Character>/Memory_Templates/<template_name>.json
         Returns dict or None if not found/invalid.
         """
         try:
@@ -683,7 +681,7 @@ class ConversationService:
                     return None
                 char_path = os.path.join("Character", char)
 
-            tmpl_path = os.path.join(char_path, "Memory_Template", f"{template_name}.json")
+            tmpl_path = os.path.join(char_path, "Memory_Templates", f"{template_name}.json")
             if not os.path.exists(tmpl_path):
                 return None
             with open(tmpl_path, "r", encoding="utf-8") as f:
