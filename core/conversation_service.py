@@ -557,21 +557,20 @@ class ConversationService:
                 continue
             entry_lines.append(pt)
 
-            # Then add all annotated fields
+            # Then add all annotated fields from the template
             for label, instr in pairs:
-                # Skip prompt_text — already included
-                if label.lower().strip() == "prompt_text":
+                if label.strip().lower() == "prompt_text":
                     continue
 
-                # Find matching value (case-insensitive label support)
                 val = None
                 label_clean = label.strip().lower()
-
                 for k, v in m.items():
                     if isinstance(k, str) and k.strip().lower() == label_clean:
                         val = v
                         break
+
                 if val is None:
+                    print(f"[DEBUG] Skipped missing field: {label}")
                     continue
 
                 # Format value
@@ -582,6 +581,9 @@ class ConversationService:
 
                 if not val_str:
                     continue
+
+                # ? This line is what should show up
+                entry_lines.append(f"{instr.strip()}: {val_str}")
 
                 entry_lines.append(f"{instr.strip()}: {val_str}")
 
